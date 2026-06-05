@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, Link, OutlinedInput, Stack, styled, TextareaAutosize, TextField, Typography, useTheme } from "@mui/material"
+import { Alert, Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, Link, OutlinedInput, Stack, styled, TextareaAutosize, TextField, Typography, useTheme } from "@mui/material"
 import logo from '../assets/logo.webp'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import { useAuth } from "../Hook/UseAuth";
 import { loginSchema, type LoginInput } from "../Schema/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
+import { useContactWithAdmin } from "../Hook/UseContactWithAdmin";
 
 
 const TypografyStylee = styled("a")(({ theme }) => ({
@@ -26,11 +27,14 @@ const TypografyStylee = styled("a")(({ theme }) => ({
 const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
-  const [userName, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [open, setOpen] = useState(false)
-  const theme = useTheme()
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactAsk, setContactAsk] = useState("");
+  const theme = useTheme();
+
   //for dialog 
   const handleClickOpen = () => {
     setOpen(true);
@@ -40,13 +44,13 @@ const Login = () => {
     setOpen(false);
   };
 
+  const contactAdminMutation = useContactWithAdmin();
 
-  const submit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const formJson = Object.fromEntries((formData as any).entries());
-    const email = formJson.email;
-    console.log(email);
+  const submitDialog = () => {
+    contactAdminMutation.mutate({
+      contactEmail,
+      contactAsk
+    })
     handleClose();
   };
   //
@@ -87,7 +91,7 @@ const Login = () => {
           border: '1px solid #2B5A6C ',
           maxWidth: 600,
           mx: "auto",
-          my: 5.5,
+          my: 3.5,
           p: 4,
           pt: 1,
           borderRadius: 3,
@@ -131,7 +135,7 @@ const Login = () => {
           {...register("userName")}
           error={!!errors.userName}
           helperText={errors.userName?.message}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setUserName(e.target.value)}
         />
         <Controller
           name="password"
@@ -169,6 +173,7 @@ const Login = () => {
                       }
                       onClick={handleClickShowPassword}
                       edge="end"
+
                     >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
@@ -238,7 +243,21 @@ const Login = () => {
                   You can still reach us , please fill out our contact form here.
                   we will get back to you with your access details and any help you need .
                 </DialogContentText>
-                <form onSubmit={submit} id="subscription-form">
+                {contactAdminMutation.isSuccess && (
+                  <Alert variant="outlined" severity="success" sx={{ mb: 2 }}>
+                    Message sent successfully
+                  </Alert>
+                )}
+
+                {contactAdminMutation.isError && (
+                  <Alert variant="outlined" severity="error" sx={{ mb: 2 }}>
+                    Sending failed. Please try again.
+                  </Alert>
+                )}
+
+                <form
+                  onSubmit={submitDialog}
+                  id="subscription-form">
                   <TextField
                     autoFocus
                     required
@@ -249,17 +268,19 @@ const Login = () => {
                     type="email"
                     fullWidth
                     variant="standard"
-                    />
+                    onChange={(e) => setContactEmail(e.target.value)}
+                  />
 
-                  <TextareaAutosize                  
+                  <TextareaAutosize
                     aria-label="Your Ask"
                     minRows={3}
+                    name="ask"
                     placeholder="Your Ask "
                     style={{
                       width: '100%',
                       backgroundColor: '#E8F2F3',
-                      border:'none',
-                      borderBottom:'1px solid #2B5A6C ',
+                      border: 'none',
+                      borderBottom: '1px solid #2B5A6C ',
                       fontSize: 16,
                       outline: 'none',
                     }}
@@ -269,14 +290,25 @@ const Login = () => {
                     onBlur={(e) => {
                       e.currentTarget.style.borderBottom = '1px solid #2B5A6C';
                     }}
+
+                    onChange={(e) => setContactAsk(e.target.value)}
+
                   />
 
                 </form>
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button type="submit" form="subscription-form"  sx={{ bgcolor: "#1C6280" , color:'white'}}>
-                  Contact
+                <Button type="submit" form="subscription-form"
+                  disabled={contactAdminMutation.isPending}
+                  sx={{ bgcolor: "#1C6280", color: 'white' }}
+                  startIcon={
+                    contactAdminMutation.isPending
+                      ? <CircularProgress size={16} />
+                      : null}>
+                  {contactAdminMutation.isPending
+                    ? 'Sending...' :
+                    'Contact'}
                 </Button>
               </DialogActions>
             </Dialog>
