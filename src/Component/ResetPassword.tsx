@@ -8,17 +8,16 @@ import {
   Stack,
   TextField,
   Typography,
-  useTheme,
+  useTheme
 } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import {
   type ResetPasswordInput,
   resetPasswordSchema,
 } from "../Schema/ResetPasswordSchema";
-import { useNavigate } from "react-router-dom";
-import key from "../assets/Key 01 Icon _ Hugeicons.webp";
-import reset from "../assets/Reset Password Icon _ Hugeicons.webp";
+import logo from '../assets/logo.webp'
 import { useRestPassword } from "../Hook/UseResetPassword";
 export default function ResetPassword() {
   const [showPassword, setShowPassword] = useState(false);
@@ -35,6 +34,8 @@ export default function ResetPassword() {
     mode: "onChange",
   });
 
+
+
   const onSubmit = (data: ResetPasswordInput) => {
     console.log("New password submitted:", data.password);
     // TODO: send data to your backend via Axios or React Query
@@ -46,28 +47,34 @@ export default function ResetPassword() {
   };
 
   return (
-    <Stack>
+    <Stack sx={{ color: 'black' }}>
       <Box
         sx={{
-          backgroundImage: `url(${reset}) `,
-          backgroundSize: "33%",
+          backgroundImage: `url(${logo}) `,
+          backgroundSize: "43%",
           backgroundRepeat: "no-repeat",
+          backgroundPosition:'left center',
           overflow: "hidden",
           fontWeight: 700,
-          bgcolor: '#ebf2f3',
-          height: "100vh"
+          bgcolor: '#E8F2F3',
+          height: "100vh",
+          mt:-0.7,
+          [theme.breakpoints.down('sm')]:{
+            alignSelf:'center'
+          }
         }}
       >
         <IconButton onClick={() => navigate(-1)}>
           <ArrowBack />
         </IconButton>
+        
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}
           noValidate
           sx={{
             maxWidth: 600,
-            ml: "34%",
+            ml: "38%",
             mr: "5%",
             my: 9,
             borderRadius: 4,
@@ -76,6 +83,9 @@ export default function ResetPassword() {
               mx: "4%",
               mt: "7%",
             },
+             border: '1px solid #2B5A6C ',
+           boxShadow: "0 2px 17px #1A7B9B",
+        
           }}
         >
           <Typography
@@ -85,26 +95,31 @@ export default function ResetPassword() {
             Reset Your Password
           </Typography>
           <Stack spacing={3}>
+           
             <TextField
               label="New Password"
               type={showPassword ? "text" : "password"}
-              {...register("password")}
               error={!!errors.password}
               helperText={errors.password?.message}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => setShowPassword(!showPassword)}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
+                            {...register("password")}
+              inputRef={register("password").ref}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
               }}
             />
-            <TextField
+
+           <TextField
               label="Confirm Password"
               type={showPassword ? "text" : "password"}
               {...register("confirmPassword")}
@@ -117,25 +132,7 @@ export default function ResetPassword() {
           </Stack>
         </Box>
       </Box>
-      <Box
-        sx={{
-          backgroundImage: `url(${key}) `,
-          backgroundSize: "80%",
-          backgroundRepeat: "no-repeat",
-          overflow: "hidden",
-          fontWeight: 700,
-          mt: "-18%",
-          height: 200,
-          width: 200,
-          alignSelf: "end",
-          [theme.breakpoints.down("md")]: {
-            backgroundSize: "80%",
-            mt: "-25%",
-            height: 90,
-            width: 100,
-          },
-        }}
-      ></Box>
+    
     </Stack>
   );
 }
