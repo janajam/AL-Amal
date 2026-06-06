@@ -82,7 +82,7 @@ const Login = () => {
   return (
     <Box sx={{
       backgroundColor: "white",
-    }}>
+     }}>
 
       <Box
         component="form"
@@ -91,7 +91,7 @@ const Login = () => {
           border: '1px solid #2B5A6C ',
           maxWidth: 600,
           mx: "auto",
-          my: 3.5,
+          my: 3.8,
           p: 4,
           pt: 1,
           borderRadius: 3,
@@ -101,6 +101,7 @@ const Login = () => {
           [theme.breakpoints.down("sm")]: {
             mx: "3%",
             fontWeight: 500,
+            
           }
         }} >
         <Box
@@ -112,6 +113,10 @@ const Login = () => {
             mx: 'auto',
             alignSelf: "center",
             backgroundRepeat: "no-repeat",
+             [theme.breakpoints.down("sm")]: {
+            mt:-2
+            
+             }
           }} />
 
         <Typography variant="h1" align="center"
@@ -130,7 +135,7 @@ const Login = () => {
           margin="normal"
           sx={{
             backgroundColor: '#E8F2F3',
-            borderRadius: '12px'
+            borderRadius: '12px',
           }}
           {...register("userName")}
           error={!!errors.userName}
@@ -214,6 +219,7 @@ const Login = () => {
               "&:hover": {
                 color: theme.palette.primary.main,
               },
+              whiteSpace:'wrap'
             }}>
               Don't Have an Account ? {" "}
 
