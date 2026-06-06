@@ -28,6 +28,7 @@ export default function OtpVerification({ onBack, onSubmit }: Props) {
   const { setData } = useOtpStore();
   const mutation = useOtpVerify();
   const navigate = useNavigate();
+
   const {
     handleSubmit,
     setValue,
@@ -76,17 +77,20 @@ export default function OtpVerification({ onBack, onSubmit }: Props) {
   }, [seconds, minutes]);
 
   const theme = useTheme();
+
   return (
     <form onSubmit={handleSubmit(Submit)} noValidate>
       <Stack
         spacing={4}
         sx={{
-          maxWidth: 600,
-          mx: "auto",
+          maxWidth: 500,
+           [theme.breakpoints.down("sm")]: {
+            ml:-2,
+            maxWidth:250         
+           },
+          ml: 25,
           mt: 1,
           textAlign: "center",
-          bgcolor: "#ebf2f3"
-
         }}
       >
         <Typography color={theme.palette.primary.main} variant="h2">
@@ -105,8 +109,8 @@ export default function OtpVerification({ onBack, onSubmit }: Props) {
         </Typography>
 
         <Stack
+          direction={'row'}
           sx={{
-            direction: "row",
             alignContent: "center"
           }}
           spacing={2}>
@@ -114,13 +118,13 @@ export default function OtpVerification({ onBack, onSubmit }: Props) {
             length={6}
             ref={pinRef}
             type="numeric"
+            width='20px'
             onChange={(value) => setValue("code", value)}
             style={{
-              width: "60%",
+              width: "20%",
               height: "50px",
               fontSize: "20px",
               textAlign: "center",
-              //  marginLeft:'8%',
               border: `1px solid ${theme.palette.primary.main}`,
               borderRadius: "8px",
               backgroundColor: "transparent",
@@ -134,11 +138,10 @@ export default function OtpVerification({ onBack, onSubmit }: Props) {
         )}
 
         <Stack
+          direction={'row'}
           sx={{
-            direction: "row",
             alignSelf: "center",
             whiteSpace: "nowrap"
-
           }}
           spacing={2}
         >
@@ -174,8 +177,9 @@ export default function OtpVerification({ onBack, onSubmit }: Props) {
         </Stack>
 
         <Stack
+          direction={'row'}
           sx={{
-            direction: "row",
+
             justifyContent: "space-between",
             mt: 4
           }}

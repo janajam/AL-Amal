@@ -86,9 +86,9 @@ export default function ForgotPassword() {
               backgroundImage: `url(${amal})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: { xs: "contain", md: "auto 90%" },
-              backgroundPosition: { xs: "left top ", md: "left bottom " },
-              opacity: 0.8,
-              ml: { xs: 0, md: -28 },
+              backgroundPosition: { xs: "center top ", md: "left bottom " },
+              opacity:{xs:0.3,md:0.8},
+              ml: { xs: 0, md: -30 },
               zIndex: 1,
               pointerEvents: "none",
             }}

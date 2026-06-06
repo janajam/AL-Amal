@@ -1,6 +1,5 @@
 import z from "zod";
 
-// Zod Schema for OTP (6-digit numeric code)
 export const otpSchema = z.object({
   code: z
     .string()
