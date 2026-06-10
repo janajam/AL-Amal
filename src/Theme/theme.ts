@@ -7,15 +7,16 @@ export const getTheme = (mode: 'light' | 'dark') =>
       ...(mode === "light"
         ? {
             primary: { main: "#2B5A6C  " },
-            background: { default: "#fff", paper: "#E8F2F3", },
+            background: { default: "#fff", paper: "#ffff", },
             text: { primary: "#fffff" },
             secondary: {
               main: "#76D7B6 ",
+              contrastText:''
             },
             
           }
         : {
-            primary: { main: "#41B3C4  " },
+            primary: { main: "#41B3C4" },
             background: { default: "#1C6280", paper: "#76D7B6 " },
      text: { primary: "#fffff" },
             secondary: {

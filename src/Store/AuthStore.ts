@@ -1,13 +1,14 @@
 
 import { create } from "zustand";
 import { removeToken, setToken } from "../apiServices/cookie";
+import type { UserRole } from "../Entities/SidebarItems";
 
 
 interface AuthState {
   fullName:string| null;
   token: string | null;
-  role: string | null;
-  setAuth: (data: {fullName:string; token: string; role: string }) => void;
+  role: UserRole| null;
+  setAuth: (data: {fullName:string; token: string; role: UserRole }) => void;
   logout: () => void;
 }
 
@@ -21,6 +22,6 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
   logout: () => {
     removeToken();
-    set({ token: null, role: null });
+    set({ fullName: null, token: null, role: null });
   },
 }));

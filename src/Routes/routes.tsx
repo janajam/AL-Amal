@@ -1,7 +1,8 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Login from "../Component/Login";
 import ForgotPassword from "../Component/ForgotPassword";
 import ResetPassword from "../Component/ResetPassword";
+import DashboardLayout from "../Layout/DashboardLayout";
 
 
 export const router = createBrowserRouter([
@@ -11,28 +12,9 @@ export const router = createBrowserRouter([
      element: (
        <>
        <Login/>
-{/* //         <WelcomePage /> */}
       </>
      ),
    },
-//   {
-//     path: "/aboutus",
-//     element: (
-//       <>
-//         <NavBar />
-//         <AboutUs />
-//       </>
-//     ),
-//   },
-
-//   {
-//     path: "/signin",
-//     element: <LogIn />,
-//   },
-//   {
-//     path: "/signup",
-//     element: <RegisterPage />,
-//   },
   {
     path: "/forgotPassword",
     element: <ForgotPassword />,
@@ -41,32 +23,17 @@ export const router = createBrowserRouter([
     path: "/resetPassword",
     element: <ResetPassword />,
   },
-//   {
-//     path: "/dashboard",
-//     element: <Dashboard />,
-//   },
-//   {
-//     path: "/accounts",
-//     element: <Accounts />,
-//   },
-//   {
-//     path: "/provider/:id",
-//     element: < ProviderDetailes />
-//   },
-//   {
-//     path: "/complaints",
-//     element: < Complaints />
-//   },
-//     {
-//     path: "/profile",
-//     element: < Profile />
-//   },
-//     {
-//     path: "/changePassword",
-//     element: < ChangePassword />
-//   },
-// {
-//     path: "/dash",
-//     element: <Dash />,
-  // },
- ]);
+  
+
+{    path: '/dashboard', 
+    element: <DashboardLayout />, 
+    children: [
+      
+      { index: true, element: <Navigate to="overview" replace /> }, 
+      
+    ],
+  },
+]);
+
+
+
