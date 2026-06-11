@@ -1,12 +1,14 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Login from "../Component/Login";
 import ForgotPassword from "../Component/ForgotPassword";
 import ResetPassword from "../Component/ResetPassword";
 import DashboardLayout from "../Layout/DashboardLayout";
+import RoleRouter from "../Component/RoleRouter";
+
 
 
 export const router = createBrowserRouter([
-  //Start Pages
+
   {
    path: "/",
      element: (
@@ -23,17 +25,16 @@ export const router = createBrowserRouter([
     path: "/resetPassword",
     element: <ResetPassword />,
   },
+  {
   
-
-{    path: '/dashboard', 
-    element: <DashboardLayout />, 
+path: '/dashboard',
+    element: <DashboardLayout />,
     children: [
-      
-      { index: true, element: <Navigate to="overview" replace /> }, 
-      
+    
+      { index: true, element: <RoleRouter /> },
+
     ],
-  },
-]);
+  },]);
 
 
 

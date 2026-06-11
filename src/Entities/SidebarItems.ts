@@ -20,7 +20,7 @@ export const sidebarItems: SidebarItem[] = [
     path: '/dashboard',
     label: 'Dashboard',
     icon: HomeIcon, 
-    roles: ['admin'],
+   roles: ['admin', 'secretary','doctor'],
   },
   {
     path: '/dashboard/accounts',

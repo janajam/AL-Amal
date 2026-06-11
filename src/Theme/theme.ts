@@ -6,11 +6,11 @@ export const getTheme = (mode: 'light' | 'dark') =>
       mode,
       ...(mode === "light"
         ? {
-            primary: { main: "#2B5A6C  " },
+            primary: { main: "#2B5A6C" },
             background: { default: "#fff", paper: "#ffff", },
             text: { primary: "#fffff" },
             secondary: {
-              main: "#76D7B6 ",
+              main: "#76D7B6",
               contrastText:''
             },
             
