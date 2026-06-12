@@ -12,8 +12,8 @@ const dashboardMap = {
 
 export default function RoleRouter() {
 
-  const userRole = useAuthStore((state) => state.role);
-
+  // const userRole = useAuthStore((state) => state.role);
+const userRole='admin'
   if (!userRole || !(userRole in dashboardMap)) {
     return <Navigate to="/" replace />;
   }

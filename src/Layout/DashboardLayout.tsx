@@ -4,23 +4,25 @@ import { Box } from '@mui/material';
 import { Navigate, Outlet } from 'react-router-dom';
 
 import Sidebar from '../Component/Sidebar';
-import { useAuthStore } from '../Store/AuthStore';
 
 export default function DashboardLayout() {
 
-  const userRole = useAuthStore((state) => state.role);
+  // const userRole = useAuthStore((state) => state.role);
 
+
+  const userRole = 'admin'
 
   if (!userRole) {
     return <Navigate to="/login" replace />;
-    
+
   }
 
   return (
     <Box sx={{
       display: 'flex',
-      minHeight: '100vh',
+      minHeight: '100%',
     }}>
+
 
       <Sidebar userRole={userRole} />
       <Box
@@ -36,10 +38,10 @@ export default function DashboardLayout() {
           backgroundColor: 'white',
           borderRadius: '16px',
           p: 3,
-          minHeight: 'calc(100vh - 64px)',
-          boxShadow: '0px 2px 8px rgba(0,0,0,0.02)'
+          minHeight: 'calc(100% - 64px)',
         }}>
           <Outlet />
+
         </Box>
       </Box>
     </Box>

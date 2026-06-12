@@ -3,9 +3,6 @@
 export default function AdminDashboard() {
 
   return (
-    <div>
-      <h2 >Admin Dashboard</h2>
-     
-    </div>
-  );
+ <h1>Admin Dashboard</h1>
+  )
 }

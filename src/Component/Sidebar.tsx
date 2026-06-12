@@ -7,7 +7,6 @@ import {
   Drawer,
   IconButton,
   List, ListItem, ListItemButton, ListItemIcon, ListItemText,
-  Typography,
   useTheme
 } from '@mui/material';
 import { useState } from 'react';
