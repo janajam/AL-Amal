@@ -1,7 +1,7 @@
 import { Search } from "@mui/icons-material";
 import { Box, IconButton, InputBase } from "@mui/material";
 
-const SearchBar=()=> {
+const SearchBar = () => {
   return (
     <Box
       component="form"
@@ -11,8 +11,8 @@ const SearchBar=()=> {
         alignItems: "center",
         width: 400,
         boxShadow: "0 4px 30px rgba(26, 123, 155, 0.2)",
-                borderRadius: 4,
-        my:2
+        borderRadius: 4,
+        my: 2
       }}
     >
       <InputBase
@@ -26,4 +26,4 @@ const SearchBar=()=> {
     </Box>
   );
 }
-export default  SearchBar;
+export default SearchBar;

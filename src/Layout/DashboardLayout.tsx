@@ -1,9 +1,10 @@
 
-
 import { Box } from '@mui/material';
-import { Navigate, Outlet } from 'react-router-dom';
-
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import Sidebar from '../Component/Sidebar';
+import AppBar from '../Component/AppBar';
+import { sidebarItems, type SidebarItem } from '../Entities/SidebarItems';
+
 
 export default function DashboardLayout() {
 
@@ -16,6 +17,14 @@ export default function DashboardLayout() {
     return <Navigate to="/login" replace />;
 
   }
+
+  const location = useLocation();
+  const currentPage = sidebarItems.find
+  (item => item.path === location.pathname);
+
+
+  const title = currentPage?.label ?? 'Dashboard';
+  const subtitle = currentPage?.subtitle ?? '';
 
   return (
     <Box sx={{
@@ -40,6 +49,7 @@ export default function DashboardLayout() {
           p: 3,
           minHeight: 'calc(100% - 64px)',
         }}>
+          <AppBar title={title} subtitle={subtitle} />
           <Outlet />
 
         </Box>

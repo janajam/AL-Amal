@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import Login from "../Component/Login";
 import ForgotPassword from "../Component/ForgotPassword";
+import Login from "../Component/Login";
 import ResetPassword from "../Component/ResetPassword";
-import DashboardLayout from "../Layout/DashboardLayout";
 import RoleRouter from "../Component/RoleRouter";
+import DashboardLayout from "../Layout/DashboardLayout";
 
 
 
