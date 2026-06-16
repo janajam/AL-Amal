@@ -183,8 +183,8 @@ export default function Sidebar({ userRole }: SidebarProps) {
               sx: {
                 width: DRAWER_WIDTH,
                 boxSizing: 'border-box',
-                borderRight: `2px solid ${theme.palette.primary.main}`,
-                boxShadow: '10px 0px 30px rgba(26, 123, 155, 0.2)',
+                // borderRight: `2px solid ${theme.palette.primary.main}`,
+                boxShadow: '10px 0px 10px rgba(26, 123, 155, 0.2)',
                 borderRadius: 4,
                 zIndex: 1200,
                 bgcolor: theme.palette.background.default ,
