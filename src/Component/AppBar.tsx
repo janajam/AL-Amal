@@ -13,7 +13,7 @@ interface Props {
 const AppBar = ({ title, subtitle }: Props) => {
   const theme = useTheme();
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, mt:-6 ,bgcolor:theme.palette.background.default}}>
       <Grid container spacing={"15%"}>
         <Grid size={"grow"}>
           <Header title={title} subtitle={subtitle} />

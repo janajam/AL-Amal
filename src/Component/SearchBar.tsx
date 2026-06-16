@@ -1,7 +1,8 @@
 import { Search } from "@mui/icons-material";
-import { Box, IconButton, InputBase } from "@mui/material";
+import { Box, IconButton, InputBase, useTheme } from "@mui/material";
 
 const SearchBar = () => {
+  const theme =useTheme()
   return (
     <Box
       component="form"
@@ -12,11 +13,16 @@ const SearchBar = () => {
         width: 400,
         boxShadow: "0 4px 30px rgba(26, 123, 155, 0.2)",
         borderRadius: 4,
-        my: 2
+        my: 2,
+         [theme.breakpoints.down('sm')]:{
+            ml:-2
+         },
       }}
     >
       <InputBase
-        sx={{ ml: 1, flex: 1 }}
+        sx={{ ml: 1, flex: 1 ,
+
+        }}
         placeholder="Search ..."
         inputProps={{ "aria-label": "search google maps" }}
       />

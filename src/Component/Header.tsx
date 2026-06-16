@@ -10,9 +10,9 @@ const Header = ({ title, subtitle }: Props) => {
     <Box sx={{ mt:2}}>
       <Typography
         variant="h1"
-        color={theme.palette.primary.main}
         sx={{
           mb: "4px",
+          color:theme.palette.primary.main,
           [theme.breakpoints.down("sm")]: {
             fontSize: "1.3rem",
             fontWeight: 600,
@@ -23,8 +23,8 @@ const Header = ({ title, subtitle }: Props) => {
       </Typography>
       <Typography
         variant="h3"
-        color={theme.palette.secondary.main}
         sx={{
+           color:theme.palette.etal.main,       
           [theme.breakpoints.down("sm")]: {
             fontSize: "0.70rem",
             fontWeight: 500,

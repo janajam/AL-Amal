@@ -1,5 +1,5 @@
 
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import Sidebar from '../Component/Sidebar';
 import AppBar from '../Component/AppBar';
@@ -9,7 +9,7 @@ import { sidebarItems, type SidebarItem } from '../Entities/SidebarItems';
 export default function DashboardLayout() {
 
   // const userRole = useAuthStore((state) => state.role);
-
+const theme = useTheme()
 
   const userRole = 'admin'
 
@@ -30,6 +30,7 @@ export default function DashboardLayout() {
     <Box sx={{
       display: 'flex',
       minHeight: '100%',
+      bgcolor: theme.palette.background.default,
     }}>
 
 
@@ -48,6 +49,9 @@ export default function DashboardLayout() {
           borderRadius: '16px',
           p: 3,
           minHeight: 'calc(100% - 64px)',
+          [theme.breakpoints.only('sm')]:{
+            ml:-10
+          }
         }}>
           <AppBar title={title} subtitle={subtitle} />
           <Outlet />

@@ -34,7 +34,10 @@ export default function Sidebar({ userRole }: SidebarProps) {
   );
 
   const drawerContent = (
-    <Box sx={{ height: '27%', display: 'flex', flexDirection: 'column', bgcolor: 'white' }}>
+    <Box sx={{ height: '27%', display: 'flex', flexDirection: 'column', bgcolor: theme.palette.background.default 
+
+
+    }}>
       <Box
         sx={{
           height: '100%',
@@ -43,7 +46,8 @@ export default function Sidebar({ userRole }: SidebarProps) {
           justifyContent: 'center',
           alignItems: 'center',
           p: 2,
-          mb: '-20px'
+          mb: '-20px',
+          
         }}
       >
         <img
@@ -57,15 +61,18 @@ export default function Sidebar({ userRole }: SidebarProps) {
         />
       </Box>
 
-      <Box sx={{ flexGrow: 1, px: 2, bgcolor: 'white' }}>
+      <Box sx={{ flexGrow: 1, px: 2, bgcolor: theme.palette.background.default 
+ }}>
 
-        <List sx={{ mt: 1 }}>
+        <List sx={{ mt: 1,bgcolor: theme.palette.background.default 
+ }}>
           {allowedRoutes.map((route) => {
             const isSelected = location.pathname === route.path;
             const IconComponent = route.icon;
 
             return (
-              <ListItem key={route.path} disablePadding sx={{ mb: 1, bgcolor: 'white' }}>
+              <ListItem key={route.path} disablePadding sx={{ mb: 1, bgcolor: theme.palette.background.default 
+ }}>
                 <ListItemButton
                   component={Link as any}
                   to={route.path}
@@ -111,7 +118,8 @@ export default function Sidebar({ userRole }: SidebarProps) {
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex',bgcolor: theme.palette.background.default 
+ }}>
       <CssBaseline />
 
       <Box sx={{
@@ -119,7 +127,9 @@ export default function Sidebar({ userRole }: SidebarProps) {
         position: 'fixed',
         top: 10,
         left: 10,
-        zIndex: 1100
+        zIndex: 1100,
+        bgcolor: theme.palette.background.default 
+
       }}>
 
         <IconButton
@@ -136,7 +146,11 @@ export default function Sidebar({ userRole }: SidebarProps) {
         </IconButton>
       </Box>
 
-      <Box component="nav" sx={{ width: { sm: DRAWER_WIDTH }, flexShrink: { sm: 0 } }}>
+      <Box component="nav"     
+      sx={{ width: { sm: DRAWER_WIDTH },
+      flexShrink: { sm: 0 } ,
+      bgcolor: theme.palette.background.default 
+}}>
 
         <Drawer
           variant="temporary"
@@ -148,10 +162,15 @@ export default function Sidebar({ userRole }: SidebarProps) {
               sx: {
                 width: DRAWER_WIDTH,
                 boxSizing: 'border-box',
+                bgcolor: theme.palette.background.default 
+
               }
             }
           }}
-          sx={{ display: { xs: 'block', sm: 'none' } }}
+          sx={{
+             display: { xs: 'block', sm: 'none' },
+            //  bgcolor: theme.palette.background.default 
+ }}
         >
           {drawerContent}
         </Drawer>
@@ -168,6 +187,11 @@ export default function Sidebar({ userRole }: SidebarProps) {
                 boxShadow: '10px 0px 30px rgba(26, 123, 155, 0.2)',
                 borderRadius: 4,
                 zIndex: 1200,
+                bgcolor: theme.palette.background.default ,
+                [theme.breakpoints.only('sm')]:{
+                  width:210
+                }
+
               }
             }
           }}

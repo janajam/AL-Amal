@@ -6,7 +6,6 @@ import RoleRouter from "../Component/RoleRouter";
 import DashboardLayout from "../Layout/DashboardLayout";
 
 
-
 export const router = createBrowserRouter([
 
   {
@@ -34,7 +33,8 @@ path: '/dashboard',
       { index: true, element: <RoleRouter /> },
 
     ],
-  },]);
+  },
+]);
 
 
 

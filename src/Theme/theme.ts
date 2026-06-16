@@ -1,5 +1,15 @@
 import { createTheme } from "@mui/material/styles";
 
+declare module "@mui/material/styles" {
+  interface Palette {
+    etal: Palette["primary"];
+  }
+
+  interface PaletteOptions {
+    etal?: PaletteOptions["primary"];
+  }
+}
+
 export const getTheme = (mode: 'light' | 'dark') =>
   createTheme({
     palette: {
@@ -10,9 +20,12 @@ export const getTheme = (mode: 'light' | 'dark') =>
             background: { default: "#fff", paper: "#ffff", },
             text: { primary: "#fffff" },
             secondary: {
-              main: "#76D7B6",
+              main: "#7CDBD8",
               contrastText:''
             },
+            etal:{
+              main:'#23A6B5'
+            }
             
           }
         : {
@@ -21,6 +34,9 @@ export const getTheme = (mode: 'light' | 'dark') =>
      text: { primary: "#fffff" },
             secondary: {
               main: "#F1FDFF",
+            },
+            etal: {
+              main: "#9ed1d5",
             },
           }),
     },
