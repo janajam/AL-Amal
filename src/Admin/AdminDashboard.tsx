@@ -7,8 +7,8 @@ import {
   useTheme
 } from "@mui/material";
 import AnimatedNumber from "./Dashboard/AnimatedNumber";
-import ComplaintsSection from "./Dashboard/ComplaintsSection";
 import AppointmentByWeekChart from "./Dashboard/AppointmentByWeekChart";
+import RecentComplaints from "./Dashboard/RecentComplaints";
 
 const cards = [
   { label: 'Todays Visitid', value: 100 },
@@ -101,7 +101,7 @@ export default function AdminDashboard() {
               boxSizing: 'border-box'
             }}
           >
-            <ComplaintsSection />
+            <RecentComplaints />
           </Box>
         </Grid>
 

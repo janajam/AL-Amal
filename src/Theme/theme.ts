@@ -17,7 +17,7 @@ export const getTheme = (mode: 'light' | 'dark') =>
       ...(mode === "light"
         ? {
             primary: { main: "#2B5A6C" },
-            background: { default: "#fff", paper: "#ffff", },
+            background: { default: "#fff", paper: "#E8F2F3", },
             text: { primary: "#fffff" },
             secondary: {
               main: "#7CDBD8",
