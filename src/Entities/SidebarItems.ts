@@ -32,7 +32,7 @@ export const sidebarItems: SidebarItem[] = [
     subtitle: 'Manage system accounts'
   },
   {
-    path: '/dashboard/complains',
+    path: '/dashboard/complaints',
     label: 'Complains',
     icon: Announcement,
     roles: ['admin'],
