@@ -1,6 +1,29 @@
 'use client'
 
-import { Alert, Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, Link, OutlinedInput, Stack, styled, TextareaAutosize, TextField, Typography, useTheme } from "@mui/material"
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  FormControl,
+  FormHelperText,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  Link,
+  OutlinedInput,
+  Stack,
+  styled,
+  TextareaAutosize,
+  TextField,
+  Typography,
+  useTheme
+} from "@mui/material"
 import logo from '../assets/logo.webp'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -82,7 +105,7 @@ const Login = () => {
   return (
     <Box sx={{
       backgroundColor: "white",
-     }}>
+    }}>
 
       <Box
         component="form"
@@ -101,7 +124,7 @@ const Login = () => {
           [theme.breakpoints.down("sm")]: {
             mx: "3%",
             fontWeight: 500,
-            
+
           }
         }} >
         <Box
@@ -113,10 +136,10 @@ const Login = () => {
             mx: 'auto',
             alignSelf: "center",
             backgroundRepeat: "no-repeat",
-             [theme.breakpoints.down("sm")]: {
-            mt:-2
-            
-             }
+            [theme.breakpoints.down("sm")]: {
+              mt: -2
+
+            }
           }} />
 
         <Typography variant="h1" align="center"
@@ -219,7 +242,7 @@ const Login = () => {
               "&:hover": {
                 color: theme.palette.primary.main,
               },
-              whiteSpace:'wrap'
+              whiteSpace: 'wrap'
             }}>
               Don't Have an Account ? {" "}
 

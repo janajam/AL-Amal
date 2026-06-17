@@ -9,6 +9,7 @@ import {
 import AnimatedNumber from "./Dashboard/AnimatedNumber";
 import AppointmentByWeekChart from "./Dashboard/AppointmentByWeekChart";
 import RecentComplaints from "./Dashboard/RecentComplaints";
+import RecentAction from "./Dashboard/RecentAction";
 
 const cards = [
   { label: 'Todays Visitid', value: 100 },
@@ -26,6 +27,7 @@ export default function AdminDashboard() {
         mt: 2,
         bgcolor: theme.palette.background.default,
         width: '100%',
+        height: '100vh',
         boxSizing: 'border-box'
       }}>
 
@@ -73,7 +75,8 @@ export default function AdminDashboard() {
         spacing={3}
         sx={{
           alignItems: "stretch",
-          my: 4
+          my: 4,
+          mx: 'auto'
         }}>
 
         <Grid size={{ xs: 12, md: 7 }}>
@@ -104,7 +107,15 @@ export default function AdminDashboard() {
             <RecentComplaints />
           </Box>
         </Grid>
-
+        <Grid
+          size={{ xs: 12, md: 12 }}
+          sx={{ justifySelf: 'center',
+            mt:-3,
+            mb:2
+           }}
+        >
+          <RecentAction />
+        </Grid>
       </Grid>
     </Box>
   );

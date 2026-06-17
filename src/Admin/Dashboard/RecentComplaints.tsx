@@ -1,5 +1,14 @@
 import { ArrowBack } from "@mui/icons-material"
-import { Box, Button, Card, CardContent, IconButton, Stack, Typography, useTheme } from "@mui/material"
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  IconButton,
+  Stack,
+  Typography,
+  useTheme
+} from "@mui/material"
 import { useNavigate } from "react-router-dom"
 
 const cards = [
@@ -53,10 +62,10 @@ const RecentComplaints = () => {
           mb: 2,
           color: theme.palette.primary.main,
           fontWeight: theme.typography.h3,
-          ':hover':theme.palette.etal.main
+          ':hover': theme.palette.etal.main
         }}
-        onClick={()=>navigate('/dashboard/complains')}
-        >
+        onClick={() => navigate('/dashboard/complains')}
+      >
         <IconButton>
           <ArrowBack sx={{
             color: theme.palette.primary.main
