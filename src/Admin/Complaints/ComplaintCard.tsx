@@ -1,13 +1,28 @@
-import { Box, Button, Card, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, TextareaAutosize, TextField, Typography, useTheme } from "@mui/material"
+import {
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Stack,
+    TextareaAutosize,
+    TextField,
+    Typography,
+    useTheme
+} from "@mui/material"
 import CardContainer from "../../Component/CardContainer"
-
 import { useState } from "react"
 
 const cards = [
-    { clientName: 'AA', subject: 'subject',email:'aa@email.com', description: 'description', status: 'open' },
-    { clientName: 'BB', subject: 'subject',email:'BB@email.com', description: 'description', status: 'open' },
-    { clientName: 'CC', subject: 'subject',email:'CC@email.com', description: 'description', status: 'open' },
-    { clientName: 'DD', subject: 'subject',email:'DD@email.com', description: 'description', status: 'open' },
+    { clientName: 'AA', subject: 'subject', email: 'aa@email.com', description: 'description', status: 'open' },
+    { clientName: 'BB', subject: 'subject', email: 'BB@email.com', description: 'description', status: 'open' },
+    { clientName: 'CC', subject: 'subject', email: 'CC@email.com', description: 'description', status: 'open' },
+    { clientName: 'DD', subject: 'subject', email: 'DD@email.com', description: 'description', status: 'open' },
 
 
 ]
@@ -56,7 +71,7 @@ const ComplaintCard = () => {
                                 justifyContent: 'space-between'
                             }}>
                                 <Stack >
-                                    <Typography sx={{ fontWeight:700,fontSize:17 }}>{card.email}</Typography>
+                                    <Typography sx={{ fontWeight: 700, fontSize: 17 }}>{card.email}</Typography>
                                     <Typography>{card.description} Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis accusamus voluptatibus tenetur dolor. Hic, itaque fugit sit, provident ullam numquam deleniti autem rerum nihil iure commodi quae unde nesciunt libero!</Typography>
                                 </Stack>
                                 <Typography>{card.status}</Typography>
@@ -69,7 +84,7 @@ const ComplaintCard = () => {
                                     height: 40,
                                     mt: 3,
                                     ml: '77%',
-                                    cursor:'pointer',
+                                    cursor: 'pointer',
                                     [theme.breakpoints.down('md')]: {
                                         ml: '22%'
                                     }
@@ -92,7 +107,7 @@ const ComplaintCard = () => {
                                         maxWidth: 'none',
                                         backgroundImage: 'none',
                                         boxShadow: 'none',
-                                        
+
                                     },
                                 }}
                             >
@@ -150,22 +165,22 @@ const ComplaintCard = () => {
                                 </DialogContent>
                                 <DialogActions>
                                     <Button onClick={handleClose}
-                                    sx={{ 
-                                        bgcolor:theme.palette.secondary.main,
-                                        color:theme.palette.secondary.contrastText,
-                                        width:100,
-                                        mx:3
-                                     }}>
-                                    
-                                        Cancel
-                                        </Button>
-                                    <Button type="submit" form="subscription-form" 
-                                    sx={{ 
-                                        bgcolor:theme.palette.primary.main,
-                                        color:theme.palette.primary.contrastText,
-                                        width:100,
+                                        sx={{
+                                            bgcolor: theme.palette.secondary.main,
+                                            color: theme.palette.secondary.contrastText,
+                                            width: 100,
+                                            mx: 3
+                                        }}>
 
-                                     }}>
+                                        Cancel
+                                    </Button>
+                                    <Button type="submit" form="subscription-form"
+                                        sx={{
+                                            bgcolor: theme.palette.primary.main,
+                                            color: theme.palette.primary.contrastText,
+                                            width: 100,
+
+                                        }}>
                                         Send
                                     </Button>
                                 </DialogActions>
