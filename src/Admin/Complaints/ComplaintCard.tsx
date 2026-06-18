@@ -1,23 +1,42 @@
-import { Box, Button, Card, CardContent, CardHeader, Stack, Typography, useTheme } from "@mui/material"
+import { Box, Button, Card, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, TextareaAutosize, TextField, Typography, useTheme } from "@mui/material"
 import CardContainer from "../../Component/CardContainer"
 
+import { useState } from "react"
+
 const cards = [
-    { clientName: 'AA', subject: 'subject', description: 'description', status: 'open' },
-    { clientName: 'BB', subject: 'subject', description: 'description', status: 'open' },
-    { clientName: 'CC', subject: 'subject', description: 'description', status: 'open' },
-    { clientName: 'DD', subject: 'subject', description: 'description', status: 'open' },
+    { clientName: 'AA', subject: 'subject',email:'aa@email.com', description: 'description', status: 'open' },
+    { clientName: 'BB', subject: 'subject',email:'BB@email.com', description: 'description', status: 'open' },
+    { clientName: 'CC', subject: 'subject',email:'CC@email.com', description: 'description', status: 'open' },
+    { clientName: 'DD', subject: 'subject',email:'DD@email.com', description: 'description', status: 'open' },
 
 
 ]
 
 const ComplaintCard = () => {
     const theme = useTheme()
+    const [open, setOpen] = useState(false)
+
+
+    //for dialog 
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const submitDialog = () => {
+        handleClose();
+    };
+
+
     return (
         <Box>
             {cards.map(card => (
                 <CardContainer>
 
-                    <Card sx={{
+                    <Card key={card.clientName} sx={{
                         my: 2,
                         bgcolor: theme.palette.background.default,
                         boxShadow: '0 4px 10px #9ed1d5',
@@ -36,7 +55,10 @@ const ComplaintCard = () => {
                             <Stack direction={'row'} sx={{
                                 justifyContent: 'space-between'
                             }}>
-                                <Typography>{card.description} Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis accusamus voluptatibus tenetur dolor. Hic, itaque fugit sit, provident ullam numquam deleniti autem rerum nihil iure commodi quae unde nesciunt libero!</Typography>
+                                <Stack >
+                                    <Typography sx={{ fontWeight:700,fontSize:17 }}>{card.email}</Typography>
+                                    <Typography>{card.description} Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis accusamus voluptatibus tenetur dolor. Hic, itaque fugit sit, provident ullam numquam deleniti autem rerum nihil iure commodi quae unde nesciunt libero!</Typography>
+                                </Stack>
                                 <Typography>{card.status}</Typography>
                             </Stack>
                             <Button
@@ -46,20 +68,119 @@ const ComplaintCard = () => {
                                     width: 150,
                                     height: 40,
                                     mt: 3,
-                                    ml: '77%'
+                                    ml: '77%',
+                                    cursor:'pointer',
+                                    [theme.breakpoints.down('md')]: {
+                                        ml: '22%'
+                                    }
                                 }}
-
+                                onClick={() => {
+                                    handleClickOpen()
+                                }}
                             >
                                 Respose
                             </Button>
+                            <Dialog
+                                open={open}
+                                onClose={handleClose}
+                                sx={{
+                                    '& .MuiBackdrop-root': {
+                                        backgroundColor: 'rgba(0, 0, 0, 0.22)',
+                                    },
+                                    '& .MuiDialog-paper': {
+                                        width: { xs: '99vw', sm: 520, md: 620 },
+                                        maxWidth: 'none',
+                                        backgroundImage: 'none',
+                                        boxShadow: 'none',
+                                        
+                                    },
+                                }}
+                            >
+                                <DialogTitle sx={{
+                                    fontSize: 17,
+                                    fontWeight: 700,
+                                    color: theme.palette.primary.main
+                                }}>
+                                    Your Response
+                                </DialogTitle>
+                                <DialogContent >
+                                    <DialogContentText sx={{
+                                        width: '100%'
+                                    }}>
+                                        Lets Solve The Complaint And Make Things Fine
+
+                                    </DialogContentText>
+                                    <form onSubmit={submitDialog} id="subscription-form">
+                                        <TextField
+                                            autoFocus
+                                            required
+                                            margin="dense"
+                                            id="name"
+                                            name="email"
+                                            label="Email Address"
+                                            type="email"
+                                            fullWidth
+                                            variant="standard"
+                                        />
+                                        <TextareaAutosize
+                                            aria-label="Response"
+                                            minRows={3}
+                                            name="ask"
+                                            placeholder="Response "
+                                            style={{
+                                                width: '100%',
+                                                backgroundColor: '#E8F2F3',
+                                                border: 'none',
+                                                borderBottom: '1px solid #2B5A6C ',
+                                                fontSize: 16,
+                                                outline: 'none',
+                                            }}
+                                            onFocus={(e) => {
+                                                e.currentTarget.style.borderBottom = '2px solid #2B5A6C';
+                                            }}
+                                            onBlur={(e) => {
+                                                e.currentTarget.style.borderBottom = '1px solid #2B5A6C';
+                                            }}
+
+                                        // onChange={(e) => setContactAsk(e.target.value)}
+
+                                        />
+
+                                    </form>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleClose}
+                                    sx={{ 
+                                        bgcolor:theme.palette.secondary.main,
+                                        color:theme.palette.secondary.contrastText,
+                                        width:100,
+                                        mx:3
+                                     }}>
+                                    
+                                        Cancel
+                                        </Button>
+                                    <Button type="submit" form="subscription-form" 
+                                    sx={{ 
+                                        bgcolor:theme.palette.primary.main,
+                                        color:theme.palette.primary.contrastText,
+                                        width:100,
+
+                                     }}>
+                                        Send
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
                         </CardContent>
                     </Card>
                 </CardContainer>
 
 
             ))}
+
         </Box>
     )
 }
 
 export default ComplaintCard
+
+

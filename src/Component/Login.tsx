@@ -264,7 +264,7 @@ const Login = () => {
             <Dialog open={open} onClose={handleClose}>
               <DialogTitle sx={{
                 fontSize: 20,
-                color: "#1C6280",
+                color: theme.palette.primary.main,
                 fontWeight: 700
               }}>Contact AdminStrator</DialogTitle>
               <DialogContent>

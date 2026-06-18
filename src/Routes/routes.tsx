@@ -5,6 +5,7 @@ import ResetPassword from "../Component/ResetPassword";
 import RoleRouter from "../Component/RoleRouter";
 import DashboardLayout from "../Layout/DashboardLayout";
 import Complaints from "../Admin/Complaints";
+import ComplaintsResponse from "../Admin/Complaints/ComplaintsResponse";
 
 
 export const router = createBrowserRouter([
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
   {
     path: "/resetPassword",
     element: <ResetPassword />,
+  },
+  {
+    path:'/response',
+    element:<ComplaintsResponse/>
   },
   {
   

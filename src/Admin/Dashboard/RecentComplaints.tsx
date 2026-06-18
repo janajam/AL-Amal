@@ -41,7 +41,9 @@ const RecentComplaints = () => {
         <Card sx={{
           my: 1,
           bgcolor: theme.palette.background.paper
-        }}>
+        }}
+        
+        >
 
           <CardContent>
             <Stack direction={'row'} sx={{
@@ -64,7 +66,7 @@ const RecentComplaints = () => {
           fontWeight: theme.typography.h3,
           ':hover': theme.palette.etal.main
         }}
-        onClick={() => navigate('/dashboard/complains')}
+        onClick={() => navigate('/dashboard/complaints')}
       >
         <IconButton>
           <ArrowBack sx={{
