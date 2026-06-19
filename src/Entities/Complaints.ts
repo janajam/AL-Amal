@@ -1,17 +1,16 @@
-
-export  interface Complaints{
-    name:string,
-    email:string,
-    subject:string,
-    status:string,
-    descreption:string
-} 
-
-export interface ComplaintsResponse  {
-  status: number
-  message: string
+export interface Complaint {
+    clientName: string;
+    email: string;
+    subject: string;
+    status: string;
+    description: string;
 }
 
+export interface ComplaintsResponse {
+    status: number;
+    message: string;
+    data: Complaint[];
+}
 export interface SendComplaintsResponse{
     email:string,
     response:string

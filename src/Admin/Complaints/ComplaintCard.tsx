@@ -15,10 +15,11 @@ import {
     Typography,
     useTheme
 } from "@mui/material"
-import CardContainer from "../../Component/CardContainer"
 import { useState } from "react"
+import CardContainer from "../../Component/CardContainer"
+import { useGetComplaints } from "../../Hook/UseGetComplaints"
 
-const cards = [
+const complaints = [
     { clientName: 'AA', subject: 'subject', email: 'aa@email.com', description: 'description', status: 'open' },
     { clientName: 'BB', subject: 'subject', email: 'BB@email.com', description: 'description', status: 'open' },
     { clientName: 'CC', subject: 'subject', email: 'CC@email.com', description: 'description', status: 'open' },
@@ -31,6 +32,7 @@ const ComplaintCard = () => {
     const theme = useTheme()
     const [open, setOpen] = useState(false)
 
+    // const { data } = useGetComplaints()
 
     //for dialog 
     const handleClickOpen = () => {
@@ -42,24 +44,29 @@ const ComplaintCard = () => {
     };
 
     const submitDialog = () => {
+
         handleClose();
     };
 
 
+
     return (
         <Box>
-            {cards.map(card => (
+            
+            {/* {data?.data.map */}
+            {complaints.map
+            (complaint => (
                 <CardContainer>
 
-                    <Card key={card.clientName} sx={{
+                    <Card key={complaint.clientName} sx={{
                         my: 2,
                         bgcolor: theme.palette.background.default,
                         boxShadow: '0 4px 10px #9ed1d5',
                         px: 2
                     }}>
                         <CardHeader
-                            subheader={card.clientName}
-                            title={card.subject}
+                            subheader={complaint.clientName}
+                            title={complaint.subject}
                             sx={{
                                 color: theme.palette.primary.main,
 
@@ -71,10 +78,10 @@ const ComplaintCard = () => {
                                 justifyContent: 'space-between'
                             }}>
                                 <Stack >
-                                    <Typography sx={{ fontWeight: 700, fontSize: 17 }}>{card.email}</Typography>
-                                    <Typography>{card.description} Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis accusamus voluptatibus tenetur dolor. Hic, itaque fugit sit, provident ullam numquam deleniti autem rerum nihil iure commodi quae unde nesciunt libero!</Typography>
+                                    <Typography sx={{ fontWeight: 700, fontSize: 17 }}>{complaint.email}</Typography>
+                                    <Typography>{complaint.description} Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis accusamus voluptatibus tenetur dolor. Hic, itaque fugit sit, provident ullam numquam deleniti autem rerum nihil iure commodi quae unde nesciunt libero!</Typography>
                                 </Stack>
-                                <Typography>{card.status}</Typography>
+                                <Typography>{complaint.status}</Typography>
                             </Stack>
                             <Button
                                 variant='contained'
