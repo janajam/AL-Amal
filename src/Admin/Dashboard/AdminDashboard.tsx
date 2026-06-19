@@ -6,10 +6,10 @@ import {
   Typography,
   useTheme
 } from "@mui/material";
-import AnimatedNumber from "./Dashboard/AnimatedNumber";
-import AppointmentByWeekChart from "./Dashboard/AppointmentByWeekChart";
-import RecentComplaints from "./Dashboard/RecentComplaints";
-import RecentAction from "./Dashboard/RecentAction";
+import AnimatedNumber from "./AnimatedNumber";
+import AppointmentByWeekChart from "./AppointmentByWeekChart";
+import RecentComplaints from "./RecentComplaints";
+import RecentAction from "./RecentAction";
 
 const cards = [
   { label: 'Todays Visitid', value: 100 },

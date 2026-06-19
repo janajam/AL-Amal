@@ -19,7 +19,6 @@ import {
   OutlinedInput,
   Stack,
   styled,
-  TextareaAutosize,
   TextField,
   Typography,
   useTheme
@@ -33,6 +32,7 @@ import { loginSchema, type LoginInput } from "../Schema/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
 import { useContactWithAdmin } from "../Hook/UseContactWithAdmin";
+import { ContactAdminSchema, type ContectAdminInput } from "../Schema/ContectAdminSchema";
 
 
 const TypografyStylee = styled("a")(({ theme }) => ({
@@ -54,8 +54,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [open, setOpen] = useState(false)
-  const [contactEmail, setContactEmail] = useState("");
-  const [contactAsk, setContactAsk] = useState("");
   const theme = useTheme();
 
   //for dialog 
@@ -69,11 +67,23 @@ const Login = () => {
 
   const contactAdminMutation = useContactWithAdmin();
 
-  const submitDialog = () => {
-    contactAdminMutation.mutate({
-      contactEmail,
-      contactAsk
-    })
+  const {
+    register: registerContact,
+    handleSubmit: handleContactSubmit,
+    formState: { errors: contactErrors },
+    reset: resetContactForm,
+  } = useForm<ContectAdminInput>({
+    resolver:zodResolver(ContactAdminSchema),
+    mode: "onChange",
+    defaultValues: {
+      contectEmail: "",
+      contectAsk: "",
+    },
+  });
+
+  const submitDialog = (formData: ContectAdminInput) => {
+    contactAdminMutation.mutate(formData)
+    resetContactForm();
     handleClose();
   };
   //
@@ -285,45 +295,41 @@ const Login = () => {
                 )}
 
                 <form
-                  onSubmit={submitDialog}
+                  onSubmit={handleContactSubmit(submitDialog)}
                   id="subscription-form">
                   <TextField
                     autoFocus
-                    required
                     margin="dense"
-                    id="name"
-                    name="email"
+                    id="contactEmail"
                     label="Email Address"
                     type="email"
                     fullWidth
                     variant="standard"
-                    onChange={(e) => setContactEmail(e.target.value)}
+                    {...registerContact("contectEmail")}
+                    error={!!contactErrors.contectEmail}
+                    helperText={contactErrors.contectEmail?.message}
+                 
                   />
-
-                  <TextareaAutosize
-                    aria-label="Your Ask"
+                  <TextField
+                    margin="dense"
+                    label="Your Ask"
+                    placeholder="Your Ask"
+                    multiline
                     minRows={3}
-                    name="ask"
-                    placeholder="Your Ask "
-                    style={{
-                      width: '100%',
-                      backgroundColor: '#E8F2F3',
-                      border: 'none',
-                      borderBottom: '1px solid #2B5A6C ',
-                      fontSize: 16,
-                      outline: 'none',
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderBottom = '2px solid #2B5A6C';
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderBottom = '1px solid #2B5A6C';
-                    }}
-
-                    onChange={(e) => setContactAsk(e.target.value)}
-
+                    fullWidth
+                    variant="standard"
+                    {...registerContact("contectAsk", {
+                      required: "Please enter your message",
+                      minLength: {
+                        value: 5,
+                        message: "Message should be at least 5 characters",
+                      },
+                    })}
+                    error={!!contactErrors.contectAsk}
+                    helperText={contactErrors.contectAsk?.message}
+                   
                   />
-
+                 
                 </form>
               </DialogContent>
               <DialogActions>

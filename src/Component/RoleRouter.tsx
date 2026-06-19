@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { useAuthStore } from '../Store/AuthStore';
-import AdminDashboard from '../Admin/AdminDashboard';
+import AdminDashboard from '../Admin/Dashboard/AdminDashboard';
 import DoctorDashboard from '../Doctor/DoctorDashboard';
 import SecretaryDashboard from '../Secretary/SecretaryDashboard';
 

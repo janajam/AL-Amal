@@ -1,4 +1,4 @@
-import ComplaintCard from './Complaints/ComplaintCard'
+import ComplaintCard from './ComplaintCard'
 
 const Complaints = () => {
     return (

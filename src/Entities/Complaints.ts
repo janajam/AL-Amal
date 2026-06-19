@@ -11,7 +11,13 @@ export interface ComplaintsResponse {
     message: string;
     data: Complaint[];
 }
-export interface SendComplaintsResponse{
-    email:string,
-    response:string
+export interface SendComplaintsResponse {
+    email: string,
+    response: string
+}
+
+export interface ResponseComplaintsRespons {
+    status: number;
+    message: string;
+
 }

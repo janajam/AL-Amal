@@ -1,9 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import ApiClient from "../apiServices/api_client";
+import type { ContectAdminInput } from "../Schema/ContectAdminSchema";
 
 interface ContactData {
-    contactEmail: string;
-    contactAsk: string;
+    contectEmail: string;
+    contectAsk: string;
 }
 
 const apiClient = new ApiClient<{ status: number }, ContactData>("/contact/admin");
@@ -11,7 +12,7 @@ const apiClient = new ApiClient<{ status: number }, ContactData>("/contact/admin
 export const useContactWithAdmin = () => {
     return useMutation({
         mutationKey: ["contactAdmin"],
-        mutationFn: async (data: ContactData) => {
+        mutationFn: async (data: ContectAdminInput) => {
             return await apiClient.post(data);
         },
         onSuccess: (data) => {
