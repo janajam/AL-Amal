@@ -25,10 +25,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 //for test 
 const complaints = [
-    { clientName: 'AA', subject: 'subject', email: 'aa@email.com', description: 'description', status: 'open' },
-    { clientName: 'BB', subject: 'subject', email: 'BB@email.com', description: 'description', status: 'open' },
-    { clientName: 'CC', subject: 'subject', email: 'CC@email.com', description: 'description', status: 'open' },
-    { clientName: 'DD', subject: 'subject', email: 'DD@email.com', description: 'description', status: 'open' },
+    { id: 1, clientName: 'AA', subject: 'subject', email: 'aa@email.com', description: 'description', status: 'open' },
+    { id: 2, clientName: 'BB', subject: 'subject', email: 'BB@email.com', description: 'description', status: 'open' },
+    { id: 3, clientName: 'CC', subject: 'subject', email: 'CC@email.com', description: 'description', status: 'open' },
+    { id: 4, clientName: 'DD', subject: 'subject', email: 'DD@email.com', description: 'description', status: 'open' },
 
 
 ]
@@ -76,7 +76,7 @@ const ComplaintCard = () => {
                 (complaint => (
                     <CardContainer>
 
-                        <Card key={complaint.clientName} sx={{
+                        <Card key={complaint.id} sx={{
                             my: 2,
                             bgcolor: theme.palette.background.default,
                             boxShadow: '0 4px 10px #9ed1d5',

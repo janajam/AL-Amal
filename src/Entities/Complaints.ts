@@ -1,4 +1,5 @@
 export interface Complaint {
+    id:number
     clientName: string;
     email: string;
     subject: string;
