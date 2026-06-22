@@ -129,7 +129,7 @@ const Login = () => {
           pt: 1,
           borderRadius: 3,
           boxShadow: "0 2px 17px #1A7B9B",
-          fontWeight: 700,
+          fontWeight: 700,         
           color: "#1A7B9B",
           [theme.breakpoints.down("sm")]: {
             mx: "3%",

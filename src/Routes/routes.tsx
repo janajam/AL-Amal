@@ -6,17 +6,19 @@ import RoleRouter from "../Component/RoleRouter";
 import DashboardLayout from "../Layout/DashboardLayout";
 import Complaints from "../Admin/Complaints/Complaints";
 import Accounts from "../Admin/Accounts/Accounts";
+import AccountDetails from "../Admin/Accounts/AccountDetails";
+import CreateAccount from "../Admin/Accounts/CreateAccount";
 
 export const router = createBrowserRouter([
 
   {
-   path: "/",
-     element: (
-       <>
-       <Login/>
+    path: "/",
+    element: (
+      <>
+        <Login />
       </>
-     ),
-   },
+    ),
+  },
   {
     path: "/forgotPassword",
     element: <ForgotPassword />,
@@ -26,17 +28,25 @@ export const router = createBrowserRouter([
     element: <ResetPassword />,
   },
   {
-  
-path: '/dashboard',
+
+    path: '/dashboard',
     element: <DashboardLayout />,
     children: [
-    
+
       { index: true, element: <RoleRouter /> },
-      {path:'complaints',element:<Complaints/>},
-      {path:'accounts',element:<Accounts/>},
+      { path: 'complaints', element: <Complaints /> },
+      { path: 'accounts', element: <Accounts /> },
+      {path:'createAccount',element:<CreateAccount/>}
+
+
 
     ],
   },
+  {
+    path: "accounts/:id",
+    element: < AccountDetails />
+  },
+  
 ]);
 
 

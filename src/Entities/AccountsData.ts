@@ -1,6 +1,7 @@
 
 export type AccountRole = "Doctor" | "Secretary";
-
+export type AccountStatus="ACTIVE" | "REVOKED";
+  
 export interface Account {
   id: number;
   name: string;
@@ -9,27 +10,27 @@ export interface Account {
   birthDay: Date;
   image: string;
   role: AccountRole;
-  status: "ACTIVE" | "REVOKED";
+  status: AccountStatus;
   createdAt: Date;
+  address:string;
+  department: Department;
+  
 }
 
 export interface Doctor extends Account {
   role: "Doctor";
   specialty: Specialty;
-  department: Department;
   licenses: string[];
   workingDays: string[];
 }
 
 export interface Secretary extends Account {
   role: "Secretary";
-  department: Department;
 }
 
 export interface Department {
   id: number;
   name: string;
-  specialty?: Specialty;
 }
 
 export interface Specialty {
@@ -37,23 +38,22 @@ export interface Specialty {
   name: string;
 }
 
-export interface DoctorAccountResponse {
-    status: number;
-    message: string;
-    data: Doctor[];
+// export interface DoctorAccountResponse {
+//     status: number;
+//     message: string;
+//     data: Doctor[];
 
-}
+// }
 
 
-export interface SecretaryAccountResponse {
-    status: number;
-    message: string;
-    data: Secretary[];
+// export interface SecretaryAccountResponse {
+//     status: number;
+//     message: string;
+//     data: Secretary[];
 
-}
-
+// }
 export interface AccountsResponse {
-  status: number;
-  message: string;
-  data: (Doctor | Secretary)[];
+    status: number;
+    message: string;
+    data: (Doctor | Secretary)[];
 }

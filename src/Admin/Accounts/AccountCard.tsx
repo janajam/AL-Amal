@@ -1,6 +1,7 @@
 import { Box, Card, CardHeader, CardMedia, Stack, Typography, useTheme } from '@mui/material'
 import CardContainer from '../../Component/CardContainer'
 import logo from '../../assets/amal.webp'
+import { useNavigate } from 'react-router-dom'
 
 
 const accounts = [
@@ -10,7 +11,7 @@ const accounts = [
         role: "Doctor",
         status: "ACTIVE",
         createdAt: '10-2-2022',
-        specialty: 'serger'
+        specialty: 'string'
     },
     {
         id: 2, name: 'B', email: 'B2@email.com', phoneNumber: 'string', birthDay: '1990',
@@ -35,6 +36,8 @@ const accounts = [
 ]
 const AccountCard = () => {
     const theme = useTheme()
+    const navigate =useNavigate()
+
     return (
         <Box>
             {accounts.map((account) => (
@@ -45,7 +48,9 @@ const AccountCard = () => {
                             bgcolor: theme.palette.background.default,
                             boxShadow: '0 4px 10px #9ed1d5',
                             px: 2
-                        }}>
+                        }}
+                        onClick={() => navigate(`/accounts/${account.id}`)}
+                        >
                         <Stack direction={'row'} sx={{
                             justifyContent: 'space-between'
                         }}>
