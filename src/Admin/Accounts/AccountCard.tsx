@@ -2,8 +2,9 @@ import { Box, Card, CardHeader, CardMedia, Stack, Typography, useTheme } from '@
 import CardContainer from '../../Component/CardContainer'
 import logo from '../../assets/amal.webp'
 import { useNavigate } from 'react-router-dom'
+import { useGetAccounts } from '../../Hook/UseGetAccounts'
 
-
+//for test
 const accounts = [
     {
         id: 1, name: 'A', email: 'A1@email.com', phoneNumber: 'string', birthDay: '1990',
@@ -30,13 +31,15 @@ const accounts = [
 
         createdAt: '22'
     },
-
-
-
 ]
+
+
+
 const AccountCard = () => {
     const theme = useTheme()
-    const navigate =useNavigate()
+    const navigate = useNavigate();
+    // const { data } = useGetAccounts();
+    // const accounts = data?.data ?? []
 
     return (
         <Box>
@@ -50,7 +53,7 @@ const AccountCard = () => {
                             px: 2
                         }}
                         onClick={() => navigate(`/accounts/${account.id}`)}
-                        >
+                    >
                         <Stack direction={'row'} sx={{
                             justifyContent: 'space-between'
                         }}>
@@ -119,21 +122,12 @@ const AccountCard = () => {
                                         fontWeight: 550,
                                         color: theme.palette.primary.main
                                     }}>
-
-                                    Specialty :
-                                </Typography>
-                                <Typography>{account.specialty}</Typography>
-
-                            </Stack>
-                            <Stack direction={'row'} spacing={1}>
-                                <Typography
-                                    sx={{
-                                        fontWeight: 550,
-                                        color: theme.palette.primary.main
-                                    }}>
                                     Created At :
                                 </Typography>
-                                <Typography>{account.createdAt}</Typography>
+                                <Typography>
+                                    {account.createdAt}
+                                    {/* {account.createdAt.getDate()} */}
+                                </Typography>
                             </Stack>
 
                         </Stack>

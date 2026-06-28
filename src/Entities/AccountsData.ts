@@ -20,7 +20,7 @@ export interface Account {
 export interface Doctor extends Account {
   role: "Doctor";
   specialty: Specialty;
-  licenses: string[];
+  licenses: License[];
   workingDays: string[];
 }
 
@@ -38,20 +38,17 @@ export interface Specialty {
   name: string;
 }
 
-// export interface DoctorAccountResponse {
-//     status: number;
-//     message: string;
-//     data: Doctor[];
-
-// }
-
-
-// export interface SecretaryAccountResponse {
-//     status: number;
-//     message: string;
-//     data: Secretary[];
-
-// }
+export interface License {
+    id: number;
+    name: string;
+    fileUrl: string;
+    uploadedAt: string;
+}
+export interface AccountResponse {
+    status: number;
+    message: string;
+    data: Doctor | Secretary;
+}
 export interface AccountsResponse {
     status: number;
     message: string;

@@ -1,339 +1,314 @@
 
-import { ArrowBack } from '@mui/icons-material'
-import { Box, Button, CardMedia, Divider, Stack, Typography, useTheme } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
-import logo from '../../assets/amal.webp'
+import {
+    Box,
+    Button,
+    CardMedia,
+    Divider,
+    Stack,
+    Typography,
+    useTheme,
+} from "@mui/material";
 
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetAccount } from "../../Hook/UseGetAccount";
+import logo from '../../assets/logo.webp'
+import pdf from '../../assets/SRS HIMS_٠٩٢٩٣٦.pdf'
+import { ArrowBack } from "@mui/icons-material";
+import LicenseItem from "./LicenseItem";
 
+//for test
 const accounts = [
     {
-        id: 1, name: 'Jana Jammoul', email: 'A1@email.com', phoneNumber: 'string', birthDay: '1990',
+        id: 1, name: 'User Name', email: 'A1@email.com', phoneNumber: 'string', birthDay: '1990',
         image: { logo },
         role: "Doctor",
         status: "ACTIVE",
         createdAt: '10-2-2022',
-        specialty: 'string',
+        specialty: {
+    id: 1,
+    name: "Cardiology"
+}, 
         address: 'Lorem ipsum dolor sit amet. ',
-        department: 'lorem ipsum'
+        department: {
+    id: 1,
+    name: "Internal Medicine"
+},
+        licenses: [
+  {
+    id: 1,
+    name: "Medical License",
+    fileUrl: pdf,
+    uploadedAt: "2025-07-13",
+  },
+  {
+    id: 2,
+    name: "Board Certificate",
+    fileUrl: "https://example.com/certificate.pdf",
+    uploadedAt: "2025-07-14",
+  },
+],
+
+workingDays: ["Sunday", "Monday", "Tuesday"]
     },
 ]
+
 const AccountDetails = () => {
-    const theme = useTheme()
-    const navigate = useNavigate()
+    const theme = useTheme();
+    const navigate = useNavigate();
+
+    // const { id } = useParams();
+
+    // const {
+    // data,
+    // } = useGetAccount(Number(id));
+
+    // const account = data?.data;
+
+
+
     return (
         <>
-
-            <ArrowBack
-                sx={{
-                    mx: 2,
-                    mt: 1,
-                    color: theme.palette.primary.main
-                }}
-                onClick={() => navigate(-1)}
-            />
-
-            <Box
-                sx={{
-                    width: '90%',
-                    height: '100%',
-                    bgcolor: theme.palette.background.default,
-                    mb: 3,
-                    justifySelf: 'center',
-                    borderRadius: 3,
-                    p: 2,
-                    boxShadow: "0 2px 17px #9ed1d5",
-                }}
-            >
-                {accounts.map((account) => (
-
-                    <Stack direction={{ xs: 'column', sm: 'row', md: 'row' }}
-                        spacing={{ xs: 3, md: '28%' }}
+            {accounts.map((account) =>
+                <>
+                    <ArrowBack
                         sx={{
-                            alignSelf: 'center',
-                            px: 5,
-                            [theme.breakpoints.down('sm')]: {
-                                justifyContent: 'center'
-                            }
-                        }}>
+                            mx: 2,
+                            mt: 2,
+                            cursor: "pointer",
+                            color: theme.palette.primary.main,
+                        }}
+                        onClick={() => navigate(-1)}
+                    />
 
-                        <CardMedia
-                            sx={{
-                                height: 200,
-                                width: 200,
-                                borderRadius: 15,
-                                [theme.breakpoints.down('md')]: {
-                                    height: 160,
-                                    width: 200,
-                                },
-                            }}
-                            image={logo}
-                            title="place photo"
-                        />
-                        <Stack>
-                            <Typography
-                                sx={{
-                                    fontSize: 30,
-                                    fontWeight: 550,
-                                    textAlign: 'center',
-                                    justifySelf: 'center',
-                                    color: theme.palette.primary.main,
-                                    mt: 6,
-                                    whiteSpace: 'nowrap',
-                                }}
-                            >
-                                {account.name}
-                            </Typography>
-                            <Typography
-                                sx={{
-                                    color: theme.palette.etal.main
-                                }}
-                            >
-                                {account.role}
-                            </Typography>
-                            <Typography
-                                sx={{
-                                    color: theme.palette.etal.main
-                                }}
-                            >
-                                {account.specialty}
-                            </Typography>
-                        </Stack>
-                    </Stack>
+                    <Box
+                        sx={{
+                            width: "90%",
+                            bgcolor: theme.palette.background.default,
+                            justifySelf: "center",
+                            borderRadius: 3,
+                            p: 3,
+                            mb: 3,
+                            boxShadow: "0 2px 17px #9ed1d5",
+                        }}
+                    >
 
-                ))}
 
-                <Stack
-                    sx={{
-                        justifyContent: 'space-between'
-                    }}
-                    direction={{ xs: 'column', sm: 'column', md: 'row' }}
-
-                >
-
-                    {accounts.map(account => (
                         <Stack
+                            direction={{ xs: "column", md: "row" }}
+                            spacing={{ xs: 3, md: '25%' }}
                             sx={{
-                                mx: '7%',
-                                my: 2,
-                            }}>
-                            <Typography
+                                alignItems: "center",
+                                mb: 4
+                            }}
+                        >
+
+
+                            <CardMedia
+                                component="img"
+                                // image={account?.image}
+                                image={logo}
+                                alt={account?.name}
                                 sx={{
-                                    fontWeight: 550,
-                                    fontSize: 18,
+                                    width: 200,
+                                    height: 180,
+                                    borderRadius: 3,
                                 }}
-                            >
-                                Contect Info :
-                            </Typography>
-                            <Stack
-                                direction={'row'}
-                                spacing={2}
-                                sx={{ my: 2 }}
-                            >
+                            />
+
+                            <Stack spacing={1}>
                                 <Typography
+                                    variant="h4"
                                     sx={{
-                                        fontSize: 15,
-                                        fontWeight: 550,
-                                    }}>
-                                    Email :
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        fontSize: 15,
+                                        color: theme.palette.primary.main,
+                                        fontWeight: 600,
+                                        fontSize: 30,
+                                        whiteSpace: 'nowrap',
+                                        textAlign: 'center',
+                                        justifySelf: 'center'
                                     }}
                                 >
-                                    {account.email}
+                                    {account?.name}
                                 </Typography>
-                            </Stack>
-                            <Stack
-                                direction={'row'}
-                                spacing={2}
-                                sx={{ mb: 2 }}
-                            >
-                                <Typography
-                                    sx={{
-                                        fontSize: 15,
-                                        fontWeight: 550,
-                                    }}>
-                                    Phone Number :
+
+                                <Typography sx={{
+                                    color: theme.palette.etal.main,
+                                    fontWeight: 550
+                                }}>
+                                    {account?.role}
                                 </Typography>
-                                <Typography
-                                    sx={{
-                                        fontSize: 15,
-                                    }}
-                                >
-                                    {account.phoneNumber}
-                                </Typography>
-                            </Stack>
-                            <Divider sx={{
-                                width: '90%',
-                                height: '1.5px',
-                                bgcolor: theme.palette.etal.main,
-                            }} />
-                            <Stack direction={'row'} spacing={2}
-                                sx={{
-                                    my: 2
-                                }}
-                            >
-                                <Typography
-                                    sx={{
-                                        fontSize: 15,
-                                        fontWeight: 550,
-                                    }}>
-                                    Birth Day :
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        fontSize: 15,
-                                    }}
-                                >
-                                    {account.birthDay}
-                                </Typography>
-                            </Stack>
-                            <Stack direction={'row'} spacing={2}
-                                sx={{
-                                    mb: 2
-                                }}
-                            >
-                                <Typography
-                                    sx={{
-                                        fontSize: 15,
-                                        fontWeight: 550,
-                                        whiteSpace:'nowrap'
+
+                                {account?.role === "Doctor" && (
+                                    <Typography color="text.secondary">
+                                        {account?.specialty.name} 
                                         
-                                    }}>
-                                    Address :
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        fontSize: 15,
-                                    }}
-                                >
-                                    {account.address}
-                                </Typography>
-                            </Stack>
-                            <Stack direction={'row'} spacing={2}
-                                sx={{
-                                    color: 'gray'
-                                }}
-                            >
-                                <Typography
-                                    sx={{
-                                        fontSize: 15,
-                                        fontWeight: 550,
-                                        whiteSpace:'nowrap'
-                                        
-                                    }}>
-                                    Created At :
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        fontSize: 15,
-                                    }}
-                                >
-                                    {account.createdAt}
-                                </Typography>
+                                    </Typography>
+                                )}
                             </Stack>
                         </Stack>
-                    ))}
 
-                    {accounts.map((account) => (
-                        <Stack sx={{
-                            mx: '7%',
-                            my: 2,
-                        }}>
-                            <Stack direction={'row'} spacing={2}
-                              >
+
+
+                        <Stack
+                            direction={{ xs: "column", md: "row" }}
+                            sx={{
+                                justifyContent: "space-between"
+                            }}
+                        >
+                            {/* LEFT */}
+
+                            <Stack spacing={2}>
+
                                 <Typography
                                     sx={{
-                                        fontSize: 15,
-                                        fontWeight: 550,
-                                        whiteSpace:'nowrap'
+                                        fontWeight: 600,
+                                        fontSize: 20
+                                    }}
+                                >
+                                    Contact Information
+                                </Typography>
+
+                                <Stack direction="row" spacing={2}>
+                                    <Typography sx={{ fontWeight: 600 }}>
+                                        Email:
+                                    </Typography>
+
+                                    <Typography>
+                                        {account?.email}
+                                    </Typography>
+                                </Stack>
+
+                                <Stack direction="row" spacing={2}>
+                                    <Typography
+                                        sx={{ fontWeight: 600 }}>
+                                        Phone:
+                                    </Typography>
+
+                                    <Typography>
+                                        {account?.phoneNumber}
+                                    </Typography>
+                                </Stack>
+
+                                <Divider
+                                    sx={{
+                                        height: '1.5px',
+                                        width: '90%',
+                                        bgcolor: theme.palette.etal.main
+                                    }}
+                                />
+
+                                <Stack direction="row" spacing={2}>
+                                    <Typography sx={{ fontWeight: 600 }}>
+                                        Birthday:
+                                    </Typography>
+                                    <Typography>
+                                        {/* {account?.birthDay?.toLocaleDateString()} */}
+                                        {account.birthDay}
+                                    </Typography>
+                                </Stack>
+
+                                <Stack direction="row" spacing={2}>
+                                    <Typography sx={{ fontWeight: 600 }}>
+                                        Address:
+                                    </Typography>
+
+                                    <Typography>
+                                        {account?.address}
+                                    </Typography>
+                                </Stack>
+
+                                <Stack direction="row" spacing={2}>
+                                    <Typography sx={{ fontWeight: 600 }}>
+                                        Created At:
+                                    </Typography>
+
+                                    <Typography>
+                                        {/* {account?.createdAt.toLocaleDateString()} */}
+                                        {account.createdAt}
+                                    </Typography>
+                                </Stack>
+                            </Stack>
+
+                            {/* RIGHT */}
+
+                            <Stack spacing={2} sx={{ mt: { xs: 3, md: 0 } }}>
+
+                                <Stack direction="row" spacing={2}>
+                                    <Typography sx={{ fontWeight: 600 }}>
+                                        Department:
+                                    </Typography>
+
+                                    <Typography>
+                                         {account?.department.name} 
                                         
-                                    }}>
+                                    </Typography>
+                                </Stack>
 
-                                    Department :
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        fontSize: 15,
+                                {account?.role === "Doctor" && (
+                                    <>
+                                        <Stack direction="row" spacing={2}>
+                                            <Typography sx={{ fontWeight: 600 }}>
+                                                Specialty:
+                                            </Typography>
 
-                                    }}
-                                >
-                                    {account.department}
-                                </Typography>
-                            </Stack>
+                                            <Typography>
+                                                {account.specialty.name} 
+                                                
+                                            </Typography>
+                                        </Stack>
 
-                            <Stack direction={'row'} spacing={2}
-                                sx={{
-mb:2
-                                }}
-                            >
-                                <Typography
-                                    sx={{
-                                        fontSize: 15,
-                                        fontWeight: 550,
-                                        whiteSpace:'nowrap'
+                                        <Stack spacing={2}>
+                                            <Typography sx={{ fontWeight: 600 }}>
+                                                Licenses:
+                                            </Typography>
+                                            <Stack >
+                                                    {account.licenses.map((license) => (
+
+                                                        <LicenseItem 
+                                                             key={license.id} 
+                                                             license={license}
+                                                        /> 
+
+                                                     ))} 
+
+                                                </Stack>
+                                            </Stack>
                                         
-                                    }}>
 
-                                    licenses :
-                                </Typography>
-                                <Typography
+                                        <Stack direction="row" spacing={2}>
+                                            <Typography sx={{ fontWeight: 600 }}>
+                                                Working Days:
+                                            </Typography>
+
+                                            <Typography>
+                                                {account?.workingDays.join(", ")} 
+                                                {/* {account.workingDays} */}
+                                            </Typography>
+                                        </Stack>
+                                    </>
+                                )}
+
+                                <Button
+                                    variant="contained"
                                     sx={{
-                                        fontSize: 15,
-
+                                        mt: 3,
+                                        alignSelf: "flex-end",
+                                        bgcolor:
+                                            account?.status === "ACTIVE"
+                                                ? theme.palette.secondary.main
+                                                : theme.palette.etal.main,
                                     }}
                                 >
-                                    {account.address}
-                                </Typography>
+                                    {account?.status === "ACTIVE"
+                                        ? "Revoke"
+                                        : "Unrevoke"}
+                                </Button>
                             </Stack>
-                            <Stack direction={'row'} spacing={2}
-                                sx={{
-mb:2
-                                }}
-                            >
-                                <Typography
-                                    sx={{
-                                        fontSize: 15,
-                                        fontWeight: 550,
-                                        whiteSpace:'nowrap'
-
-                                    }}>
-
-                                    Work days :
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        fontSize: 15,
-
-                                    }}
-                                >
-                                    {account.address}
-                                </Typography>
-                            </Stack>
-                            <Button
-                                sx={{
-                                    width:160,
-                                    bgcolor: `${account.status === 'REVOKED'
-                                        ? theme.palette.etal.main
-                                        : theme.palette.secondary.main}`,
-                                    
-                                    alignSelf:'end',
-                                    [theme.breakpoints.down('sm')]:{
-                                     alignSelf:'center'
-                                    }
-                                }}
-                            >
-                                {account.status === 'ACTIVE'
-                                    ? 'Revok'
-                                    : 'UnRevoke'}
-                            </Button>
                         </Stack>
-                    ))}
-                </Stack>
+                    </Box>
+                </>
+            )}
+        </>
+    );
+};
 
-            </Box></>
-    )
-}
-
-export default AccountDetails
+export default AccountDetails;

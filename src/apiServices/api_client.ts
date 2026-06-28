@@ -2,7 +2,7 @@ import axios, { type AxiosRequestConfig } from "axios";
 import { getToken } from "./cookie";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000/api/v1", 
+  baseURL: "http://localhost:8000/api/v1",
   withCredentials: true, // important to send cookies
 });
 
@@ -27,26 +27,35 @@ class ApiClient<TResponse, TRequest> {
     return res.data;
   }
 
+
+  async get(id: string | number, config?: AxiosRequestConfig) {
+    const res = await axiosInstance.get<TRequest>(
+      `${this.endpoint}/${id}`,
+      config
+    );
+
+    return res.data;
+  }
   async post(data: TRequest) {
     const res = await axiosInstance.post<TResponse>(this.endpoint, data);
     return res.data;
   }
 
-   update = async (id: string | number, data: Partial<TRequest>) => {
-      const res = await axiosInstance.put<TResponse>(`${this.endpoint}/${id}`, data);
+  update = async (id: string | number, data: Partial<TRequest>) => {
+    const res = await axiosInstance.put<TResponse>(`${this.endpoint}/${id}`, data);
     return res.data;
   }
 
-   
-    delete = async (id: string | number) => {
-        const res = await axiosInstance.delete(`${this.endpoint}/${id}`);
-      return res.data;
-    }
 
-    async patch(id:  string |number, data: Partial<TRequest>) {
-      const res = await axiosInstance.patch<TResponse>(`${this.endpoint}/${id}`, data);
-      return res.data;
-    }
+  delete = async (id: string | number) => {
+    const res = await axiosInstance.delete(`${this.endpoint}/${id}`);
+    return res.data;
+  }
+
+  async patch(id: string | number, data: Partial<TRequest>) {
+    const res = await axiosInstance.patch<TResponse>(`${this.endpoint}/${id}`, data);
+    return res.data;
+  }
 
 
 }
