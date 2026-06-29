@@ -25,30 +25,30 @@ const accounts = [
         status: "ACTIVE",
         createdAt: '10-2-2022',
         specialty: {
-    id: 1,
-    name: "Cardiology"
-}, 
+            id: 1,
+            name: "Cardiology"
+        },
         address: 'Lorem ipsum dolor sit amet. ',
         department: {
-    id: 1,
-    name: "Internal Medicine"
-},
+            id: 1,
+            name: "Internal Medicine"
+        },
         licenses: [
-  {
-    id: 1,
-    name: "Medical License",
-    fileUrl: pdf,
-    uploadedAt: "2025-07-13",
-  },
-  {
-    id: 2,
-    name: "Board Certificate",
-    fileUrl: "https://example.com/certificate.pdf",
-    uploadedAt: "2025-07-14",
-  },
-],
+            {
+                id: 1,
+                name: "Medical License",
+                fileUrl: pdf,
+                uploadedAt: "2025-07-13",
+            },
+            {
+                id: 2,
+                name: "Board Certificate",
+                fileUrl: "https://example.com/certificate.pdf",
+                uploadedAt: "2025-07-14",
+            },
+        ],
 
-workingDays: ["Sunday", "Monday", "Tuesday"]
+        workingDays: ["Sunday", "Monday", "Tuesday"]
     },
 ]
 
@@ -139,8 +139,8 @@ const AccountDetails = () => {
 
                                 {account?.role === "Doctor" && (
                                     <Typography color="text.secondary">
-                                        {account?.specialty.name} 
-                                        
+                                        {account?.specialty.name}
+
                                     </Typography>
                                 )}
                             </Stack>
@@ -238,11 +238,10 @@ const AccountDetails = () => {
                                     </Typography>
 
                                     <Typography>
-                                         {account?.department.name} 
-                                        
+                                        {account?.department.name}
+
                                     </Typography>
                                 </Stack>
-
                                 {account?.role === "Doctor" && (
                                     <>
                                         <Stack direction="row" spacing={2}>
@@ -251,8 +250,8 @@ const AccountDetails = () => {
                                             </Typography>
 
                                             <Typography>
-                                                {account.specialty.name} 
-                                                
+                                                {account.specialty.name}
+
                                             </Typography>
                                         </Stack>
 
@@ -261,31 +260,31 @@ const AccountDetails = () => {
                                                 Licenses:
                                             </Typography>
                                             <Stack >
-                                                    {account.licenses.map((license) => (
+                                                {account.licenses.map((license) => (
 
-                                                        <LicenseItem 
-                                                             key={license.id} 
-                                                             license={license}
-                                                        /> 
+                                                    <LicenseItem
+                                                        key={license.id}
+                                                        license={license}
+                                                    />
 
-                                                     ))} 
+                                                ))}
 
-                                                </Stack>
                                             </Stack>
-                                        
-
-                                        <Stack direction="row" spacing={2}>
-                                            <Typography sx={{ fontWeight: 600 }}>
-                                                Working Days:
-                                            </Typography>
-
-                                            <Typography>
-                                                {account?.workingDays.join(", ")} 
-                                                {/* {account.workingDays} */}
-                                            </Typography>
                                         </Stack>
                                     </>
                                 )}
+                                
+                                <Stack direction="row" spacing={2}>
+                                    <Typography sx={{ fontWeight: 600 }}>
+                                        Working Days:
+                                    </Typography>
+
+                                    <Typography>
+                                        {account?.workingDays.join(", ")}
+                                        {/* {account.workingDays} */}
+                                    </Typography>
+                                </Stack>
+
 
                                 <Button
                                     variant="contained"

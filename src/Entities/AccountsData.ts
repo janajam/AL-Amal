@@ -14,6 +14,7 @@ export interface Account {
   createdAt: Date;
   address:string;
   department: Department;
+  workingDays: WorkingSchedule[]
   
 }
 
@@ -21,7 +22,6 @@ export interface Doctor extends Account {
   role: "Doctor";
   specialty: Specialty;
   licenses: License[];
-  workingDays: string[];
 }
 
 export interface Secretary extends Account {
@@ -44,6 +44,27 @@ export interface License {
     fileUrl: string;
     uploadedAt: string;
 }
+export interface WorkingSchedule {
+  id: number;
+  day: WeekDay;
+  startTime: string;
+  endTime: string;
+  isAvailable: boolean;
+}
+
+export interface WorkingScheduleResponse {
+  status: number;
+  message: string;
+  data: WorkingSchedule[];
+}
+export type WeekDay =
+  | "Monday"
+  | "Tuesday"
+  | "Wednesday"
+  | "Thursday"
+  | "Friday"
+  | "Saturday"
+  | "Sunday";
 export interface AccountResponse {
     status: number;
     message: string;
