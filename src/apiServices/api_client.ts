@@ -51,11 +51,15 @@ class ApiClient<TResponse, TRequest> {
     const res = await axiosInstance.delete(`${this.endpoint}/${id}`);
     return res.data;
   }
+async patch(path: string | number, data: Partial<TRequest>) {
+  const res = await axiosInstance.patch<TResponse>(
+    `${this.endpoint}/${path}`,
+    data
+  );
 
-  async patch(id: string | number, data: Partial<TRequest>) {
-    const res = await axiosInstance.patch<TResponse>(`${this.endpoint}/${id}`, data);
-    return res.data;
-  }
+  return res.data;
+}
+  
 
 
 }

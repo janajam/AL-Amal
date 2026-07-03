@@ -45,11 +45,12 @@ export interface License {
     uploadedAt: string;
 }
 export interface WorkingSchedule {
-  id: number;
-  day: WeekDay;
-  startTime: string;
-  endTime: string;
-  isAvailable: boolean;
+    id: number;
+    date: string;
+    day: WeekDay;
+    startTime: string;
+    endTime: string;
+    isAvailable: boolean;
 }
 
 export interface WorkingScheduleResponse {
@@ -65,6 +66,12 @@ export type WeekDay =
   | "Friday"
   | "Saturday"
   | "Sunday";
+
+  export interface UpdateScheduleRequest {
+    accountId: number;
+    schedules: WorkingSchedule[];
+
+}
 export interface AccountResponse {
     status: number;
     message: string;

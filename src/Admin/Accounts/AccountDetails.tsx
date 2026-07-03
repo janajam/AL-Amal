@@ -15,6 +15,7 @@ import logo from '../../assets/logo.webp'
 import pdf from '../../assets/SRS HIMS_٠٩٢٩٣٦.pdf'
 import { ArrowBack } from "@mui/icons-material";
 import LicenseItem from "./LicenseItem";
+import Schedule from "../../Component/Schedule/Schedule";
 
 //for test
 const accounts = [
@@ -69,8 +70,10 @@ const AccountDetails = () => {
     return (
         <>
             {accounts.map((account) =>
-                <>
+                <div key={account.id}
+                >
                     <ArrowBack
+                        key={account.id}
                         sx={{
                             mx: 2,
                             mt: 2,
@@ -85,7 +88,7 @@ const AccountDetails = () => {
                             width: "90%",
                             bgcolor: theme.palette.background.default,
                             justifySelf: "center",
-                            borderRadius: 3,
+                            borderRadius:1,
                             p: 3,
                             mb: 3,
                             boxShadow: "0 2px 17px #9ed1d5",
@@ -117,6 +120,8 @@ const AccountDetails = () => {
 
                             <Stack spacing={1}>
                                 <Typography
+
+
                                     variant="h4"
                                     sx={{
                                         color: theme.palette.primary.main,
@@ -138,7 +143,8 @@ const AccountDetails = () => {
                                 </Typography>
 
                                 {account?.role === "Doctor" && (
-                                    <Typography color="text.secondary">
+                                    <Typography key={account.id}
+                                        color="text.secondary">
                                         {account?.specialty.name}
 
                                     </Typography>
@@ -244,7 +250,8 @@ const AccountDetails = () => {
                                 </Stack>
                                 {account?.role === "Doctor" && (
                                     <>
-                                        <Stack direction="row" spacing={2}>
+                                        <Stack
+                                            direction="row" spacing={2}>
                                             <Typography sx={{ fontWeight: 600 }}>
                                                 Specialty:
                                             </Typography>
@@ -273,24 +280,33 @@ const AccountDetails = () => {
                                         </Stack>
                                     </>
                                 )}
-                                
-                                <Stack direction="row" spacing={2}>
+
+                                {/* <Stack direction="row" spacing={2}>
                                     <Typography sx={{ fontWeight: 600 }}>
                                         Working Days:
                                     </Typography>
-
+                                    <Schedule accountId={account.id} />
                                     <Typography>
+
                                         {account?.workingDays.join(", ")}
-                                        {/* {account.workingDays} */}
+                                        {/* {account.workingDays} 
                                     </Typography>
-                                </Stack>
+                                </Stack> */}
 
 
-                                <Button
+                              
+                              </Stack>
+                        </Stack>
+                                    
+                    </Box>
+                       <Schedule accountId={account.id} />
+                         <Button
                                     variant="contained"
                                     sx={{
-                                        mt: 3,
+                                        my: 3,
                                         alignSelf: "flex-end",
+                                        justifySelf:'flex-end',
+                                        ml:138,
                                         bgcolor:
                                             account?.status === "ACTIVE"
                                                 ? theme.palette.secondary.main
@@ -301,10 +317,9 @@ const AccountDetails = () => {
                                         ? "Revoke"
                                         : "Unrevoke"}
                                 </Button>
-                            </Stack>
-                        </Stack>
-                    </Box>
-                </>
+                            
+                     
+                </div>
             )}
         </>
     );
