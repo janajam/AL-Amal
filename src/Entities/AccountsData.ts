@@ -67,10 +67,10 @@ export type WeekDay =
   | "Saturday"
   | "Sunday";
 
-  export interface UpdateScheduleRequest {
-    accountId: number;
-    schedules: WorkingSchedule[];
-
+export interface UpdateScheduleRequest {
+    startTime?: string;
+    endTime?: string;
+    isAvailable?: boolean;
 }
 export interface AccountResponse {
     status: number;

@@ -1,7 +1,6 @@
 import {
   AccessTime,
-  CalendarToday,
-  Edit,
+  Edit
 } from "@mui/icons-material";
 
 import {
@@ -9,11 +8,10 @@ import {
   Button,
   Card,
   CardContent,
-  Chip,
   Divider,
   Stack,
   Typography,
-  useTheme,
+  useTheme
 } from "@mui/material";
 
 import dayjs from "dayjs";
@@ -22,7 +20,7 @@ import type { WorkingSchedule } from "../../Entities/AccountsData";
 
 interface Props {
   day: WorkingSchedule;
-  onEdit?: (schedule: WorkingSchedule) => void;
+  onEdit: (schedule: WorkingSchedule) => void;
 }
 
 const DayCard = ({ day, onEdit }: Props) => {
@@ -31,20 +29,18 @@ const DayCard = ({ day, onEdit }: Props) => {
 
   return (
     <Card
-      // elevation={4}
       sx={{
-        height:'90%',
-    borderRadius: 1,
+        height: '90%',
+        borderRadius: 1,
         transition: "0.3s",
-        bgcolor:`${day.isAvailable
-        ? theme.palette.background.default
-        :theme.palette.background.paper}`,
+        bgcolor: `${day.isAvailable
+          ? theme.palette.background.default
+          : theme.palette.background.paper}`,
         border: 'none',
         width: 150,
-        // justifySelf:'center',
-        mx:6,
-          alignSelf:'center',
-          "&:hover": {
+        mx: 6,
+        alignSelf: 'center',
+        "&:hover": {
           transform: "translateY(-5px)",
           boxShadow: 8,
         },
@@ -55,11 +51,12 @@ const DayCard = ({ day, onEdit }: Props) => {
         {/* Header */}
 
         <Stack
-          // spacing={1}
-          sx={{ alignItems: "center", }}
+          sx={{
+             alignItems: "center", 
+            }}
         >
 
-                  <Typography
+          <Typography
             variant="h4"
             sx={{
               color: theme.palette.primary.main,
@@ -98,10 +95,11 @@ const DayCard = ({ day, onEdit }: Props) => {
               />
 
               <Typography
-                sx={{ fontWeight: 550,
-                   fontSize:14,                 
-                 }}       
-                        >
+                sx={{
+                  fontWeight: 550,
+                  fontSize: 14,
+                }}
+              >
                 From:
               </Typography>
 
@@ -123,7 +121,7 @@ const DayCard = ({ day, onEdit }: Props) => {
 
               <Typography
                 sx={{
-                  fontSize:14,
+                  fontSize: 14,
                   fontWeight: 550
                 }}
               >
@@ -144,14 +142,14 @@ const DayCard = ({ day, onEdit }: Props) => {
             sx={{
               py: 2,
               textAlign: "center",
-             }}
+            }}
           >
             <Typography
               sx={{
                 fontWeight: 600,
-                color:'gray'
+                color: 'gray'
               }}
-          >
+            >
               OFF DAY
             </Typography>
           </Box>
@@ -165,12 +163,12 @@ const DayCard = ({ day, onEdit }: Props) => {
           variant="contained"
           startIcon={<Edit />}
           sx={{
-            my:1,
+            my: 1,
             borderRadius: 1,
-            }}
-          onClick={() => onEdit?.(day)}
+          }}
+          onClick={() => onEdit(day)}
         >
-          Edit 
+          Edit
         </Button>
 
       </CardContent>

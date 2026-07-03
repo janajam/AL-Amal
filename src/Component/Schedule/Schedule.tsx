@@ -7,6 +7,8 @@ import WeekNavigator from "./WeekNavigatog";
 import ScheduleTable from "./ScheduleTable";
 import { splitScheduleIntoWeeks } from "./ScheduleHelper";
 import { dummySchedule } from "./ScheduleDummy";
+import type { WorkingSchedule } from "../../Entities/AccountsData";
+import EditScheduleDialog from "./EditScheduleDialog";
 
 interface Props {
     accountId: number;
@@ -15,7 +17,9 @@ interface Props {
 const ScheduleSection = ({ accountId }: Props) => {
 
     const theme = useTheme();
+    const [selectedDay, setSelectedDay] = useState<WorkingSchedule | null>(null);
 
+    const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(dayjs());
 
     const [currentWeek, setCurrentWeek] = useState(0);
@@ -26,6 +30,10 @@ const ScheduleSection = ({ accountId }: Props) => {
 
     const isLoading = false;
 
+   const handleEdit = (schedule: WorkingSchedule) => {
+    setSelectedDay(schedule);
+    setDialogOpen(true);
+};
     // const { data, isLoading } = useGetSchedule(
     //     accountId,
     //     selectedMonth.month() + 1,
@@ -50,7 +58,7 @@ const ScheduleSection = ({ accountId }: Props) => {
                 width: '90%',
                 justifySelf: 'center',
                 boxShadow: "0 2px 17px #9ed1d5",
-                        
+
             }}
         >
 
@@ -60,7 +68,7 @@ const ScheduleSection = ({ accountId }: Props) => {
                     color: "primary",
                     fontWeight: 600,
                     fontSize: 20,
-                    mb:2
+                    mb: 2
                 }}
             >
                 Working Schedule
@@ -93,12 +101,28 @@ const ScheduleSection = ({ accountId }: Props) => {
             }}>
 
                 <ScheduleTable
+                    week={weeks[currentWeek] ?? []}
+                    loading={isLoading}
+                    onEdit={handleEdit}
+                />
+                {/* <ScheduleTable
                     loading={isLoading}
                     week={weeks[currentWeek] ?? []}
-                />
+                /> */}
 
             </Box>
 
+            {selectedDay && (
+
+                <EditScheduleDialog
+                    open={dialogOpen}
+                    onClose={() => setDialogOpen(false)}
+                    day={selectedDay}
+                    accountId={accountId}
+                />
+
+            )}
+            
         </Paper>
 
     );

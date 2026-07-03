@@ -2,13 +2,13 @@ import { Grid, Skeleton, Typography } from "@mui/material";
 import type { WorkingSchedule } from "../../Entities/AccountsData";
 import DayCard from "./DayCard";
 
-
 interface Props {
-  loading: boolean;
   week: WorkingSchedule[];
+  loading: boolean;
+  onEdit: (schedule: WorkingSchedule) => void;
 }
 
-const ScheduleTable = ({ loading, week }: Props) => {
+const ScheduleTable = ({ loading, week, onEdit }: Props) => {
 
   if (loading) {
     return (
@@ -31,10 +31,10 @@ const ScheduleTable = ({ loading, week }: Props) => {
   if (!week.length) {
     return (
       <Typography
-      sx={{  
-        align:"center",
-        color:"text.secondary",
-        py:5
+        sx={{
+          align: "center",
+          color: "text.secondary",
+          py: 5
         }}
       >
         No schedule available for this week.
@@ -50,9 +50,14 @@ const ScheduleTable = ({ loading, week }: Props) => {
       {week.map((day) => (
         <Grid
           key={day.id}
-          size={{ xs: 12, sm: 6, md: 4, lg: 12/6.6}}
+          size={{ xs: 12, sm: 6, md: 4, lg: 12 / 6.6 }}
         >
-          <DayCard day={day} />
+          <DayCard
+            key={day.id}
+            day={day}
+            onEdit={onEdit}
+          />
+          {/* <DayCard day={day} /> */}
         </Grid>
       ))}
     </Grid>
