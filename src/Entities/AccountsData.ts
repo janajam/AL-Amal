@@ -82,3 +82,8 @@ export interface AccountsResponse {
     message: string;
     data: (Doctor | Secretary)[];
 }
+
+export interface CreateAccountsResponse {
+    status: number;
+    message: string;
+}

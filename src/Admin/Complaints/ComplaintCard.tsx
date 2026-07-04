@@ -37,7 +37,7 @@ const ComplaintCard = () => {
     const theme = useTheme()
     const [open, setOpen] = useState(false)
 
-    useGetComplaints()
+    // const {data} = useGetComplaints()
     const sendRespons = UsePostComplaintRespnse()
 
     const {

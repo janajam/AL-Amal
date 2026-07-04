@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import ApiClient from "../apiServices/api_client";
+import ApiClient from "../apiServices/api_client.ts";
 import type { ResponseComplaintsRespons } from "../Entities/Complaints";
 import type { ComplaintResponseInput } from "../Schema/ComplaintResponseSchema.ts";
 
