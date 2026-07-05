@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Collapse, Divider, MenuItem, Stack, styled, TextField, ToggleButton, ToggleButtonGroup, Typography, useTheme } from "@mui/material";
+import { Alert, Box, Button, Collapse, Divider, MenuItem, Snackbar, Stack, styled, TextField, ToggleButton, ToggleButtonGroup, Typography, useTheme } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { CreateAccountSchema, type CreateAccountInfo } from "../../Schema/CreateAccountSchema";
 
@@ -41,22 +41,59 @@ const CreateAccount = () => {
     const navigate = useNavigate()
     const { mutate: createAccount, isPending } = useCreateAccount()
 
+    // const onSubmit = (data: CreateAccountInfo) => {
+    //     createAccount(data, {
+    //         onSuccess: (response) => {
+    //             alert(response.message);
+    //             navigate("/dashboard/accounts");
+    //         },
+    //         onError: (error: any) => {
+    //             alert(
+    //                 error?.response?.data?.message ??
+    //                 "Something went wrong"
+    //             );
+
+    //         },
+
+    //     });
+
+    // };
+    const [snackbar, setSnackbar] = useState({
+        open: false,
+        message: "",
+        severity: "success" as "success" | "error",
+    });
+    const handleClose = () => {
+        setSnackbar((prev) => ({
+            ...prev,
+            open: false,
+        }));
+
+    };
     const onSubmit = (data: CreateAccountInfo) => {
         createAccount(data, {
+
             onSuccess: (response) => {
-                alert(response.message);
-                navigate("/dashboard/accounts");
+                setSnackbar({
+                    open: true,
+                    message: response.message,
+                    severity: "success",
+                });
+                setTimeout(() => {
+                    navigate("/accounts");
+                }, 1000);
             },
             onError: (error: any) => {
-                alert(
-                    error?.response?.data?.message ??
-                    "Something went wrong"
-                );
+                setSnackbar({
 
+                    open: true,
+                    message:
+                        error.response?.data?.message ??
+                        "Something went wrong",
+                    severity: "error",
+                });
             },
-
         });
-
     };
     const {
         register,
@@ -175,7 +212,7 @@ const CreateAccount = () => {
                         label='Email'
                         sx={{
                             borderRadius: 1,
-                           }}
+                        }}
                         {...register('email')}
                         error={!!errors.email}
                         helperText={errors.email?.message}
@@ -221,7 +258,7 @@ const CreateAccount = () => {
                                 onChange={(newValue) => setBirthday(newValue as Date)}
                                 maxDate={today} // Prevents picking future dates
                                 openTo="year" // Opens the year view first 
-                                views={['year', 'month', 'day']} 
+                                views={['year', 'month', 'day']}
                             />
                         </Box>
                     </LocalizationProvider>
@@ -335,7 +372,7 @@ const CreateAccount = () => {
                     </Stack>
                     <Stack direction="row" spacing={2}>
                         <Button
-                         variant="outlined"
+                            variant="outlined"
                             onClick={() => {
                                 reset();
                                 setBirthday(null);
@@ -357,8 +394,17 @@ const CreateAccount = () => {
                 </Stack>
 
             </Stack >
-
-        </Box>)
+            <Snackbar
+                open={snackbar.open}
+                autoHideDuration={3000}
+                onClose={handleClose}
+            >
+                <Alert severity={snackbar.severity}>
+                    {snackbar.message}
+                </Alert>
+            </Snackbar>
+        </Box>
+    )
 }
 
 export default CreateAccount
