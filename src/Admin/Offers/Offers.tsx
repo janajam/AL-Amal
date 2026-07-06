@@ -1,8 +1,12 @@
 import { Button, useTheme } from '@mui/material'
 import OfferCard from './OfferCard'
+import CreateOfferDialog from './CreateOfferDialog'
+import { useState } from 'react'
 
 const Oferrs = () => {
   const theme = useTheme()
+  const [dialogOpen, setDialogOpen] = useState(false);
+      
   return (
     <div>
       <OfferCard />
@@ -15,16 +19,16 @@ const Oferrs = () => {
           ml: '80%',
           mt: 3
         }}
+        onClick={()=>setDialogOpen(true)}
       >
         Create Offer
 
       </Button>
-      {/* {dialogOpen &&
-        <EditOfferDialog
+          <CreateOfferDialog
           open={dialogOpen}
           onClose={() => setDialogOpen(false)}
-          offerId={offer.id} />
-      } */}
+           />
+      
     </div>
   )
 }

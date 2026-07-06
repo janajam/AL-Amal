@@ -1,28 +1,33 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { createOfferSchema, type CreateOfferInput } from "../../Schema/CreateOfferSchema";
-import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button, CircularProgress, useTheme } from "@mui/material";
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, TextField, useTheme } from '@mui/material';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import type { OfferData } from '../../Entities/OfferData';
+import { useEditOffer } from '../../Hook/UseEditOffer';
+import { createOfferSchema, type CreateOfferInput } from '../../Schema/CreateOfferSchema';
+import { useCreateOffer } from '../../Hook/UseCreateOffer';
 interface Props {
-    open: boolean;
-    onClose: () => void;
-    offerId: number;
+    open: boolean,
+    // offer: OfferData| null,
+    onClose: () => void
 }
 
-const CreateOfferDialog = ({ open, onClose, offerId }: Props) => {
+const CreateOfferDialog = ({ open, onClose }: Props) => {
 
     const theme = useTheme()
 
+    const createOffer = useCreateOffer()
+
 
     const submitDialog = (formData: CreateOfferInput) => {
-        // sendRespons.mutate(formData)
-        onClose();
-    };
-
-
+        createOffer.mutate(formData)
+        onClose()
+    }
     const {
         register,
         handleSubmit,
+
         formState: { errors }
     } = useForm<CreateOfferInput>({
         resolver: zodResolver(createOfferSchema),
@@ -52,7 +57,7 @@ const CreateOfferDialog = ({ open, onClose, offerId }: Props) => {
                     fontWeight: 700,
                     color: theme.palette.primary.main
                 }}>
-                    Edit Offer
+                    Create New Offer
                 </DialogTitle>
                 <DialogContent >
                     <form onSubmit={handleSubmit(submitDialog)} id="subscription-form">
@@ -60,31 +65,52 @@ const CreateOfferDialog = ({ open, onClose, offerId }: Props) => {
                             autoFocus
                             margin="dense"
                             id="title"
-                            label=""
-                            type="email"
+                            label='Title'
                             fullWidth
                             variant="standard"
-                        //   {...register('email')}
-                        //   error={!!errors.email}
-                        //   helperText={errors.email?.message}
-
+                            {...register('title')}
+                            error={!!errors.title}
+                            helperText={errors.title?.message}
                         />
+
                         <TextField
                             margin="dense"
-                            label="Response"
-                            placeholder="Response"
+                            label="Description"
                             multiline
-                            minRows={3}
                             fullWidth
                             variant="standard"
-                        //   {...register('response')}
-                        //   error={!!errors.response}
-                        //   helperText={errors.response?.message}
-
+                            {...register('description')}
+                            error={!!errors.description}
+                            helperText={errors.description?.message}
                         />
 
+                        <TextField
+                            margin="dense"
+                            id="startTime"
+                            label='Start Time'
+                            placeholder='dd/mm _ hh:mm'
+                            fullWidth
+                            variant="standard"
+                            {...register('startTime')}
+                            error={!!errors.startTime}
+                            helperText={errors.startTime?.message}
+                        />
+
+                        <TextField
+                            margin="dense"
+                            id="endTime"
+                            label='End Time'
+                            fullWidth
+                            placeholder='dd/mm _ hh:mm'
+                            variant="standard"
+                            {...register('endTime')}
+                            error={!!errors.endTime}
+                            helperText={errors.endTime?.message}
+
+                        />
                     </form>
                 </DialogContent>
+
                 <DialogActions>
                     <Button onClick={onClose}
                         sx={{
@@ -93,25 +119,24 @@ const CreateOfferDialog = ({ open, onClose, offerId }: Props) => {
                             width: 100,
                             mx: 3
                         }}
-
                     >
 
                         Cancel
                     </Button>
                     <Button type="submit" form="subscription-form"
-                        //   disabled={sendRespons.isPending}
-                        //   startIcon={
-                        //       sendRespons.isPending
-                        //           ? <CircularProgress size={20} />
-                        //           : null}
+                        disabled={createOffer.isPending}
+                        startIcon={
+                            createOffer.isPending
+                                ? <CircularProgress size={20} />
+                                : null}
                         sx={{
                             bgcolor: theme.palette.primary.main,
                             color: theme.palette.primary.contrastText,
                             width: 130,
 
                         }}>
-                        {/* {sendRespons.isPending ? 'Sending...' : 'Send'} */}
-                        send
+                        {createOffer.isPending ? 'Creating...' : 'Create'}
+
                     </Button>
                 </DialogActions>
             </Dialog>

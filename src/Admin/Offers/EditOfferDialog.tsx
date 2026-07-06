@@ -111,7 +111,7 @@ const EditOfferDialog = ({ open, offer, onClose }: Props) => {
                         <TextField
                             margin="dense"
                             id="endTime"
-                            label='End Time]'
+                            label='End Time'
                             fullWidth
                             variant="standard"
                             {...register('endTime')}
