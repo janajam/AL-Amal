@@ -1,6 +1,6 @@
 
 
-import { AccountCircle, Announcement, CreateRounded, Work } from '@mui/icons-material';
+import { AccountCircle, AccountTree, Announcement, AppShortcut, CreateRounded, Hub, Work } from '@mui/icons-material';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
 import type { ComponentType } from 'react';
@@ -47,12 +47,20 @@ export const sidebarItems: SidebarItem[] = [
 
   },
   {
-    path:'/dashboard/department',
+    path:'/dashboard/departments',
     label:'Department',
-    icon:Work,
+    icon:AccountTree,
      roles:['admin'],
     subtitle:'View a brief overview '
   },
+  {
+    path:'/dashboard/offers',
+    label:'Offers',
+    icon:AppShortcut,
+     roles:['admin'],
+    subtitle:'Make the service exceptional '
+  },
+
   {
     path: '/dashboard/profile',
     label: 'Profile',

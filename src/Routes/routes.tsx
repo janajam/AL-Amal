@@ -9,6 +9,7 @@ import Accounts from "../Admin/Accounts/Accounts";
 import AccountDetails from "../Admin/Accounts/AccountDetails";
 import CreateAccount from "../Admin/Accounts/CreateAccount";
 import DepartmentCard from "../Admin/Department/DepartmentCard";
+import Offers from "../Admin/Offers/Offers";
 
 export const router = createBrowserRouter([
 
@@ -38,7 +39,8 @@ export const router = createBrowserRouter([
       { path: 'complaints', element: <Complaints /> },
       { path: 'accounts', element: <Accounts /> },
       {path:'createAccount',element:<CreateAccount/>},
-      {path:'department',element:<DepartmentCard/>}
+      {path:'departments',element:<DepartmentCard/>},
+      {path:'offers',element:<Offers/>}
 
 
 
