@@ -11,7 +11,7 @@ import {
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetAccount } from "../../Hook/UseGetAccount";
-import logo from '../../assets/logo.webp'
+import logo from '../../assets/amal.webp'
 import pdf from '../../assets/SRS HIMS_٠٩٢٩٣٦.pdf'
 import { ArrowBack } from "@mui/icons-material";
 import LicenseItem from "./LicenseItem";
@@ -306,7 +306,7 @@ const AccountDetails = () => {
                                         my: 3,
                                         alignSelf: "flex-end",
                                         justifySelf:'flex-end',
-                                        ml:138,
+                                        ml:'88%',
                                         bgcolor:
                                             account?.status === "ACTIVE"
                                                 ? theme.palette.secondary.main

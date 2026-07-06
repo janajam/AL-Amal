@@ -1,4 +1,4 @@
-import { Grid, Skeleton, Typography } from "@mui/material";
+import { Grid, Skeleton, Typography, useTheme } from "@mui/material";
 import type { WorkingSchedule } from "../../Entities/AccountsData";
 import DayCard from "./DayCard";
 
@@ -9,14 +9,14 @@ interface Props {
 }
 
 const ScheduleTable = ({ loading, week, onEdit }: Props) => {
-
+const theme = useTheme()
   if (loading) {
     return (
       <Grid container spacing={2}>
         {Array.from({ length: 7 }).map((_, index) => (
           <Grid
             key={index}
-            size={{ xs: 12, sm: 6, md: 4, lg: 12 / 7 }}
+            size={{ xs: 12, sm: 3, md: 3, lg: 12 / 7 }}
           >
             <Skeleton
               variant="rounded"
@@ -50,14 +50,14 @@ const ScheduleTable = ({ loading, week, onEdit }: Props) => {
       {week.map((day) => (
         <Grid
           key={day.id}
-          size={{ xs: 12, sm: 6, md: 4, lg: 12 / 6.6 }}
-        >
+          size={{ xs: 12, sm: 3, md: 3, lg: 12 / 6.6 }}
+          >
           <DayCard
             key={day.id}
             day={day}
             onEdit={onEdit}
           />
-          {/* <DayCard day={day} /> */}
+        
         </Grid>
       ))}
     </Grid>

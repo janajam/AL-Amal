@@ -1,7 +1,8 @@
+import type { WorkingSchedule } from "./WorkingSchedualeData";
 
 export type AccountRole = "Doctor" | "Secretary";
-export type AccountStatus="ACTIVE" | "REVOKED";
-  
+export type AccountStatus = "ACTIVE" | "REVOKED";
+
 export interface Account {
   id: number;
   name: string;
@@ -12,10 +13,10 @@ export interface Account {
   role: AccountRole;
   status: AccountStatus;
   createdAt: Date;
-  address:string;
+  address: string;
   department: Department;
   workingDays: WorkingSchedule[]
-  
+
 }
 
 export interface Doctor extends Account {
@@ -29,61 +30,32 @@ export interface Secretary extends Account {
 }
 
 export interface Department {
-  id: number;
-  name: string;
+  id: number,
+  name: string
 }
-
 export interface Specialty {
   id: number;
   name: string;
 }
 
 export interface License {
-    id: number;
-    name: string;
-    fileUrl: string;
-    uploadedAt: string;
-}
-export interface WorkingSchedule {
-    id: number;
-    date: string;
-    day: WeekDay;
-    startTime: string;
-    endTime: string;
-    isAvailable: boolean;
-}
-
-export interface WorkingScheduleResponse {
-  status: number;
-  message: string;
-  data: WorkingSchedule[];
-}
-export type WeekDay =
-  | "Monday"
-  | "Tuesday"
-  | "Wednesday"
-  | "Thursday"
-  | "Friday"
-  | "Saturday"
-  | "Sunday";
-
-export interface UpdateScheduleRequest {
-    startTime?: string;
-    endTime?: string;
-    isAvailable?: boolean;
+  id: number;
+  name: string;
+  fileUrl: string;
+  uploadedAt: string;
 }
 export interface AccountResponse {
-    status: number;
-    message: string;
-    data: Doctor | Secretary;
+  status: number;
+  message: string;
+  data: Doctor | Secretary;
 }
 export interface AccountsResponse {
-    status: number;
-    message: string;
-    data: (Doctor | Secretary)[];
+  status: number;
+  message: string;
+  data: (Doctor | Secretary)[];
 }
 
 export interface CreateAccountsResponse {
-    status: number;
-    message: string;
+  status: number;
+  message: string;
 }

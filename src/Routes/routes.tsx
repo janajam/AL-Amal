@@ -8,6 +8,7 @@ import Complaints from "../Admin/Complaints/Complaints";
 import Accounts from "../Admin/Accounts/Accounts";
 import AccountDetails from "../Admin/Accounts/AccountDetails";
 import CreateAccount from "../Admin/Accounts/CreateAccount";
+import DepartmentCard from "../Admin/Department/DepartmentCard";
 
 export const router = createBrowserRouter([
 
@@ -36,7 +37,8 @@ export const router = createBrowserRouter([
       { index: true, element: <RoleRouter /> },
       { path: 'complaints', element: <Complaints /> },
       { path: 'accounts', element: <Accounts /> },
-      {path:'createAccount',element:<CreateAccount/>}
+      {path:'createAccount',element:<CreateAccount/>},
+      {path:'department',element:<DepartmentCard/>}
 
 
 

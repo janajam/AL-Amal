@@ -1,6 +1,6 @@
 
 
-import { AccountCircle, Announcement, CreateRounded } from '@mui/icons-material';
+import { AccountCircle, Announcement, CreateRounded, Work } from '@mui/icons-material';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
 import type { ComponentType } from 'react';
@@ -37,9 +37,6 @@ export const sidebarItems: SidebarItem[] = [
     icon: Announcement,
     roles: ['admin'],
     subtitle: 'View and resolve complaints'
-
-
-
   },
   {
     path: '/dashboard/createAccount',
@@ -48,6 +45,13 @@ export const sidebarItems: SidebarItem[] = [
     roles: ['admin', 'doctor'],
     subtitle: 'Add a new doctor or secretary'
 
+  },
+  {
+    path:'/dashboard/department',
+    label:'Department',
+    icon:Work,
+     roles:['admin'],
+    subtitle:'View a brief overview '
   },
   {
     path: '/dashboard/profile',

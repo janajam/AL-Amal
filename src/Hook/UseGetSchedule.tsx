@@ -5,7 +5,8 @@
 
 import { useQuery } from "@tanstack/react-query";
 import ApiClient from "../apiServices/api_client";
-import type { WorkingScheduleResponse } from "../Entities/AccountsData";
+import type { WorkingScheduleResponse } from "../Entities/WorkingSchedualeData";
+
 
 // export const useGetSchedule = (accountId: number) => {
 
