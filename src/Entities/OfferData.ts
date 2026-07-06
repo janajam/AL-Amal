@@ -3,8 +3,8 @@ type Status='Expired'|'Ongoing'
 
 export interface OfferData {
     id: number,
-    name: string,
-    descripttion: string,
+    title: string,
+    description: string,
     startTime: string,
     endTime: string,
     status:Status
@@ -18,7 +18,7 @@ export interface OfferResponse{
 }
 
 export interface UpdateOffer {
-    name?: string;
+    title?: string;
     description?: string;
     startTime?: string;
     endTime?: string;   

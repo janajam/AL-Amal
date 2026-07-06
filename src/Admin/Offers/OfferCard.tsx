@@ -1,32 +1,50 @@
 
-import { Box, Button, Card, CardContent, CardHeader, Stack, Typography, useTheme } from "@mui/material"
+import { Box, Button, Card, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography, useTheme } from "@mui/material"
 import CardContainer from "../../Component/CardContainer"
 import { useGetOffers } from "../../Hook/UseGetOffers"
+import { useState } from "react"
+import type { OfferData } from "../../Entities/OfferData"
+import EditOfferDialog from "./EditOfferDialog"
 
 
 
 //for test 
-const offers = [
+const offers : OfferData[] = [
     {
-        id: 1, status: 'Ongoing', name: 'AA', startTime: '12/7-9:00', endTime: '12/7-11:00', description: 'description'
+        id: 1, status: 'Ongoing', title: 'AA', startTime: '12/7_9:00', endTime: '12/7_11:00', description: 'description'
     },
     {
-        id: 2, status: 'Expired', name: 'BB', startTime: '12/7-10:00', endTime: '12/7-11:00', description: 'description'
+        id: 2, status: 'Expired', title: 'BB', startTime: '12/7-10:00', endTime: '12/7-11:00', description: 'description'
     },
     {
-        id: 3, status: 'Ongoing', name: 'CC', startTime: '12/7-11:00', endTime: '12/7-12:00', description: 'description'
+        id: 3, status: 'Ongoing', title: 'CC', startTime: '12/7-11:00', endTime: '12/7-12:00', description: 'description'
     },
     {
-        id: 3, status: 'Expired', name: 'CC', startTime: '12/7-11:00', endTime: '12/7-12:00', description: 'description'
-    },
-
-
+        id: 3, status: 'Expired', title: 'CC', startTime: '12/7-11:00', endTime: '12/7-12:00', description: 'description'
+    }
 ]
 
 const OfferCard = () => {
     const theme = useTheme()
+
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [selectedOffer, setSelectedOffer] = useState<OfferData | null>(null);
+
+    ;
+
+    const handleEdit = (offer: OfferData) => {
+
+        setSelectedOffer(offer);
+
+        setDialogOpen(true);
+    };
+
+    const handleClose = () => {
+        setDialogOpen(false);
+    };
+
     // const {data}=useGetOffers()
-        return (
+    return (
         <Box>
 
             {/* {data?.data.map*/}
@@ -41,8 +59,8 @@ const OfferCard = () => {
                                     ? theme.palette.background.default
                                     : theme.palette.background.paper}`,
                                 boxShadow: `${offer.status === 'Ongoing'
-                                        ? '0 4px 10px #9ed1d5'
-                                        : 'non'}`,
+                                    ? '0 4px 10px #9ed1d5'
+                                    : 'non'}`,
                                 px: 2
                             }}>
                             <Stack
@@ -51,7 +69,7 @@ const OfferCard = () => {
                                     justifyContent: 'space-between'
                                 }}>
                                 <CardHeader
-                                    subheader={offer.name}
+                                    subheader={offer.title}
                                     sx={{
                                         color: theme.palette.primary.main,
                                     }}
@@ -98,15 +116,27 @@ const OfferCard = () => {
                                             color: theme.palette.etal.main,
                                             alignSelf: 'flex-end'
                                         }}
+                                        onClick={() => handleEdit(offer)}
                                     >
                                         Edit
                                     </Button>
+
+
                                 </Stack>
                             </CardContent>
                         </Card>
                     </CardContainer>
                 ))
             }
+            <Box>
+
+                <EditOfferDialog
+                    open={dialogOpen}
+                    offer={selectedOffer}
+                    onClose={handleClose}
+                />
+
+            </Box>
         </Box>
     )
 }

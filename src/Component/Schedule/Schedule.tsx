@@ -7,8 +7,9 @@ import WeekNavigator from "./WeekNavigatog";
 import ScheduleTable from "./ScheduleTable";
 import { splitScheduleIntoWeeks } from "./ScheduleHelper";
 import { dummySchedule } from "./ScheduleDummy";
-import type { WorkingSchedule } from "../../Entities/AccountsData";
+
 import EditScheduleDialog from "./EditScheduleDialog";
+import type { WorkingSchedule } from "../../Entities/WorkingSchedualeData";
 
 interface Props {
     accountId: number;
@@ -105,11 +106,7 @@ const ScheduleSection = ({ accountId }: Props) => {
                     loading={isLoading}
                     onEdit={handleEdit}
                 />
-                {/* <ScheduleTable
-                    loading={isLoading}
-                    week={weeks[currentWeek] ?? []}
-                /> */}
-
+                
             </Box>
 
             {selectedDay && (

@@ -1,9 +1,30 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, Box, Button, Collapse, Divider, MenuItem, Snackbar, Stack, styled, TextField, ToggleButton, ToggleButtonGroup, Typography, useTheme } from "@mui/material";
+import {
+    Alert,
+    Box,
+    Button, Collapse,
+    Divider,
+    MenuItem,
+    Snackbar,
+    Stack,
+    styled,
+    TextField,
+    ToggleButton,
+    ToggleButtonGroup,
+    Typography,
+    useTheme
+} from "@mui/material";
 import { useForm } from "react-hook-form";
 import { CreateAccountSchema, type CreateAccountInfo } from "../../Schema/CreateAccountSchema";
-
-import { AddRounded, BadgeOutlined, HealthAndSafetyOutlined, HomeOutlined, InfoOutlined, MedicalServicesRounded, SupportAgentRounded } from "@mui/icons-material";
+import {
+    AddRounded,
+    BadgeOutlined,
+    HealthAndSafetyOutlined,
+    HomeOutlined,
+    InfoOutlined,
+    MedicalServicesRounded,
+    SupportAgentRounded
+} from "@mui/icons-material";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';

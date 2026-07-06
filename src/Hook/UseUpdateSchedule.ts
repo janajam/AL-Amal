@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ApiClient from "../apiServices/api_client";
-import type { UpdateScheduleRequest, WorkingScheduleResponse } from "../Entities/AccountsData";
+import type { WorkingScheduleResponse, UpdateScheduleRequest } from "../Entities/WorkingSchedualeData";
 
 export const useUpdateSchedule = (accountId: number) => {
     const queryClient = useQueryClient();

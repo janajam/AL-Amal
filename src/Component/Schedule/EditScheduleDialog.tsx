@@ -18,8 +18,8 @@ import {
 } from "@mui/x-date-pickers";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import type { WorkingSchedule } from "../../Entities/AccountsData";
 import { useUpdateSchedule } from "../../Hook/UseUpdateSchedule";
+import type { WorkingSchedule } from "../../Entities/WorkingSchedualeData";
 
 interface Props {
   open: boolean;
