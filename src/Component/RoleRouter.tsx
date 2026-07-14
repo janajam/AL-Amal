@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { useAuthStore } from '../Store/AuthStore';
 import AdminDashboard from '../Admin/Dashboard/AdminDashboard';
-import DoctorDashboard from '../Doctor/DoctorDashboard';
+import DoctorDashboard from '../Doctor/Dashboard/DoctorDashboard';
 import SecretaryDashboard from '../Secretary/SecretaryDashboard';
 
 const dashboardMap = {
@@ -13,7 +13,7 @@ const dashboardMap = {
 export default function RoleRouter() {
 
   // const userRole = useAuthStore((state) => state.role);
-const userRole='admin'
+const userRole='doctor'
   if (!userRole || !(userRole in dashboardMap)) {
     return <Navigate to="/" replace />;
   }

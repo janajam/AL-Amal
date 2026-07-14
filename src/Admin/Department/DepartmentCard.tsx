@@ -2,6 +2,7 @@
 import { Box, Button, Card, CardContent, CardHeader, Stack, Typography, useTheme } from "@mui/material"
 import CardContainer from "../../Component/CardContainer"
 import { useGetDepartments } from "../../Hook/UseGetDepartments"
+import { useNavigate } from "react-router-dom"
 
 
 //for test 
@@ -32,6 +33,7 @@ const departments = [
 
 const DepartmentCard = () => {
     const theme = useTheme()
+    const navigate = useNavigate()
     // const {data}=useGetDepartments ()
     return (
         <Box>
@@ -83,7 +85,14 @@ const DepartmentCard = () => {
                                                 border: `2px solid ${theme.palette.etal.main}`,
                                                 color: theme.palette.etal.main
                                             }}
+
+                                            onClick={() =>
+                                                navigate(
+                                                    `/accounts?role=Doctor&department=${department.id}`
+                                                )
+                                            }
                                         >
+
 
                                             Veiw Doctors
                                         </Button>
@@ -103,6 +112,11 @@ const DepartmentCard = () => {
                                                 border: `2px solid ${theme.palette.etal.main}`,
                                                 color: theme.palette.etal.main
                                             }}
+                                            onClick={() =>
+                                                navigate(
+                                                    `/accounts?role=Secretary&department=${department.id}`
+                                                )
+                                            }
                                         >
                                             Veiw Secretaries
 

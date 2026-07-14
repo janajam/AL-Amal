@@ -43,7 +43,7 @@ const OfferCard = () => {
         setDialogOpen(false);
     };
 
-    // const {data}=useGetOffers()
+    const {data}=useGetOffers()
     return (
         <Box>
 

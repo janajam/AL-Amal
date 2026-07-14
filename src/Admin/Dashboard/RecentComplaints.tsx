@@ -18,7 +18,6 @@ const cards = [
 
 ]
 const RecentComplaints = () => {
-
   const navigate = useNavigate()
   const theme = useTheme()
   return (
@@ -42,7 +41,6 @@ const RecentComplaints = () => {
           my: 1,
           bgcolor: theme.palette.background.paper
         }}
-        
         >
 
           <CardContent>
@@ -56,6 +54,7 @@ const RecentComplaints = () => {
         </Card>
 
       ))}
+      
       <Button
         sx={{
           justifyContent: 'center',
@@ -75,6 +74,7 @@ const RecentComplaints = () => {
         </IconButton>
         View All
       </Button>
+     
     </Box>
   )
 }

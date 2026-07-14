@@ -1,6 +1,12 @@
 
 
-import { AccountCircle, AccountTree, Announcement, AppShortcut, CreateRounded, Hub, Work } from '@mui/icons-material';
+import {
+  AccountCircle,
+  AccountTree,
+  Announcement,
+  AppShortcut,
+  CreateRounded
+} from '@mui/icons-material';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
 import type { ComponentType } from 'react';
@@ -42,7 +48,7 @@ export const sidebarItems: SidebarItem[] = [
     path: '/dashboard/createAccount',
     label: 'Create Account',
     icon: CreateRounded,
-    roles: ['admin', 'doctor'],
+    roles: ['admin'],
     subtitle: 'Add a new doctor or secretary'
 
   },
@@ -60,7 +66,15 @@ export const sidebarItems: SidebarItem[] = [
      roles:['admin'],
     subtitle:'Make the service exceptional '
   },
+  
+  {
+    path: '/dashboard/patients',
+    label: 'Patients',
+    icon: PeopleIcon,
+    roles: ['doctor'],
+    subtitle: 'Patients information'
 
+  },
   {
     path: '/dashboard/profile',
     label: 'Profile',

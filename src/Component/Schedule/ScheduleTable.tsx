@@ -1,6 +1,7 @@
 import { Grid, Skeleton, Typography, useTheme } from "@mui/material";
-import type { WorkingSchedule } from "../../Entities/AccountsData";
+
 import DayCard from "./DayCard";
+import type { WorkingSchedule } from "../../Entities/WorkingSchedualeData";
 
 interface Props {
   week: WorkingSchedule[];

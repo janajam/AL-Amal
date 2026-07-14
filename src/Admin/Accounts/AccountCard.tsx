@@ -1,8 +1,9 @@
 import { Box, Card, CardHeader, CardMedia, Stack, Typography, useTheme } from '@mui/material'
 import CardContainer from '../../Component/CardContainer'
 import logo from '../../assets/amal.webp'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useGetAccounts } from '../../Hook/UseGetAccounts'
+import { useGetAccountByRole } from '../../Hook/UseGetAccountByRole'
 
 //for test
 const accounts = [
@@ -38,6 +39,25 @@ const accounts = [
 const AccountCard = () => {
     const theme = useTheme()
     const navigate = useNavigate();
+
+//     const [searchParams] = useSearchParams();
+
+// const role =
+//     searchParams.get("role") as
+//         | "Doctor"
+//         | "Secretary"
+//         | null;
+
+// const department = Number(
+//     searchParams.get("department")
+// );
+
+// const { data, isLoading } = useGetAccountByRole({
+//     role: role ?? undefined,
+//     department:
+//         department || undefined,
+
+// });
     // const { data } = useGetAccounts();
     // const accounts = data?.data ?? []
 
