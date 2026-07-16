@@ -8,7 +8,6 @@ import {
   TableRow,
   useTheme
 } from "@mui/material"
-import type { AppointmentListItem } from "../Entities/Appointment"
 import { useGetTodayAppointments } from "../Hook/UseGetTodayAppointments"
 
 

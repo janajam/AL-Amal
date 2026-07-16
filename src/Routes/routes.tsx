@@ -10,6 +10,7 @@ import AccountDetails from "../Admin/Accounts/AccountDetails";
 import CreateAccount from "../Admin/Accounts/CreateAccount";
 import DepartmentCard from "../Admin/Department/DepartmentCard";
 import Offers from "../Admin/Offers/Offers";
+import PatientCard from "../Doctor/Patient/PatientCard";
 
 export const router = createBrowserRouter([
 
@@ -38,9 +39,10 @@ export const router = createBrowserRouter([
       { index: true, element: <RoleRouter /> },
       { path: 'complaints', element: <Complaints /> },
       { path: 'accounts', element: <Accounts /> },
-      {path:'createAccount',element:<CreateAccount/>},
-      {path:'departments',element:<DepartmentCard/>},
-      {path:'offers',element:<Offers/>}
+      { path: 'createAccount', element: <CreateAccount /> },
+      { path: 'departments', element: <DepartmentCard /> },
+      { path: 'offers', element: <Offers /> },
+      {path:'patients',element:<PatientCard/>}
 
 
 
@@ -50,7 +52,7 @@ export const router = createBrowserRouter([
     path: "accounts/:id",
     element: < AccountDetails />
   },
-  
+
 ]);
 
 
