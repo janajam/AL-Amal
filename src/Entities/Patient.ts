@@ -1,9 +1,9 @@
-import { int } from "zod"
+
 
 export interface Patient {
     id: number,
     name: string,
-    birthDay: Date,
+    age: number,
     gander: string,
     address: string,
     email: string,
@@ -17,33 +17,42 @@ export interface MedicalRecord {
     allergies?: string[],
     longTermMedication?: string[],
     operations?: string[],
-    treatmentPlan: TreatmentPlan[],
-    testResualt?: TestResualt[],
-    xRayImage: XRayImage[]
+    treatmentPlan?: TreatmentPlan[],
+    testResult?: TestResult[],
+    xRayImage?: XRayImage[]
 }
 
 
 export interface TreatmentPlan {
-
+    id: number,
+    medicalDiagnosis: string,
+    doctorName: string,
+    treatmentSteps: string[],
+    date: Date
+    status:string
 }
 
-export interface TestResualt {
+export interface TestResult {
+    id: number,
+    date: Date,
+    doctorName: string,
+    result: string,
+    labWorkingName: string,
 
 }
 
 
 export interface XRayImage {
-
+    id: number,
+    doctorName: string,
+    description: string
+    type: string,
+    image: string,
+    date: Date
 }
 
-
-export interface TestResualt {
-
+export interface PatientsResponse {
+    status: number
+    message: string
+    data: Patient
 }
-
-export interface PatientsResponse{
-    status:number
-    message:string
-    data:Patient
-}
-    

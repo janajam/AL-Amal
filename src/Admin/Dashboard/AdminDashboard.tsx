@@ -109,10 +109,11 @@ export default function AdminDashboard() {
         </Grid>
         <Grid
           size={{ xs: 12, md: 12 }}
-          sx={{ justifySelf: 'center',
-            mt:-3,
-            mb:2
-           }}
+          sx={{
+            justifySelf: 'center',
+            mt: -3,
+            mb: 2
+          }}
         >
           <RecentAction />
         </Grid>
