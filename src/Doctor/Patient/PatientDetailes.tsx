@@ -11,6 +11,8 @@ import type { Patient } from '../../Entities/Patient';
 import ContactInfo from './ContactInfo';
 import MedicalRecordSection from './MedicalRecordSection';
 import TreatmentPlanSection from './TreatmentPlan';
+import pdf from '../../assets/SRS HIMS.pdf'
+import TestResultSection from './TestSection';
 
 //for test 
 
@@ -68,22 +70,23 @@ const patient: Patient = {
         ],
 
         testResult: [
-            {
-                id: 1,
-                doctorName: "Ahmed",
-                labWorkingName: "Al-Amal Laboratory",
-                result: "Blood sugar level is stable.",
-                date: new Date()
-            },
-            {
-                id: 2,
-                doctorName: "Sarah",
-                labWorkingName: "Medical Lab",
-                result: "Vitamin D deficiency detected.",
-                date: new Date("2025-09-15")
-            }
-        ],
-
+    {
+        id:1,
+        doctorName:"Ahmed",
+        labWorkingName:"Al-Amal Laboratory",
+        reportName:"Blood Test Report.pdf",
+        reportUrl:pdf,
+        date:new Date()
+    },
+    {
+        id:2,
+        doctorName:"Sarah",
+        labWorkingName:"City Medical Lab",
+        reportName:"Vitamin D Report.pdf",
+        reportUrl:pdf,
+        date:new Date("2025-09-12")
+    }
+],
         xRayImage: [
             {
                 id: 1,
@@ -218,8 +221,14 @@ const PatientDetailes = () => {
                         patient.medicalRecord.treatmentPlan ?? []
                     }
                 />
+                {/* test result */}
+
+                <TestResultSection
+                    results={
+                        patient.medicalRecord.testResult ?? []
+                    } />
             </div >
-            
+
         </>
     )
 }

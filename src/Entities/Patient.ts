@@ -33,14 +33,13 @@ export interface TreatmentPlan {
 }
 
 export interface TestResult {
-    id: number,
-    date: Date,
-    doctorName: string,
-    result: string,
-    labWorkingName: string,
-
+    id: number;
+    date: Date;
+    doctorName: string;
+    labWorkingName: string;
+    reportName: string;
+    reportUrl: string;
 }
-
 
 export interface XRayImage {
     id: number,

@@ -12,7 +12,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetAccount } from "../../Hook/UseGetAccount";
 import logo from '../../assets/amal.webp'
-import pdf from '../../assets/SRS HIMS_٠٩٢٩٣٦.pdf'
+import pdf from '../../assets/SRS HIMS.pdf'
 import { ArrowBack } from "@mui/icons-material";
 import LicenseItem from "./LicenseItem";
 import Schedule from "../../Component/Schedule/Schedule";
