@@ -33,7 +33,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                 bgcolor: theme.palette.background.default,
                 justifySelf: "center",
                 p: 4,
-                mb: 4,
+                
           }}
         >
 
@@ -194,7 +194,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                     <Box
                         sx={{
                             display: "grid",
-                            gridTemplateColumns: isTwoColumns
+                            gridTemplateColumns: isTwoColumns 
                                 ? { xs: "1fr", md: "1fr 1fr" }
                                 : "1fr",
                             gap: 2,

@@ -13,6 +13,12 @@ import MedicalRecordSection from './MedicalRecordSection';
 import TreatmentPlanSection from './TreatmentPlan';
 import pdf from '../../assets/SRS HIMS.pdf'
 import TestResultSection from './TestSection';
+import XRayImageSection from './XRayImageSection';
+
+import img from '../../assets/img.webp'
+
+
+import img2 from '../../assets/img2.webp'
 
 //for test 
 
@@ -51,7 +57,9 @@ const patient: Patient = {
                 treatmentSteps: [
                     "Continue Metformin",
                     "Walk 30 minutes",
+                    "HbA1c after 8 weeks",
                     "HbA1c after 8 weeks"
+                
                 ],
                 date: new Date(),
                 status: "Ongoing"
@@ -70,35 +78,34 @@ const patient: Patient = {
         ],
 
         testResult: [
-    {
-        id:1,
-        doctorName:"Ahmed",
-        labWorkingName:"Al-Amal Laboratory",
-        reportName:"Blood Test Report.pdf",
-        reportUrl:pdf,
-        date:new Date()
-    },
-    {
-        id:2,
-        doctorName:"Sarah",
-        labWorkingName:"City Medical Lab",
-        reportName:"Vitamin D Report.pdf",
-        reportUrl:pdf,
-        date:new Date("2025-09-12")
-    }
-],
+            {
+                id: 1,
+                doctorName: "Ahmed",
+                labWorkingName: "Al-Amal Laboratory",
+                reportName: "Blood Test Report.pdf",
+                reportUrl: pdf,
+                date: new Date()
+            },
+            {
+                id: 2,
+                doctorName: "Sarah",
+                labWorkingName: "City Medical Lab",
+                reportName: "Vitamin D Report.pdf",
+                reportUrl: pdf,
+                date: new Date("2025-09-12")
+            }
+        ],
         xRayImage: [
             {
                 id: 1,
                 doctorName: "Ahmed",
                 description:
-                    "Chest X-ray shows no active pulmonary disease.",
+                    "Hand X-ray shows no active pulmonary disease.",
 
-                type: "Chest X-Ray",
+                type: "Hand X-Ray",
 
-                image:
-                    "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=900",
-
+                image:img,
+                  
                 date: new Date()
             },
 
@@ -110,9 +117,8 @@ const patient: Patient = {
 
                 type: "Knee X-Ray",
 
-                image:
-                    "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=900",
-
+                image:img2,
+                  
                 date: new Date("2025-08-10")
             }
         ]
@@ -226,6 +232,13 @@ const PatientDetailes = () => {
                 <TestResultSection
                     results={
                         patient.medicalRecord.testResult ?? []
+                    } />
+
+                {/* XRay Image */}
+
+                <XRayImageSection
+                    image={
+                        patient.medicalRecord.xRayImage ?? []
                     } />
             </div >
 

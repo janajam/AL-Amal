@@ -4,13 +4,12 @@ import {
     Box,
     Button,
     Card,
-    Chip,
     Divider,
     Stack,
     Tab,
     Tabs,
     Typography,
-    useTheme,
+    useTheme
 } from "@mui/material";
 
 import {
@@ -45,7 +44,7 @@ const TestResultSection = ({ results }: Props) => {
                 bgcolor: theme.palette.background.default,
                 justifySelf: "center",
                 p: 4,
-                mb: 4,
+                mt: -2
             }}
         >
 
@@ -132,7 +131,7 @@ const TestResultSection = ({ results }: Props) => {
                                 Latest
                             </Typography>
                         )}
-                        c
+                        
                         <Typography
                             variant="h5"
                             sx={{
@@ -159,7 +158,7 @@ const TestResultSection = ({ results }: Props) => {
                 <Divider sx={{ my: 3 }} />
 
                 <Stack
-                    direction={'row'}
+                    direction={{ xs: 'column', md: 'row' }}
                     sx={{
                         justifyContent: 'space-between'
                     }}>
@@ -233,13 +232,20 @@ const TestResultSection = ({ results }: Props) => {
                             border: `1px dashed ${theme.palette.primary.main}`,
                             bgcolor: theme.palette.background.default,
                             mr: 4,
+                            [theme.breakpoints.down('md')]: {
+                                mt: 3
+                            }
+
 
                         }}
                     >
 
                         <Stack
                             spacing={2}
-                            sx={{ alignItems: "center" }}
+                            sx={{
+                                alignItems: "center",
+
+                            }}
                         >
 
                             <PictureAsPdf
@@ -263,7 +269,7 @@ const TestResultSection = ({ results }: Props) => {
                             </Typography>
 
                             <Stack
-                                direction="row"
+                                direction={{ xs: 'column', md: 'row' }}
                                 spacing={2}
                             >
 
