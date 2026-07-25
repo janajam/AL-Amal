@@ -1,7 +1,8 @@
-import { ContactMailOutlined,EditRounded } from "@mui/icons-material"
+import { ContactMailOutlined, EditRounded } from "@mui/icons-material"
 import { Button, Stack, Typography, useTheme } from "@mui/material"
 import type { Patient } from "../../Entities/Patient";
 import { useState } from "react";
+import EditContactInfoDialog from "./EditDialogs/EditContactInfo";
 
 
 interface Props {
@@ -12,13 +13,13 @@ const ContactInfo = ({ patient }: Props) => {
     const [open, setOpen] = useState(false);
 
     const handleEdit = () => {
-            setOpen(true);
-        };
-    
-        const handleClose = () => {
-            setOpen(false);
-        };
-    
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     const theme = useTheme()
     return (
         <div>
@@ -104,23 +105,26 @@ const ContactInfo = ({ patient }: Props) => {
                     </Stack>
                 </Stack>
                 <Button
-                startIcon={<EditRounded/>}
+                    startIcon={<EditRounded />}
                     sx={{
                         whiteSpace: 'nowrap',
                         width: 120,
                         border: `2px solid ${theme.palette.etal.main}`,
                         bgcolor: theme.palette.etal.main,
-                        color:theme.palette.primary.contrastText,
+                        color: theme.palette.primary.contrastText,
                         alignSelf: 'flex-start',
-                        mt:4,
-                        
+                        mt: 4,
+
                     }}
                     onClick={() => handleEdit()}
                 >
                     Edit
                 </Button>
             </Stack>
-
+            <EditContactInfoDialog
+                open={open}
+                contactInfo={patient}
+                onClose={handleClose} />
         </div>
     )
 }

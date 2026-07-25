@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Add, Delete } from '@mui/icons-material'
-import { Button, Dialog, DialogContent, DialogTitle, Divider, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material'
 import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import type { MedicalRecord } from '../../../Entities/Patient'
@@ -21,7 +21,6 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
 
     const {
         control,
-        register,
         handleSubmit,
         reset,
         watch,
@@ -455,8 +454,40 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
                             </Button>
                         </Stack>
 
+                        <DialogActions>
+                            <Button onClick={onClose}
+                                sx={{
+                                    bgcolor: theme.palette.secondary.main,
+                                    color: theme.palette.secondary.contrastText,
+                                    width: 100,
+                                    mx: 3,
+                                    my: 2
+                                }}
 
-k
+                            >
+
+                                Cancel
+                            </Button>
+                            <Button type="submit" form="subscription-form"
+                                //   disabled={editOffer.isPending}
+                                //   startIcon={
+                                //       editOffer.isPending
+                                //           ? <CircularProgress size={20} />
+                                //            : null}
+                                sx={{
+                                    bgcolor: theme.palette.primary.main,
+                                    color: theme.palette.primary.contrastText,
+                                    width: 130,
+
+                                }}>
+                                {/* {editOffer.isPending ? 'Sending...' : 'Send'} */}
+                                save
+
+                            </Button>
+                        </DialogActions>
+
+
+
 
 
                     </form>
