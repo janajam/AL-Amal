@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import {
     Box,
+    Button,
     Card,
     Divider,
     Stack,
@@ -12,7 +13,7 @@ import {
     useTheme
 } from "@mui/material";
 
-import { PersonOutlined } from "@mui/icons-material";
+import { EditRounded, PersonOutlined } from "@mui/icons-material";
 import type { TreatmentPlan } from '../../Entities/Patient';
 
 interface Props {
@@ -22,6 +23,14 @@ interface Props {
 const TreatmentPlanSection = ({ plans }: Props) => {
     const theme = useTheme()
     const [selected, setSelected] = useState(0);
+    const [open, setOpen] = useState(false);
+    const handleEdit = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const currentPlan = plans[selected];
     const isTwoColumns = currentPlan.treatmentSteps.length > 3;
@@ -33,8 +42,8 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                 bgcolor: theme.palette.background.default,
                 justifySelf: "center",
                 p: 4,
-                
-          }}
+
+            }}
         >
 
             <Typography
@@ -194,7 +203,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                     <Box
                         sx={{
                             display: "grid",
-                            gridTemplateColumns: isTwoColumns 
+                            gridTemplateColumns: isTwoColumns
                                 ? { xs: "1fr", md: "1fr 1fr" }
                                 : "1fr",
                             gap: 2,
@@ -207,7 +216,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                                 direction="row"
                                 spacing={2}
                                 sx={{
-                                alignItems:"center"
+                                    alignItems: "center"
                                 }}
                             >
                                 <Box
@@ -234,6 +243,22 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                         ))}
                     </Box>
                 </Stack>
+                <Button
+                    startIcon={<EditRounded />}
+                    sx={{
+                        whiteSpace: 'nowrap',
+                        width: 120,
+                        border: `2px solid ${theme.palette.etal.main}`,
+                        bgcolor: theme.palette.etal.main,
+                        color: theme.palette.primary.contrastText,
+                        alignSelf: 'flex-start',
+                        mt: 4,
+
+                    }}
+                    onClick={() => handleEdit()}
+                >
+                    Edit
+                </Button>
 
             </Card>
 

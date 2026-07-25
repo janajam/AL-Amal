@@ -14,6 +14,7 @@ import {
 
 import {
     Download,
+    EditRounded,
     PersonOutlined,
     PictureAsPdf,
     ScienceOutlined,
@@ -29,8 +30,17 @@ interface Props {
 const TestResultSection = ({ results }: Props) => {
 
     const theme = useTheme();
-
+    const [open, setOpen] = useState(false);
     const [selected, setSelected] = useState(0);
+
+    const handleEdit = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
 
     const current = results[selected];
 
@@ -131,7 +141,7 @@ const TestResultSection = ({ results }: Props) => {
                                 Latest
                             </Typography>
                         )}
-                        
+
                         <Typography
                             variant="h5"
                             sx={{
@@ -301,6 +311,23 @@ const TestResultSection = ({ results }: Props) => {
 
 
                 </Stack>
+                <Button
+                    startIcon={<EditRounded />}
+                    sx={{
+                        whiteSpace: 'nowrap',
+                        width: 120,
+                        border: `2px solid ${theme.palette.etal.main}`,
+                        bgcolor: theme.palette.etal.main,
+                        color: theme.palette.primary.contrastText,
+                        alignSelf: 'flex-end',
+                        mt: 4,
+
+                    }}
+                    onClick={() => handleEdit()}
+                >
+                    Edit
+                </Button>
+
             </Card>
 
         </Box>

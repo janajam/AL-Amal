@@ -1,6 +1,11 @@
 import { useState } from "react";
 
 import {
+    DescriptionOutlined,
+    EditRounded,
+    PersonOutlined
+} from "@mui/icons-material";
+import {
     Box,
     Button,
     Card,
@@ -11,15 +16,7 @@ import {
     Tabs,
     Typography,
     useTheme
-} from "@mui/material"; import {
-
-    DescriptionOutlined,
-    Download,
-    PersonOutlined,
-    PictureAsPdf,
-    ScienceOutlined,
-    VisibilityOutlined,
-} from "@mui/icons-material";
+} from "@mui/material";
 
 import type { XRayImage } from "../../Entities/Patient";
 
@@ -28,8 +25,16 @@ interface Props {
 }
 
 const XRayImageSection = ({ image }: Props) => {
-
+    const [open, setOpen] = useState(false);
     const theme = useTheme();
+    const handleEdit = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
 
     const [selected, setSelected] = useState(0);
 
@@ -250,67 +255,26 @@ const XRayImageSection = ({ image }: Props) => {
                                 height: '100%'
                             }}
                         />
-                        {/*    <Stack
-                            spacing={2}
-                            sx={{
-                                alignItems: "center",
-
-                            }}
-                        >
-
-                            <PictureAsPdf
-
-                                sx={{
-                                    fontSize: 40,
-                                }}
-                            />
-
-                            <Typography
-                                sx={{ fontWeight: 700 }}
-                            >
-                                {/* {current.reportName} 
-                            </Typography>
-
-                            <Typography
-                                variant="body2"
-                                sx={{ textAlign: "center" }}
-                            >
-                                PDF Document
-                            </Typography>
-
-                            <Stack
-                                direction={{ xs: 'column', md: 'row' }}
-                                spacing={2}
-                            >
-
-                                <Button
-                                    variant="outlined"
-                                    startIcon={<VisibilityOutlined />}
-                                    component="a"
-                                    href={current.reportUrl}
-                                    target="_blank"
-                                >
-                                    Preview
-                                </Button>
-
-                                <Button
-                                    variant="contained"
-                                    startIcon={<Download />}
-                                    component="a"
-                                    href={current.reportUrl}
-                                    download
-                                >
-                                    Download
-                                </Button>
-
-                            </Stack>
-
-                         </Stack> */}
 
                     </Card>
-
-
                 </Stack>
+                <Button
+                    startIcon={<EditRounded />}
+                    sx={{
+                        whiteSpace: 'nowrap',
+                        width: 120,
+                        border: `2px solid ${theme.palette.etal.main}`,
+                        bgcolor: theme.palette.etal.main,
+                        color: theme.palette.primary.contrastText,
+                        alignSelf: 'flex-end',
+                        mt: 4,
+
+                    }}
+                    onClick={() => handleEdit()}
+                >
+                    Edit
+                </Button>
+
             </Card>
 
         </Box>

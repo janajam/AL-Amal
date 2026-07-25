@@ -19,6 +19,7 @@ import img from '../../assets/img.webp'
 
 
 import img2 from '../../assets/img2.webp'
+import EditMedicalRecord from './EditDialogs/EditMedicalRecord';
 
 //for test 
 
@@ -217,7 +218,7 @@ const PatientDetailes = () => {
                         <ContactInfo patient={patient} />
                         {/* medical record */}
                         <MedicalRecordSection record={patient.medicalRecord ?? []} />
-                    </Stack>
+                     </Stack>
                 </Box>
 
                 {/* treatment Plan */}

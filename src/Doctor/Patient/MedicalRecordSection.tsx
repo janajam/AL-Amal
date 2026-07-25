@@ -1,8 +1,10 @@
 
 
-import { FiberManualRecord, MedicalInformationOutlined } from '@mui/icons-material'
-import { Stack, Typography, useTheme } from '@mui/material'
+import { EditRounded, FiberManualRecord, MedicalInformationOutlined } from '@mui/icons-material'
+import { Button, Stack, Typography, useTheme } from '@mui/material'
 import type { MedicalRecord } from '../../Entities/Patient';
+import { useState } from 'react';
+import EditMedicalRecord from './EditDialogs/EditMedicalRecord';
 
 
 interface Props {
@@ -10,6 +12,16 @@ interface Props {
 }
 const MedicalRecordSection = ({ record }: Props) => {
     const theme = useTheme()
+    const [open, setOpen] = useState(false);
+
+    const handleEdit = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <div>
             <Stack>
@@ -136,10 +148,29 @@ const MedicalRecordSection = ({ record }: Props) => {
                             ))}
                         </Stack>
                     </Stack>
+                    <Button
+                        startIcon={<EditRounded />}
+                        sx={{
+                            whiteSpace: 'nowrap',
+                            width: 120,
+                            border: `2px solid ${theme.palette.etal.main}`,
+                            bgcolor: theme.palette.etal.main,
+                            color: theme.palette.primary.contrastText,
+                            alignSelf: 'flex-start',
+                            mt: 4,
+
+                        }}
+                        onClick={() => handleEdit()}
+                    >
+                        Edit
+                    </Button>
 
                 </Stack>
             </Stack>
-
+            <EditMedicalRecord
+                open={open}
+                record={record}
+                onClose={handleClose} />
         </div>
     )
 }
