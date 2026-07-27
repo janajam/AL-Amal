@@ -13,8 +13,9 @@ import {
     useTheme
 } from "@mui/material";
 
-import { EditRounded, PersonOutlined } from "@mui/icons-material";
+import { AddRounded, EditRounded, PersonOutlined } from "@mui/icons-material";
 import type { TreatmentPlan } from '../../Entities/Patient';
+import EditTreatmentPlanDialog from "./EditDialogs/EditTreatmentPlanDialog";
 
 interface Props {
     plans: TreatmentPlan[];
@@ -45,18 +46,33 @@ const TreatmentPlanSection = ({ plans }: Props) => {
 
             }}
         >
+            <Stack direction={'row'} spacing={4}>
+                <Typography
+                    variant="h5"
+                    sx={{
+                        fontWeight: 700,
+                        mb: 2,
+                        fontSize: 20
+                    }}
+                >
+                    Treatment Plan
+                </Typography>
+                <Button
+                    variant='outlined'
+                    startIcon={<AddRounded />}
+                    sx={{
+                        whiteSpace: 'nowrap',
+                        border: `2px solid ${theme.palette.primary.main}`,
+                        color: theme.palette.primary.main,
+                        ml: '83%',
+                        mt: 4,
 
-            <Typography
-                variant="h5"
-                sx={{
-                    fontWeight: 700,
-                    mb: 2,
-                    fontSize: 20
-                }}
-            >
-                Treatment Plan
-            </Typography>
-
+                    }}
+                    // onClick={() => handleEdit()}
+                >
+                    New Plane
+                </Button>
+            </Stack>
             <Tabs
                 value={selected}
                 onChange={(_, value) => setSelected(value)}
@@ -251,7 +267,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                         border: `2px solid ${theme.palette.etal.main}`,
                         bgcolor: theme.palette.etal.main,
                         color: theme.palette.primary.contrastText,
-                        alignSelf: 'flex-start',
+                        ml: '86%',
                         mt: 4,
 
                     }}
@@ -261,8 +277,13 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                 </Button>
 
             </Card>
-
+            <EditTreatmentPlanDialog
+                open={open}
+                plan={currentPlan}
+                onClose={handleClose}
+            />
         </Box>
+
 
     )
 }

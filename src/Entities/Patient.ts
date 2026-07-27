@@ -23,13 +23,17 @@ export interface MedicalRecord {
 }
 
 
+
+type Status='Finished'|'Ongoing'
+
 export interface TreatmentPlan {
     id: number,
     medicalDiagnosis: string,
     doctorName: string,
     treatmentSteps: string[],
     date: Date
-    status:string
+    status:Status,
+    updatedDate?:Date
 }
 
 export interface TestResult {

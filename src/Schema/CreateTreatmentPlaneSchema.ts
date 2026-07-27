@@ -15,7 +15,7 @@ export const createTreatmentPlanSchema = z.object({
         .min(1),
 
     date: z.date(),
-
+    updatedDate: z.date().optional(),
     status: z.enum([
         "Ongoing",
         "Finished"

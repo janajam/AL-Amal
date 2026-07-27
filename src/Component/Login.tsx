@@ -246,7 +246,7 @@ const Login = () => {
           >
             {loginMutation.isPending ? "Logging in..." : "Login"}
           </Button>
-          <Stack sx={{ mt: 2 }}>
+          {/*<Stack sx={{ mt: 2 }}>
             <TypografyStylee sx={{
               color: 'black',
               "&:hover": {
@@ -348,7 +348,7 @@ const Login = () => {
               </DialogActions>
             </Dialog>
 
-          </Stack>
+          </Stack>*/}
         </Box>
       </Box>
 
