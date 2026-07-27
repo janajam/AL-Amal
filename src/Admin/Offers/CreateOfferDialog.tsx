@@ -1,15 +1,11 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, TextField, useTheme } from '@mui/material';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import type { OfferData } from '../../Entities/OfferData';
-import { useEditOffer } from '../../Hook/UseEditOffer';
-import { createOfferSchema, type CreateOfferInput } from '../../Schema/CreateOfferSchema';
 import { useCreateOffer } from '../../Hook/UseCreateOffer';
+import { createOfferSchema, type CreateOfferInput } from '../../Schema/CreateOfferSchema';
 interface Props {
     open: boolean,
-    // offer: OfferData| null,
     onClose: () => void
 }
 
@@ -24,10 +20,16 @@ const CreateOfferDialog = ({ open, onClose }: Props) => {
         createOffer.mutate(formData)
         onClose()
     }
+
+    const handelCancel = () => {
+        reset()
+        onClose()
+    }
+
     const {
         register,
         handleSubmit,
-
+        reset,
         formState: { errors }
     } = useForm<CreateOfferInput>({
         resolver: zodResolver(createOfferSchema),
@@ -112,7 +114,7 @@ const CreateOfferDialog = ({ open, onClose }: Props) => {
                 </DialogContent>
 
                 <DialogActions>
-                    <Button onClick={onClose}
+                    <Button onClick={handelCancel}
                         sx={{
                             bgcolor: theme.palette.secondary.main,
                             color: theme.palette.secondary.contrastText,

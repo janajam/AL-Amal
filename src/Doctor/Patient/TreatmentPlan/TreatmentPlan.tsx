@@ -14,8 +14,9 @@ import {
 } from "@mui/material";
 
 import { AddRounded, EditRounded, PersonOutlined } from "@mui/icons-material";
-import type { TreatmentPlan } from '../../Entities/Patient';
-import EditTreatmentPlanDialog from "./EditDialogs/EditTreatmentPlanDialog";
+import EditTreatmentPlanDialog from "./EditTreatmentPlanDialog";
+import type { TreatmentPlan } from "../../../Entities/Patient";
+import CreateTreatmentPlanDialog from "./CreateTreatmentPlanDialog";
 
 interface Props {
     plans: TreatmentPlan[];
@@ -25,6 +26,17 @@ const TreatmentPlanSection = ({ plans }: Props) => {
     const theme = useTheme()
     const [selected, setSelected] = useState(0);
     const [open, setOpen] = useState(false);
+    const[openDialog,setOpenDialog]=useState(false)
+
+    const handleCreate = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
+
+    
     const handleEdit = () => {
         setOpen(true);
     };
@@ -32,6 +44,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
     const handleClose = () => {
         setOpen(false);
     };
+
 
     const currentPlan = plans[selected];
     const isTwoColumns = currentPlan.treatmentSteps.length > 3;
@@ -68,7 +81,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                         mt: 4,
 
                     }}
-                    // onClick={() => handleEdit()}
+                    onClick={() => handleCreate()}
                 >
                     New Plane
                 </Button>
@@ -277,6 +290,11 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                 </Button>
 
             </Card>
+
+            <CreateTreatmentPlanDialog 
+            open={openDialog} 
+            onClose={handleCloseDialog}
+            />
             <EditTreatmentPlanDialog
                 open={open}
                 plan={currentPlan}

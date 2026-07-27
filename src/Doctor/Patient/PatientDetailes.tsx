@@ -8,18 +8,16 @@ import {
 import { Box, Stack, Typography, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import type { Patient } from '../../Entities/Patient';
-import ContactInfo from './ContactInfo';
-import MedicalRecordSection from './MedicalRecordSection';
-import TreatmentPlanSection from './TreatmentPlan';
 import pdf from '../../assets/SRS HIMS.pdf'
-import TestResultSection from './TestSection';
-import XRayImageSection from './XRayImageSection';
-
 import img from '../../assets/img.webp'
 
 
 import img2 from '../../assets/img2.webp'
-import EditMedicalRecord from './EditDialogs/EditMedicalRecord';
+import ContactInfo from './ContactInfo/ContactInfo';
+import MedicalRecordSection from './MedicalRecord/MedicalRecordSection';
+import TreatmentPlanSection from './TreatmentPlan/TreatmentPlan';
+import TestResultSection from './TestResult/TestSection';
+import XRayImageSection from './XRayImage/XRayImageSection';
 
 //for test 
 

@@ -1,15 +1,9 @@
 import { useState } from "react";
 
 import {
-    DescriptionOutlined,
-    EditRounded,
-    PersonOutlined
-} from "@mui/icons-material";
-import {
     Box,
     Button,
     Card,
-    CardMedia,
     Divider,
     Stack,
     Tab,
@@ -18,15 +12,26 @@ import {
     useTheme
 } from "@mui/material";
 
-import type { XRayImage } from "../../Entities/Patient";
+import {
+    Download,
+    EditRounded,
+    PersonOutlined,
+    PictureAsPdf,
+    ScienceOutlined,
+    VisibilityOutlined,
+} from "@mui/icons-material";
+import type { TestResult } from "../../../Entities/Patient";
 
 interface Props {
-    image: XRayImage[];
+    results: TestResult[];
 }
 
-const XRayImageSection = ({ image }: Props) => {
-    const [open, setOpen] = useState(false);
+const TestResultSection = ({ results }: Props) => {
+
     const theme = useTheme();
+    const [open, setOpen] = useState(false);
+    const [selected, setSelected] = useState(0);
+
     const handleEdit = () => {
         setOpen(true);
     };
@@ -36,11 +41,9 @@ const XRayImageSection = ({ image }: Props) => {
     };
 
 
-    const [selected, setSelected] = useState(0);
+    const current = results[selected];
 
-    const current = image[selected];
-
-    if (!image.length) return null;
+    if (!results.length) return null;
 
     return (
 
@@ -63,7 +66,7 @@ const XRayImageSection = ({ image }: Props) => {
                 }}
 
             >
-                XRay Image
+                Test Results
             </Typography>
 
             <Tabs
@@ -73,7 +76,7 @@ const XRayImageSection = ({ image }: Props) => {
                 scrollButtons="auto"
             >
 
-                {image.map((item) => (
+                {results.map((item) => (
 
                     <Tab
                         key={item.id}
@@ -145,7 +148,7 @@ const XRayImageSection = ({ image }: Props) => {
                                 fontSize: 12
                             }}
                         >
-                            {current.type}
+                            {current.reportName}
                         </Typography>
 
                     </Box>
@@ -173,6 +176,33 @@ const XRayImageSection = ({ image }: Props) => {
                         sx={{
                             mt: 2
                         }}>
+                        <Stack
+                            direction="row"
+                            spacing={2}
+                            sx={{ alignItems: "center" }}
+                        >
+
+                            <ScienceOutlined
+                                sx={{
+                                    color: theme.palette.etal.main,
+                                }}
+                            />
+
+                            <Box>
+
+                                <Typography
+                                    sx={{ fontWeight: 700 }}
+                                >
+                                    Laboratory
+                                </Typography>
+
+                                <Typography >
+                                    {current.labWorkingName}
+                                </Typography>
+
+                            </Box>
+
+                        </Stack>
 
                         <Stack
                             direction="row"
@@ -201,62 +231,84 @@ const XRayImageSection = ({ image }: Props) => {
                             </Box>
 
                         </Stack>
-
-                        <Stack
-                            direction="row"
-                            spacing={2}
-                            sx={{ alignItems: "center" }}
-                        >
-
-                            <DescriptionOutlined
-                                sx={{
-                                    color: theme.palette.etal.main,
-                                }}
-                            />
-
-                            <Box>
-
-                                <Typography
-                                    sx={{ fontWeight: 700 }}
-                                >
-                                    Description
-                                </Typography>
-
-                                <Typography >
-                                    {current.description}
-                                </Typography>
-
-                            </Box>
-
-                        </Stack>
-
                     </Stack>
+                    {/* <Divider /> */}
 
                     <Card
                         variant="outlined"
                         sx={{
+                            p: 3,
+                            border: `1px dashed ${theme.palette.primary.main}`,
                             bgcolor: theme.palette.background.default,
                             mr: 4,
                             [theme.breakpoints.down('md')]: {
-                                mt: 3,
-                                width: 200,
-                                height: 280,
-                            },
-                            width: 360,
-                            height: 280
+                                mt: 3
+                            }
 
 
                         }}
                     >
-                        <CardMedia
-                            image={current.image}
+
+                        <Stack
+                            spacing={2}
                             sx={{
-                                width: '100%',
-                                height: '100%'
+                                alignItems: "center",
+
                             }}
-                        />
+                        >
+
+                            <PictureAsPdf
+
+                                sx={{
+                                    fontSize: 40,
+                                }}
+                            />
+
+                            <Typography
+                                sx={{ fontWeight: 700 }}
+                            >
+                                {current.reportName}
+                            </Typography>
+
+                            <Typography
+                                variant="body2"
+                                sx={{ textAlign: "center" }}
+                            >
+                                PDF Document
+                            </Typography>
+
+                            <Stack
+                                direction={{ xs: 'column', md: 'row' }}
+                                spacing={2}
+                            >
+
+                                <Button
+                                    variant="outlined"
+                                    startIcon={<VisibilityOutlined />}
+                                    component="a"
+                                    href={current.reportUrl}
+                                    target="_blank"
+                                >
+                                    Preview
+                                </Button>
+
+                                <Button
+                                    variant="contained"
+                                    startIcon={<Download />}
+                                    component="a"
+                                    href={current.reportUrl}
+                                    download
+                                >
+                                    Download
+                                </Button>
+
+                            </Stack>
+
+                        </Stack>
 
                     </Card>
+
+
                 </Stack>
                 <Button
                     startIcon={<EditRounded />}
@@ -283,4 +335,4 @@ const XRayImageSection = ({ image }: Props) => {
 
 };
 
-export default XRayImageSection;
+export default TestResultSection;

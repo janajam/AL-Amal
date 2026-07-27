@@ -2,10 +2,9 @@
 
 import { EditRounded, FiberManualRecord, MedicalInformationOutlined } from '@mui/icons-material'
 import { Button, Stack, Typography, useTheme } from '@mui/material'
-import type { MedicalRecord } from '../../Entities/Patient';
 import { useState } from 'react';
-import EditMedicalRecord from './EditDialogs/EditMedicalRecord';
-
+import type { MedicalRecord } from '../../../Entities/Patient';
+import EditMedicalRecord from './EditMedicalRecord';
 
 interface Props {
     record: MedicalRecord;

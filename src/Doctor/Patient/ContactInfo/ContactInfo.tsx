@@ -1,9 +1,8 @@
 import { ContactMailOutlined, EditRounded } from "@mui/icons-material"
 import { Button, Stack, Typography, useTheme } from "@mui/material"
-import type { Patient } from "../../Entities/Patient";
 import { useState } from "react";
-import EditContactInfoDialog from "./EditDialogs/EditContactInfo";
-
+import type { Patient } from "../../../Entities/Patient";
+import EditContactInfoDialog from "./EditContactInfo";
 
 interface Props {
     patient: Patient;
