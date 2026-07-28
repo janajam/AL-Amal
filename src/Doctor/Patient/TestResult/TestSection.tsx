@@ -24,6 +24,7 @@ import {
 } from "@mui/icons-material";
 import type { TestResult } from "../../../Entities/Patient";
 import EditTestResultDialog from "./EditTestResultDialog";
+import AddTestResultDialog from "./AddTestResultDialog";
 
 interface Props {
     results: TestResult[];
@@ -33,6 +34,8 @@ const TestResultSection = ({ results }: Props) => {
 
     const theme = useTheme();
     const [open, setOpen] = useState(false);
+     const [openDialog, setOpenDialog] = useState(false);
+   
     const [selected, setSelected] = useState(0);
 
     const handleEdit = () => {
@@ -41,6 +44,13 @@ const TestResultSection = ({ results }: Props) => {
 
     const handleClose = () => {
         setOpen(false);
+    };
+const handleAdd = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
     };
 
 
@@ -83,7 +93,7 @@ const TestResultSection = ({ results }: Props) => {
                         mt: 4,
 
                     }}
-                // onClick={() => handleCreate()}
+                onClick={() => handleAdd()}
                 >
                     Add
                 </Button>
@@ -362,6 +372,10 @@ const TestResultSection = ({ results }: Props) => {
  open={open}
   result={current} 
   onClose={handleClose }/>
+
+  <AddTestResultDialog
+   open={openDialog} 
+   onClose={handleCloseDialog}  />
         </Box>
 
     );
