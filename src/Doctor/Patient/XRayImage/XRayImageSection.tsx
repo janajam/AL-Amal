@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import {
+    AddRounded,
     DescriptionOutlined,
     EditRounded,
     PersonOutlined
@@ -52,19 +53,35 @@ const XRayImageSection = ({ image }: Props) => {
                 mt: -2
             }}
         >
+            <Stack direction="row" spacing={4}>
+                <Typography
+                    variant="h5"
+                    sx={{
+                        fontWeight: 700,
+                        mb: 2,
+                        fontSize: 20
+                    }}
 
-            <Typography
-                variant="h5"
-                sx={{
-                    fontWeight: 700,
-                    mb: 2,
-                    fontSize: 20
-                }}
+                >
+                    XRay Image
+                </Typography>
+                <Button
+                    variant='outlined'
+                    startIcon={<AddRounded />}
+                    sx={{
+                        whiteSpace: 'nowrap',
+                        border: `2px solid ${theme.palette.primary.main}`,
+                        color: theme.palette.primary.main,
+                        ml: '83%',
+                        mt: 4,
 
-            >
-                XRay Image
-            </Typography>
+                    }}
+                // onClick={() => handleCreate()}
+                >
+                    Add
+                </Button>
 
+            </Stack>
             <Tabs
                 value={selected}
                 onChange={(_, value) => setSelected(value)}
@@ -267,6 +284,8 @@ const XRayImageSection = ({ image }: Props) => {
                         color: theme.palette.primary.contrastText,
                         alignSelf: 'flex-end',
                         mt: 4,
+                         ml: '86%',
+                       
 
                     }}
                     onClick={() => handleEdit()}

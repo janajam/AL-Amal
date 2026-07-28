@@ -79,19 +79,22 @@ const patient: Patient = {
         testResult: [
             {
                 id: 1,
-                doctorName: "Ahmed",
-                labWorkingName: "Al-Amal Laboratory",
-                reportName: "Blood Test Report.pdf",
-                reportUrl: pdf,
-                date: new Date()
+                requestedBy: "Ahmed",
+                uploaded_by: "Leen",
+                title: "Blood Test Report.pdf",
+                attachment: pdf,
+                uploaded_at: new Date(),
+                result:'result of test'
             },
             {
                 id: 2,
-                doctorName: "Sarah",
-                labWorkingName: "City Medical Lab",
-                reportName: "Vitamin D Report.pdf",
-                reportUrl: pdf,
-                date: new Date("2025-09-12")
+                requestedBy: "Sarah",
+                uploaded_by: "Leen",
+                title: "Vitamin D Report.pdf",
+                attachment: pdf,
+                uploaded_at: new Date("2025-09-12"),
+                 result:'result of test'
+            
             }
         ],
         xRayImage: [

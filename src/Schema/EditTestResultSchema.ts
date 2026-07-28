@@ -2,23 +2,24 @@ import { z } from "zod";
 
 export const editTestResultSchema = z.object({
 
-    doctorName: z
+    requestedBy: z
         .string()
         .min(2),
 
-    labWorkingName: z
+    uploaded_by: z
         .string()
         .min(2),
 
-    date: z.date(),
-
-    reportName: z
+    title: z
         .string()
         .min(2),
 
-    reportFile: z
+    attachment: z
         .instanceof(File)
-        .optional()
+        .optional(),
+
+    result: z.string().min(2)
+
 
 });
 

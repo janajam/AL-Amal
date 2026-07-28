@@ -38,11 +38,12 @@ export interface TreatmentPlan {
 
 export interface TestResult {
     id: number;
-    date: Date;
-    doctorName: string;
-    labWorkingName: string;
-    reportName: string;
-    reportUrl: string;
+    uploaded_at: Date;
+    requestedBy: string;
+    result: string;
+    uploaded_by: string;
+    title: string;
+    attachment: string;
 }
 
 export interface XRayImage {

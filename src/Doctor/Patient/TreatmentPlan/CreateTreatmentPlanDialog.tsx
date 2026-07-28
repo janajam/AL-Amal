@@ -13,28 +13,28 @@ interface Props {
 
 const CreateTreatmentPlanDialog = ({ open, onClose }: Props) => {
     const theme = useTheme()
-const { fullName } = useAuthStore();
+    const { fullName } = useAuthStore();
 
     const submitDialog = (data: CreateTreatmentPlanInput) => {
 
-    const payload: CreateTreatmentPlanInput = {
+        const payload: CreateTreatmentPlanInput = {
 
-        medicalDiagnosis: data.medicalDiagnosis,
+            medicalDiagnosis: data.medicalDiagnosis,
 
-        treatmentSteps: data.treatmentSteps.filter(
-            step => step.trim() !== ""
-        ),
+            treatmentSteps: data.treatmentSteps.filter(
+                step => step.trim() !== ""
+            ),
 
-        doctorName: fullName || "Dr.Ahmad",
+            doctorName: fullName || "Dr.Ahmad",
 
-        status: "Ongoing",
+            status: "Ongoing",
 
-        date: new Date(),
+            date: new Date(),
+        };
+
+        // createTreatmentPlan.mutate(payload);
+
     };
-
-    // createTreatmentPlan.mutate(payload);
-
-};
 
     const handelCancel = () => {
         reset()
@@ -153,6 +153,9 @@ const { fullName } = useAuthStore();
                                     fullWidth
                                     label={`Step ${index + 1}`}
                                     value={step}
+                                    error={!!errors.treatmentSteps?.[index]}
+                                    helperText={errors.treatmentSteps?.[index]?.message}
+
                                     onChange={(e) =>
                                         updateStep(index, e.target.value)
                                     }
@@ -178,7 +181,9 @@ const { fullName } = useAuthStore();
                             }}
                         >
                             Add Step
-                        </Button>   </DialogContent>
+                        </Button>
+                    </form>
+                </DialogContent>
 
                 <DialogActions>
                     <Button onClick={handelCancel}
@@ -207,10 +212,10 @@ const { fullName } = useAuthStore();
                         create    {/* {createOffer.isPending ? 'Creating...' : 'Create'} */}
 
                     </Button>
+
                 </DialogActions>
 
             </Dialog>
-
         </div>
     )
 }

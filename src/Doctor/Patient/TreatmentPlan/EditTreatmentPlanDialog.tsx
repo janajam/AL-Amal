@@ -15,7 +15,11 @@ interface Props {
 const EditTreatmentPlanDialog = ({ open, plan, onClose }: Props) => {
 
     const theme = useTheme()
-
+const handelCancel=()=>{
+        reset()
+        onClose()
+    }
+    
     // const editPlan=useEditPlan(plan?.id|| 0)
 
     const submitDialog = (formData: EditTreatmentPlanInput) => {
@@ -210,7 +214,7 @@ const EditTreatmentPlanDialog = ({ open, plan, onClose }: Props) => {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={onClose}
+                    <Button onClick={handelCancel}
                         sx={{
                             bgcolor: theme.palette.secondary.main,
                             color: theme.palette.secondary.contrastText,

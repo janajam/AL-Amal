@@ -41,6 +41,11 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
         onClose()
     }
 
+    const handelCancel=()=>{
+        reset()
+        onClose()
+    }
+    
     useEffect(() => {
 
         if (record && open) {
@@ -455,7 +460,7 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
                         </Stack>
 
                         <DialogActions>
-                            <Button onClick={onClose}
+                            <Button onClick={handelCancel}
                                 sx={{
                                     bgcolor: theme.palette.secondary.main,
                                     color: theme.palette.secondary.contrastText,

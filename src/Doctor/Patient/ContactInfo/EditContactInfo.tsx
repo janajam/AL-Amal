@@ -15,7 +15,11 @@ interface Props {
 const EditContactInfoDialog = ({ open, contactInfo, onClose }: Props) => {
 
     const theme = useTheme()
-
+const handelCancel=()=>{
+        reset()
+        onClose()
+    }
+    
     // const editcontactInfo=useEditcontactInfo(contactInfo?.id|| 0)
     useEffect(() => {
 
@@ -126,7 +130,7 @@ const EditContactInfoDialog = ({ open, contactInfo, onClose }: Props) => {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={onClose}
+                    <Button onClick={handelCancel}
                         sx={{
                             bgcolor: theme.palette.secondary.main,
                             color: theme.palette.secondary.contrastText,

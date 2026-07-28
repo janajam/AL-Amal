@@ -26,7 +26,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
     const theme = useTheme()
     const [selected, setSelected] = useState(0);
     const [open, setOpen] = useState(false);
-    const[openDialog,setOpenDialog]=useState(false)
+    const [openDialog, setOpenDialog] = useState(false)
 
     const handleCreate = () => {
         setOpenDialog(true);
@@ -36,7 +36,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
         setOpenDialog(false);
     };
 
-    
+
     const handleEdit = () => {
         setOpen(true);
     };
@@ -291,9 +291,9 @@ const TreatmentPlanSection = ({ plans }: Props) => {
 
             </Card>
 
-            <CreateTreatmentPlanDialog 
-            open={openDialog} 
-            onClose={handleCloseDialog}
+            <CreateTreatmentPlanDialog
+                open={openDialog}
+                onClose={handleCloseDialog}
             />
             <EditTreatmentPlanDialog
                 open={open}

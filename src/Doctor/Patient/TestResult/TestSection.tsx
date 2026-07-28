@@ -13,6 +13,8 @@ import {
 } from "@mui/material";
 
 import {
+    AddRounded,
+    DescriptionOutlined,
     Download,
     EditRounded,
     PersonOutlined,
@@ -21,6 +23,7 @@ import {
     VisibilityOutlined,
 } from "@mui/icons-material";
 import type { TestResult } from "../../../Entities/Patient";
+import EditTestResultDialog from "./EditTestResultDialog";
 
 interface Props {
     results: TestResult[];
@@ -56,19 +59,36 @@ const TestResultSection = ({ results }: Props) => {
                 mt: -2
             }}
         >
+            <Stack direction="row" spacing={4}>
 
-            <Typography
-                variant="h5"
-                sx={{
-                    fontWeight: 700,
-                    mb: 2,
-                    fontSize: 20
-                }}
+                <Typography
+                    variant="h5"
+                    sx={{
+                        fontWeight: 700,
+                        mb: 2,
+                        fontSize: 20
+                    }}
 
-            >
-                Test Results
-            </Typography>
+                >
+                    Test Results
+                </Typography>
+                <Button
+                    variant='outlined'
+                    startIcon={<AddRounded />}
+                    sx={{
+                        whiteSpace: 'nowrap',
+                        border: `2px solid ${theme.palette.primary.main}`,
+                        color: theme.palette.primary.main,
+                        ml: '83%',
+                        mt: 4,
 
+                    }}
+                // onClick={() => handleCreate()}
+                >
+                    Add
+                </Button>
+
+            </Stack>
             <Tabs
                 value={selected}
                 onChange={(_, value) => setSelected(value)}
@@ -85,7 +105,7 @@ const TestResultSection = ({ results }: Props) => {
                                 sx={{ alignItems: "flex-start" }}>
 
                                 <Typography sx={{ fontWeight: 700 }}>
-                                    {new Date(item.date).toLocaleDateString(
+                                    {new Date(item.uploaded_at).toLocaleDateString(
                                         "en-GB",
                                         {
                                             day: "2-digit",
@@ -95,7 +115,7 @@ const TestResultSection = ({ results }: Props) => {
                                 </Typography>
 
                                 <Typography variant="caption">
-                                    {item.doctorName}
+                                    {item.requestedBy}
                                 </Typography>
 
                             </Stack>
@@ -148,7 +168,7 @@ const TestResultSection = ({ results }: Props) => {
                                 fontSize: 12
                             }}
                         >
-                            {current.reportName}
+                            {current.title}
                         </Typography>
 
                     </Box>
@@ -159,7 +179,7 @@ const TestResultSection = ({ results }: Props) => {
                             color: theme.palette.primary.main,
                         }}
                     >
-                        {new Date(current.date).toLocaleDateString()}
+                        {new Date(current.uploaded_at).toLocaleDateString()}
                     </Typography>
 
                 </Stack>
@@ -193,11 +213,11 @@ const TestResultSection = ({ results }: Props) => {
                                 <Typography
                                     sx={{ fontWeight: 700 }}
                                 >
-                                    Laboratory
+                                    Laboratory Technician 
                                 </Typography>
 
                                 <Typography >
-                                    {current.labWorkingName}
+                                    {current.uploaded_by}
                                 </Typography>
 
                             </Box>
@@ -225,11 +245,19 @@ const TestResultSection = ({ results }: Props) => {
                                 </Typography>
 
                                 <Typography >
-                                    Dr. {current.doctorName}
+                                    Dr. {current.requestedBy}
                                 </Typography>
 
                             </Box>
 
+                        </Stack>
+                        <Stack direction={'row'} spacing={3}>
+                                <DescriptionOutlined 
+                                sx={{ color:theme.palette.etal.main }}
+                                />
+                                <Typography>
+                                    {current.result}
+                                </Typography>
                         </Stack>
                     </Stack>
                     {/* <Divider /> */}
@@ -267,7 +295,7 @@ const TestResultSection = ({ results }: Props) => {
                             <Typography
                                 sx={{ fontWeight: 700 }}
                             >
-                                {current.reportName}
+                                {current.title}
                             </Typography>
 
                             <Typography
@@ -286,7 +314,7 @@ const TestResultSection = ({ results }: Props) => {
                                     variant="outlined"
                                     startIcon={<VisibilityOutlined />}
                                     component="a"
-                                    href={current.reportUrl}
+                                    href={current.attachment}
                                     target="_blank"
                                 >
                                     Preview
@@ -296,7 +324,7 @@ const TestResultSection = ({ results }: Props) => {
                                     variant="contained"
                                     startIcon={<Download />}
                                     component="a"
-                                    href={current.reportUrl}
+                                    href={current.attachment}
                                     download
                                 >
                                     Download
@@ -320,6 +348,8 @@ const TestResultSection = ({ results }: Props) => {
                         color: theme.palette.primary.contrastText,
                         alignSelf: 'flex-end',
                         mt: 4,
+                        ml: '86%',
+
 
                     }}
                     onClick={() => handleEdit()}
@@ -328,7 +358,10 @@ const TestResultSection = ({ results }: Props) => {
                 </Button>
 
             </Card>
-
+<EditTestResultDialog
+ open={open}
+  result={current} 
+  onClose={handleClose }/>
         </Box>
 
     );
