@@ -3,7 +3,7 @@ import type { TestResult } from "../../../Entities/Patient";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { editTestResultSchema, type EditTestResultInput } from "../../../Schema/EditTestResultSchema";
-import { Box, Button, Dialog, DialogContent, DialogTitle, Divider, Paper, Stack, TextField, Typography, useTheme } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Paper, Stack, TextField, Typography, useTheme } from "@mui/material";
 
 
 interface Props {
@@ -166,7 +166,7 @@ const EditTestResultDialog = ({ open, result, onClose }: Props) => {
                             />
                             <Stack spacing={3}
                                 sx={{ mt: 2 }}>
-                                <Stack direction={'row'} spacing={1}>
+                                <Stack direction={'row'} spacing={3}>
                                     <Typography
                                         sx={{ fontWeight: 600 }}
                                     >
@@ -331,6 +331,37 @@ const EditTestResultDialog = ({ open, result, onClose }: Props) => {
                         </Stack>
                     </form>
                 </DialogContent>
+
+                <DialogActions>
+                    <Button onClick={handelCancel}
+                        sx={{
+                            bgcolor: theme.palette.secondary.main,
+                            color: theme.palette.secondary.contrastText,
+                            width: 100,
+                            mx: 3
+                        }}
+
+                    >
+
+                        Cancel
+                    </Button>
+                    <Button type="submit" form="subscription-form"
+                        // disabled={editPlan.isPending}
+                        // startIcon={
+                        //     editPlan.isPending
+                        //         ? <CircularProgress size={20} />
+                        //         : null}
+                        sx={{
+                            bgcolor: theme.palette.primary.main,
+                            color: theme.palette.primary.contrastText,
+                            width: 130,
+
+                        }}>
+                        {/* {editPlan.isPending ? 'Sending...' : 'Send'} */}
+                        save
+                    </Button>
+                </DialogActions>
+
             </Dialog>
 
         </div>
