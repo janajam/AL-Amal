@@ -15,15 +15,11 @@ interface Props {
 
 const EditTestResultDialog = ({ open, result, onClose }: Props) => {
     const [removeOldFile, setRemoveOldFile] = useState(false);
-    const [removedOldFile, setRemovedOldFile] = useState(false);
-
+    
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState("");
     const theme = useTheme();
 
-    // const previewUrl = selectedFile
-    //     ? URL.createObjectURL(selectedFile)
-    //     : "";
 
     const handelCancel = () => {
         reset()
@@ -64,6 +60,7 @@ const EditTestResultDialog = ({ open, result, onClose }: Props) => {
             result: "",
         },
     });
+    
     useEffect(() => {
         if (!open || !result) return;
 

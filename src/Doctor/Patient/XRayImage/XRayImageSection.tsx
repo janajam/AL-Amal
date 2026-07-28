@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import {
     AddRounded,
+    Close,
     DescriptionOutlined,
     EditRounded,
     PersonOutlined
@@ -11,7 +12,11 @@ import {
     Button,
     Card,
     CardMedia,
+    Dialog,
+    DialogContent,
+    DialogTitle,
     Divider,
+    IconButton,
     Stack,
     Tab,
     Tabs,
@@ -19,6 +24,8 @@ import {
     useTheme
 } from "@mui/material";
 import type { XRayImage } from "../../../Entities/Patient";
+import EditXRayImageDialog from "./EditXRayImageDialog";
+import AddXRayImageDialog from "./AddXRayImageDialog";
 
 interface Props {
     image: XRayImage[];
@@ -26,13 +33,23 @@ interface Props {
 
 const XRayImageSection = ({ image }: Props) => {
     const [open, setOpen] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
+    const [previewOpen, setPreviewOpen] = useState(false);
     const theme = useTheme();
+
     const handleEdit = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
+    };
+    const handleAdd = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
     };
 
 
@@ -63,7 +80,7 @@ const XRayImageSection = ({ image }: Props) => {
                     }}
 
                 >
-                    XRay Image
+                    Radiology Image
                 </Typography>
                 <Button
                     variant='outlined'
@@ -76,7 +93,7 @@ const XRayImageSection = ({ image }: Props) => {
                         mt: 4,
 
                     }}
-                // onClick={() => handleCreate()}
+                    onClick={() => handleAdd()}
                 >
                     Add
                 </Button>
@@ -98,7 +115,7 @@ const XRayImageSection = ({ image }: Props) => {
                                 sx={{ alignItems: "flex-start" }}>
 
                                 <Typography sx={{ fontWeight: 700 }}>
-                                    {new Date(item.date).toLocaleDateString(
+                                    {new Date(item.uploaded_at).toLocaleDateString(
                                         "en-GB",
                                         {
                                             day: "2-digit",
@@ -108,7 +125,7 @@ const XRayImageSection = ({ image }: Props) => {
                                 </Typography>
 
                                 <Typography variant="caption">
-                                    {item.doctorName}
+                                    {item.requestedBy}
                                 </Typography>
 
                             </Stack>
@@ -172,7 +189,7 @@ const XRayImageSection = ({ image }: Props) => {
                             color: theme.palette.primary.main,
                         }}
                     >
-                        {new Date(current.date).toLocaleDateString()}
+                        {new Date(current.uploaded_at).toLocaleDateString()}
                     </Typography>
 
                 </Stack>
@@ -207,11 +224,39 @@ const XRayImageSection = ({ image }: Props) => {
                                 <Typography
                                     sx={{ fontWeight: 700 }}
                                 >
+                                    Radiologist
+                                </Typography>
+
+                                <Typography >
+                                    Dr. {current.uploaded_by}
+                                </Typography>
+
+                            </Box>
+
+                        </Stack>
+
+                        <Stack
+                            direction="row"
+                            spacing={2}
+                            sx={{ alignItems: "center" }}
+                        >
+
+                            <PersonOutlined
+                                sx={{
+                                    color: theme.palette.etal.main,
+                                }}
+                            />
+
+                            <Box>
+
+                                <Typography
+                                    sx={{ fontWeight: 700 }}
+                                >
                                     Doctor
                                 </Typography>
 
                                 <Typography >
-                                    Dr. {current.doctorName}
+                                    Dr. {current.requestedBy}
                                 </Typography>
 
                             </Box>
@@ -265,13 +310,22 @@ const XRayImageSection = ({ image }: Props) => {
                         }}
                     >
                         <CardMedia
+                            component="img"
                             image={current.image}
+                            onClick={() => setPreviewOpen(true)}
                             sx={{
-                                width: '100%',
-                                height: '100%'
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
+                                cursor: "zoom-in",
+                                borderRadius: 1,
+                                transition: ".25s",
+
+                                "&:hover": {
+                                    transform: "scale(1.02)",
+                                },
                             }}
                         />
-
                     </Card>
                 </Stack>
                 <Button
@@ -284,8 +338,8 @@ const XRayImageSection = ({ image }: Props) => {
                         color: theme.palette.primary.contrastText,
                         alignSelf: 'flex-end',
                         mt: 4,
-                         ml: '86%',
-                       
+                        ml: '86%',
+
 
                     }}
                     onClick={() => handleEdit()}
@@ -295,6 +349,54 @@ const XRayImageSection = ({ image }: Props) => {
 
             </Card>
 
+            <EditXRayImageDialog
+                open={open}
+                img={current}
+                onClose={handleClose}
+            />
+
+            <AddXRayImageDialog 
+            open={openDialog} 
+            onClose={handleCloseDialog}
+            />
+
+            <Dialog
+                open={previewOpen}
+                onClose={() => setPreviewOpen(false)}
+                maxWidth="lg"
+                fullWidth
+            >
+                <DialogTitle>
+                   
+                 
+                    <IconButton
+                        onClick={() => setPreviewOpen(false)}
+                        sx={{
+                            position: "absolute",
+                            right: 10,
+                            top: 10,
+                        }}
+                    >
+                        <Close />
+                    </IconButton>
+                </DialogTitle>
+
+                <DialogContent
+                    sx={{
+                        p: 2,
+                    }}
+                >
+                    <Box
+                        component="img"
+                        src={current.image}
+                        sx={{
+                            width: "90%",
+                            maxHeight: "77vh",
+                            objectFit: "contain",
+                        }}
+                    />
+                </DialogContent>
+            </Dialog>
         </Box>
 
     );

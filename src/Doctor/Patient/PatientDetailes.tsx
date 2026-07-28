@@ -58,7 +58,7 @@ const patient: Patient = {
                     "Walk 30 minutes",
                     "HbA1c after 8 weeks",
                     "HbA1c after 8 weeks"
-                
+
                 ],
                 date: new Date(),
                 status: "Ongoing"
@@ -84,7 +84,7 @@ const patient: Patient = {
                 title: "Blood Test Report.pdf",
                 attachment: pdf,
                 uploaded_at: new Date(),
-                result:'result of test'
+                result: 'result of test'
             },
             {
                 id: 2,
@@ -93,35 +93,35 @@ const patient: Patient = {
                 title: "Vitamin D Report.pdf",
                 attachment: pdf,
                 uploaded_at: new Date("2025-09-12"),
-                 result:'result of test'
-            
+                result: 'result of test'
+
             }
         ],
         xRayImage: [
             {
                 id: 1,
-                doctorName: "Ahmed",
+                requestedBy: "Ahmed",
                 description:
                     "Hand X-ray shows no active pulmonary disease.",
 
                 type: "Hand X-Ray",
 
-                image:img,
-                  
-                date: new Date()
+                image: img,
+                uploaded_by: "Leen",
+                uploaded_at: new Date()
             },
 
             {
                 id: 2,
-                doctorName: "Sarah",
+                requestedBy: "Sarah",
                 description:
                     "Left knee joint with mild osteoarthritis.",
 
                 type: "Knee X-Ray",
 
-                image:img2,
-                  
-                date: new Date("2025-08-10")
+                image: img2,
+                uploaded_by: 'Leen',
+                uploaded_at: new Date("2025-08-10")
             }
         ]
     }
@@ -219,7 +219,7 @@ const PatientDetailes = () => {
                         <ContactInfo patient={patient} />
                         {/* medical record */}
                         <MedicalRecordSection record={patient.medicalRecord ?? []} />
-                     </Stack>
+                    </Stack>
                 </Box>
 
                 {/* treatment Plan */}

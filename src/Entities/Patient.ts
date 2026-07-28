@@ -48,11 +48,12 @@ export interface TestResult {
 
 export interface XRayImage {
     id: number,
-    doctorName: string,
+    uploaded_at: Date;
+    requestedBy: string;
+    uploaded_by: string;
     description: string
     type: string,
     image: string,
-    date: Date
 }
 
 export interface PatientsResponse {

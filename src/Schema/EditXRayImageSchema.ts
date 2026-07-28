@@ -1,8 +1,12 @@
 import { z } from "zod";
 
-export const editXRaySchema = z.object({
+export const editXRayImageSchema = z.object({
 
-    doctorName: z
+    requestedBy: z
+        .string()
+        .min(2),
+
+    uploaded_by: z
         .string()
         .min(2),
 
@@ -14,13 +18,10 @@ export const editXRaySchema = z.object({
         .string()
         .min(3),
 
-    date: z.date(),
+    uploaded_at: z.date(),
 
-    image: z
-        .instanceof(File)
-        .optional()
-
+    image: z.instanceof(File).optional()
 });
 
-export type EditXRayInput =
-    z.infer<typeof editXRaySchema>;
+export type EditXRayImageInput =
+    z.infer<typeof editXRayImageSchema>;
