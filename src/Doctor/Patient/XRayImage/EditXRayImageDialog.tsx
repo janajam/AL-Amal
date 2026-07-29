@@ -1,10 +1,9 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography, useTheme } from "@mui/material";
-import type { XRayImage } from "../../../Entities/Patient"
-import { useEffect, useState } from "react";
-import { editXRayImageSchema, type EditXRayImageInput } from "../../../Schema/EditXRayImageSchema";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AddRounded } from "@mui/icons-material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography, useTheme } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import type { XRayImage } from "../../../Entities/Patient";
+import { editXRayImageSchema, type EditXRayImageInput } from "../../../Schema/EditXRayImageSchema";
 
 
 interface Props {
@@ -24,7 +23,7 @@ const EditXRayImageDialog = ({ open, img, onClose }: Props) => {
         onClose()
     }
 
-    
+
     const submitDialog = (data: EditXRayImageInput) => {
 
         console.log(data);
@@ -169,10 +168,10 @@ const EditXRayImageDialog = ({ open, img, onClose }: Props) => {
                             <Button
                                 component="label"
                                 variant="outlined"
-                                sx={{ 
-                                    width:'50%',
-                                    alignSelf:'center'  
-                                 }}
+                                sx={{
+                                    width: '50%',
+                                    alignSelf: 'center'
+                                }}
                             >
                                 Replace Image
 
@@ -193,10 +192,10 @@ const EditXRayImageDialog = ({ open, img, onClose }: Props) => {
                                 />
                             </Button>
                             <Button
-                             sx={{ 
-                                    width:'50%',
-                                    alignSelf:'center'
-                             }}
+                                sx={{
+                                    width: '50%',
+                                    alignSelf: 'center'
+                                }}
                                 color="error"
                                 variant="outlined"
                                 onClick={() => {

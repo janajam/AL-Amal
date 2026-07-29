@@ -84,7 +84,7 @@ const handelCancel=()=>{
                             id="name"
                             label='Title'
                             fullWidth
-                            variant="standard"
+                            variant="outlined"
                             {...register('name')}
                             error={!!errors.name}
                             helperText={errors.name?.message}
@@ -95,7 +95,7 @@ const handelCancel=()=>{
                             label="Email"
                             multiline
                             fullWidth
-                            variant="standard"
+                            variant="outlined"
                             {...register('email')}
                             error={!!errors.email}
                             helperText={errors.email?.message}
@@ -106,7 +106,7 @@ const handelCancel=()=>{
                             id="phoneNumber"
                             label='Phone Number'
                             fullWidth
-                            variant="standard"
+                            variant="outlined"
                             {...register('phoneNumber')}
                             error={!!errors.phoneNumber}
                             helperText={errors.phoneNumber?.message}
@@ -117,7 +117,7 @@ const handelCancel=()=>{
                             id="address"
                             label='Address'
                             fullWidth
-                            variant="standard"
+                            variant="outlined"
                             {...register('address')}
                             error={!!errors.address}
                             helperText={errors.address?.message}

@@ -12,6 +12,7 @@ import DepartmentCard from "../Admin/Department/DepartmentCard";
 import Offers from "../Admin/Offers/Offers";
 import PatientCard from "../Doctor/Patient/PatientCard";
 import PatientDetailes from "../Doctor/Patient/PatientDetailes";
+import SchedulePage from "../Component/AppointmentSchedule/SchedulePage";
 
 export const router = createBrowserRouter([
 
@@ -44,6 +45,7 @@ export const router = createBrowserRouter([
       { path: 'departments', element: <DepartmentCard /> },
       { path: 'offers', element: <Offers /> },
       {path:'patients',element:<PatientCard/>},
+      {path:'appintmentsSchedule',element:<SchedulePage/>}
     
     ],
   },

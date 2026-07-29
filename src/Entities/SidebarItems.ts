@@ -5,6 +5,7 @@ import {
   AccountTree,
   Announcement,
   AppShortcut,
+  CalendarMonth,
   CreateRounded
 } from '@mui/icons-material';
 import HomeIcon from '@mui/icons-material/Home';
@@ -74,6 +75,13 @@ export const sidebarItems: SidebarItem[] = [
     roles: ['doctor'],
     subtitle: 'Patients information'
 
+  },
+  {
+    path:'/dashboard/appintmentsSchedule',
+    label:'Appointments',
+    icon:CalendarMonth,
+    roles:['doctor','secretary'],
+    subtitle:' '
   },
   {
     path: '/dashboard/profile',

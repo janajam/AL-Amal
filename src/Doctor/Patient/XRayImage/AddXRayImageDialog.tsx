@@ -174,36 +174,36 @@ const AddXRayImageDialog = ({ open, onClose }: Props) => {
           </form>
         </DialogContent>
 
-          <DialogActions>
-                            <Button onClick={handleCancel}
-                                sx={{
-                                    bgcolor: theme.palette.secondary.main,
-                                    color: theme.palette.secondary.contrastText,
-                                    width: 100,
-                                    mx: 3
-                                }}
-        
-                            >
-        
-                                Cancel
-                            </Button>
-                            <Button type="submit" form="subscription-form"
-                                // disabled={editPlan.isPending}
-                                // startIcon={
-                                //     editPlan.isPending
-                                //         ? <CircularProgress size={20} />
-                                //         : null}
-                                sx={{
-                                    bgcolor: theme.palette.primary.main,
-                                    color: theme.palette.primary.contrastText,
-                                    width: 130,
-        
-                                }}>
-                                {/* {editPlan.isPending ? 'Sending...' : 'Send'} */}
-                                save
-                            </Button>
-                        </DialogActions>
-        
+        <DialogActions>
+          <Button onClick={handleCancel}
+            sx={{
+              bgcolor: theme.palette.secondary.main,
+              color: theme.palette.secondary.contrastText,
+              width: 100,
+              mx: 3
+            }}
+
+          >
+
+            Cancel
+          </Button>
+          <Button type="submit" form="subscription-form"
+            // disabled={editPlan.isPending}
+            // startIcon={
+            //     editPlan.isPending
+            //         ? <CircularProgress size={20} />
+            //         : null}
+            sx={{
+              bgcolor: theme.palette.primary.main,
+              color: theme.palette.primary.contrastText,
+              width: 130,
+
+            }}>
+            {/* {editPlan.isPending ? 'Sending...' : 'Send'} */}
+            save
+          </Button>
+        </DialogActions>
+
       </Dialog>
 
     </div>

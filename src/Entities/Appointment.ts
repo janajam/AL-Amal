@@ -1,13 +1,19 @@
 
 
-
-export interface Appointment{
-    id:number,
-    date:Date,
-    time:string,
-    status:string
+export interface Appointment {
+    id:number;
+    patientName:string;
+    doctorId:number;
+    date:string;
+    startTime:string;
+    endTime:string;
+    status:
+        |"Available"
+        |"Booked"
+        |"Finished"
+        |"Cancelled";
+    type:string;
 }
-
 
 export interface AppointmentListItem{
 id:number,
