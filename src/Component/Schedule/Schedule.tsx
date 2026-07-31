@@ -1,15 +1,14 @@
 import { Box, Paper, Typography, useTheme } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
 import ScheduleHeader from "./SchedualeHeader";
 import { useGetSchedule } from "../../Hook/UseGetSchedule";
 import WeekNavigator from "./WeekNavigatog";
 import ScheduleTable from "./ScheduleTable";
-import { splitScheduleIntoWeeks } from "./ScheduleHelper";
 import { dummySchedule } from "./ScheduleDummy";
-
 import EditScheduleDialog from "./EditScheduleDialog";
-import type { WorkingSchedule } from "../../Entities/WorkingSchedualeData";
+import { groupScheduleByDay, type ScheduleDayView } from "./ScheduleHelper";
+import { getMonthWeeks } from "./Appointment/AppointmentHelper";
 
 interface Props {
     accountId: number;
@@ -18,7 +17,7 @@ interface Props {
 const ScheduleSection = ({ accountId }: Props) => {
 
     const theme = useTheme();
-    const [selectedDay, setSelectedDay] = useState<WorkingSchedule | null>(null);
+    const [selectedDay, setSelectedDay] = useState<ScheduleDayView | null>(null);
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(dayjs());
@@ -31,22 +30,28 @@ const ScheduleSection = ({ accountId }: Props) => {
 
     const isLoading = false;
 
-   const handleEdit = (schedule: WorkingSchedule) => {
-    setSelectedDay(schedule);
-    setDialogOpen(true);
-};
+    const handleEdit = (schedule: ScheduleDayView) => {
+        setSelectedDay(schedule);
+        setDialogOpen(true);
+    };
     // const { data, isLoading } = useGetSchedule(
     //     accountId,
     //     selectedMonth.month() + 1,
     //     selectedMonth.year()
     // );
 
-    const weeks = useMemo(() => {
-        if (!data?.data) return [];
-        return splitScheduleIntoWeeks(data.data);
-    }, [data]);
+    const weeks = useMemo(() => getMonthWeeks(selectedMonth), [selectedMonth]);
 
+    useEffect(() => {
+        setCurrentWeek(0);
+    }, [selectedMonth]);
 
+    const currentWeekDates: string[] = weeks[currentWeek] ?? [];
+
+    const currentWeekSchedule = useMemo(
+        () => groupScheduleByDay(data.data, currentWeekDates),
+        [currentWeekDates, data.data]
+    );
     return (
 
         <Paper
@@ -83,30 +88,24 @@ const ScheduleSection = ({ accountId }: Props) => {
                 }}
             />
 
-            <WeekNavigator
+         <WeekNavigator
                 currentWeek={currentWeek}
                 totalWeeks={weeks.length}
-                currentWeekData={weeks[currentWeek] ?? []}
-                onPrevious={() =>
-                    setCurrentWeek((prev) => Math.max(prev - 1, 0))
-                }
-                onNext={() =>
-                    setCurrentWeek((prev) =>
-                        Math.min(prev + 1, weeks.length - 1)
-                    )
-                }
+                currentWeekDates={currentWeekDates}
+                onPrevious={() => setCurrentWeek((prev) => Math.max(prev - 1, 0))}
+                onNext={() => setCurrentWeek((prev) => Math.min(prev + 1, weeks.length - 1))}
             />
-
             <Box sx={{
                 mt: 4
             }}>
 
+
                 <ScheduleTable
-                    week={weeks[currentWeek] ?? []}
+                    week={currentWeekSchedule}
                     loading={isLoading}
                     onEdit={handleEdit}
                 />
-                
+
             </Box>
 
             {selectedDay && (
@@ -119,7 +118,7 @@ const ScheduleSection = ({ accountId }: Props) => {
                 />
 
             )}
-            
+
         </Paper>
 
     );

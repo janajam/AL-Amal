@@ -77,10 +77,10 @@ export const sidebarItems: SidebarItem[] = [
 
   },
   {
-    path:'/dashboard/appintmentsSchedule',
+    path:'/appintmentsSchedule',
     label:'Appointments',
     icon:CalendarMonth,
-    roles:['doctor','secretary'],
+    roles:['doctor'],
     subtitle:' '
   },
   {

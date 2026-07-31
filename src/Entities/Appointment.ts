@@ -8,7 +8,7 @@ export interface Appointment {
     startTime:string;
     endTime:string;
     status:
-        |"Available"
+        |"Available"      
         |"Booked"
         |"Finished"
         |"Cancelled";
@@ -29,4 +29,30 @@ export interface AppointmentResponse{
     data:AppointmentListItem,
     message:string,
     status:number
+}
+
+
+
+
+export type SlotStatus =
+    | "Available"
+    | "Booked"
+    | "Finished"
+    | "Cancelled";
+
+export interface TimeSlot {
+    id: number;
+    date: string;
+    startTime: string;
+    endTime: string;
+    status: SlotStatus;
+
+    // موجود فقط لما status !== "Available"
+    appointment?: AppointmentListItem;
+}
+
+export interface TimeSlotsResponse {
+    status: number;
+    message: string;
+    data: TimeSlot[];
 }

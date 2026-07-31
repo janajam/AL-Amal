@@ -1,68 +1,45 @@
-import { Grid, Skeleton, Typography, useTheme } from "@mui/material";
 
+import { Grid, Skeleton, Typography } from "@mui/material";
 import DayCard from "./DayCard";
-import type { WorkingSchedule } from "../../Entities/WorkingSchedualeData";
+import type { ScheduleDayView } from "./ScheduleHelper";
 
 interface Props {
-  week: WorkingSchedule[];
-  loading: boolean;
-  onEdit: (schedule: WorkingSchedule) => void;
+    week: ScheduleDayView[];
+    loading: boolean;
+    onEdit: (schedule: ScheduleDayView) => void;
 }
 
 const ScheduleTable = ({ loading, week, onEdit }: Props) => {
-const theme = useTheme()
-  if (loading) {
-    return (
-      <Grid container spacing={2}>
-        {Array.from({ length: 7 }).map((_, index) => (
-          <Grid
-            key={index}
-            size={{ xs: 12, sm: 3, md: 3, lg: 12 / 7 }}
-          >
-            <Skeleton
-              variant="rounded"
-              height={220}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    );
-  }
 
-  if (!week.length) {
-    return (
-      <Typography
-        sx={{
-          align: "center",
-          color: "text.secondary",
-          py: 5
-        }}
-      >
-        No schedule available for this week.
-      </Typography>
-    );
-  }
+    if (loading) {
+        return (
+            <Grid container spacing={2}>
+                {Array.from({ length: 7 }).map((_, index) => (
+                    <Grid key={index} size={{ xs: 12, sm: 3, md: 3, lg: 12 / 7 }}>
+                        <Skeleton variant="rounded" height={220} />
+                    </Grid>
+                ))}
+            </Grid>
+        );
+    }
 
-  return (
-    <Grid
-      container
-      spacing={2}
-    >
-      {week.map((day) => (
-        <Grid
-          key={day.id}
-          size={{ xs: 12, sm: 3, md: 3, lg: 12 / 6.6 }}
-          >
-          <DayCard
-            key={day.id}
-            day={day}
-            onEdit={onEdit}
-          />
-        
+    if (!week.length) {
+        return (
+            <Typography sx={{ color: "text.secondary", py: 5, textAlign: "center" }}>
+                No schedule available for this week.
+            </Typography>
+        );
+    }
+
+    return (
+        <Grid container spacing={2}>
+            {week.map((day) => (
+                <Grid key={day.date} size={{ xs: 12, sm: 3, md: 3, lg: 12 / 6.6 }}>
+                    <DayCard day={day} onEdit={onEdit} />
+                </Grid>
+            ))}
         </Grid>
-      ))}
-    </Grid>
-  );
+    );
 };
 
 export default ScheduleTable;

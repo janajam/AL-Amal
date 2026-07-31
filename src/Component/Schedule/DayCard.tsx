@@ -15,12 +15,12 @@ import {
 } from "@mui/material";
 
 import dayjs from "dayjs";
-import type { WorkingSchedule } from "../../Entities/AccountsData";
+import type { ScheduleDayView } from "./ScheduleHelper";
 
 
 interface Props {
-  day: WorkingSchedule;
-  onEdit: (schedule: WorkingSchedule) => void;
+  day: ScheduleDayView;
+  onEdit: (schedule: ScheduleDayView) => void;
 }
 
 const DayCard = ({ day, onEdit }: Props) => {
@@ -52,8 +52,8 @@ const DayCard = ({ day, onEdit }: Props) => {
 
         <Stack
           sx={{
-             alignItems: "center", 
-            }}
+            alignItems: "center",
+          }}
         >
 
           <Typography
@@ -79,8 +79,15 @@ const DayCard = ({ day, onEdit }: Props) => {
         <Divider sx={{ my: 2 }} />
 
         {/* Time */}
+        {day.isPlaceholder ? (
 
-        {day.isAvailable ? (
+          <Box sx={{ py: 2, textAlign: "center" }}>
+            <Typography sx={{ fontWeight: 600, color: "text.disabled" }}>
+              Not Set
+            </Typography>
+          </Box>
+
+        ) : day.isAvailable ? (
 
           <Stack spacing={1}>
 

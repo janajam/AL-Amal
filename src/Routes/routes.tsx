@@ -1,18 +1,18 @@
 import { createBrowserRouter } from "react-router-dom";
+import AccountDetails from "../Admin/Accounts/AccountDetails";
+import Accounts from "../Admin/Accounts/Accounts";
+import CreateAccount from "../Admin/Accounts/CreateAccount";
+import Complaints from "../Admin/Complaints/Complaints";
+import DepartmentCard from "../Admin/Department/DepartmentCard";
+import Offers from "../Admin/Offers/Offers";
 import ForgotPassword from "../Component/ForgotPassword";
 import Login from "../Component/Login";
 import ResetPassword from "../Component/ResetPassword";
 import RoleRouter from "../Component/RoleRouter";
-import DashboardLayout from "../Layout/DashboardLayout";
-import Complaints from "../Admin/Complaints/Complaints";
-import Accounts from "../Admin/Accounts/Accounts";
-import AccountDetails from "../Admin/Accounts/AccountDetails";
-import CreateAccount from "../Admin/Accounts/CreateAccount";
-import DepartmentCard from "../Admin/Department/DepartmentCard";
-import Offers from "../Admin/Offers/Offers";
+import Appointment from "../Component/Schedule/Appointment/Appointment";
 import PatientCard from "../Doctor/Patient/PatientCard";
 import PatientDetailes from "../Doctor/Patient/PatientDetailes";
-import SchedulePage from "../Component/AppointmentSchedule/SchedulePage";
+import DashboardLayout from "../Layout/DashboardLayout";
 
 export const router = createBrowserRouter([
 
@@ -44,9 +44,8 @@ export const router = createBrowserRouter([
       { path: 'createAccount', element: <CreateAccount /> },
       { path: 'departments', element: <DepartmentCard /> },
       { path: 'offers', element: <Offers /> },
-      {path:'patients',element:<PatientCard/>},
-      {path:'appintmentsSchedule',element:<SchedulePage/>}
-    
+      { path: 'patients', element: <PatientCard /> },
+      
     ],
   },
   {
@@ -58,6 +57,7 @@ export const router = createBrowserRouter([
     path: "patients/:id",
     element: < PatientDetailes />
   },
+{ path: '/appintmentsSchedule', element: <Appointment /> }
 
 ]);
 

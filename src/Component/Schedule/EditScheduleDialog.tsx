@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 
@@ -10,6 +11,7 @@ import {
   FormControlLabel,
   Stack,
   Switch,
+  Typography,
 } from "@mui/material";
 
 import {
@@ -19,12 +21,12 @@ import {
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useUpdateSchedule } from "../../Hook/UseUpdateSchedule";
-import type { WorkingSchedule } from "../../Entities/WorkingSchedualeData";
+import type { ScheduleDayView } from "./ScheduleHelper";
 
 interface Props {
   open: boolean;
   onClose: () => void;
-  day: WorkingSchedule;
+  day: ScheduleDayView; 
   accountId: number;
 }
 
@@ -35,46 +37,77 @@ const EditScheduleDialog = ({
   accountId,
 }: Props) => {
 
-  const { mutate: updateSchedule, isPending } =
+  const { mutate: updateSchedule, isPending: isUpdating } =
     useUpdateSchedule(accountId);
+
+  // const { mutate: createSchedule, isPending: isCreating } =
+  //   useCreateSchedule(accountId);
+
+  // const isPending = isUpdating || isCreating;
 
   // Local State
 
   const [available, setAvailable] = useState(false);
 
-  const [startTime, setStartTime] =useState<Dayjs | null>(null);
+  const [startTime, setStartTime] = useState<Dayjs | null>(null);
 
-  const [endTime, setEndTime] =useState<Dayjs | null>(null);
+  const [endTime, setEndTime] = useState<Dayjs | null>(null);
 
   // Fill dialog whenever another day is selected
 
   useEffect(() => {
     if (!open) return;
+
     setAvailable(day.isAvailable);
-   setStartTime(dayjs(day.startTime, "HH:mm"));
-    setEndTime(dayjs(day.endTime, "HH:mm"));
+
+    setStartTime(
+      day.startTime ? dayjs(day.startTime, "HH:mm") : null
+    );
+
+    setEndTime(
+      day.endTime ? dayjs(day.endTime, "HH:mm") : null
+    );
+
   }, [day, open]);
 
   // Save
 
-  
   const handleSave = () => {
-    if (!startTime || !endTime) return;
-    updateSchedule(
-      {
-        scheduleId: day.id,
-        data: {
-          startTime: startTime.format("HH:mm"),
-          endTime: endTime.format("HH:mm"),
-          isAvailable: available,
+
+    if (available && (!startTime || !endTime)) return;
+
+    const payload = {
+      startTime: available ? startTime!.format("HH:mm") : "",
+      endTime: available ? endTime!.format("HH:mm") : "",
+      isAvailable: available,
+    };
+
+    if (day.isPlaceholder || day.id === null) {
+
+      // createSchedule(
+      //   {
+      //     date: day.date,
+      //     ...payload,
+      //   },
+      //   {
+      //     onSuccess: () => onClose(),
+      //   }
+      // );
+
+    } else {
+
+      updateSchedule(
+        {
+          scheduleId: day.id,
+          data: payload,
         },
-      },
-      {
-        onSuccess: () => {
-          onClose();
-        },
-      }
-    );
+        {
+          onSuccess: () => onClose(),
+        }
+      );
+
+    }
+
   };
 
   return (
@@ -86,17 +119,29 @@ const EditScheduleDialog = ({
         maxWidth="xs"
       >
         <DialogTitle
-        sx={{ 
-            fontSize:17,
-            fontWeight:550
-         }}
+          sx={{
+            fontSize: 17,
+            fontWeight: 550,
+          }}
         >
-         {day.day}
+          {day.day}
+
+          <Typography
+            component="span"
+            sx={{
+              display: "block",
+              fontSize: 13,
+              fontWeight: 400,
+              color: "text.secondary",
+            }}
+          >
+            {dayjs(day.date).format("DD MMM YYYY")}
+          </Typography>
         </DialogTitle>
 
         <DialogContent>
 
-          <Stack spacing={3} sx={{mt:2}}>
+          <Stack spacing={3} sx={{ mt: 2 }}>
 
             <FormControlLabel
               label="Available"
@@ -109,7 +154,6 @@ const EditScheduleDialog = ({
                 />
               }
             />
-            
 
             <TimePicker
               label="Start Time"
@@ -117,7 +161,6 @@ const EditScheduleDialog = ({
               disabled={!available}
               onChange={(value) =>
                 setStartTime(value as Dayjs | null)
-                
               }
             />
 
@@ -136,16 +179,14 @@ const EditScheduleDialog = ({
 
         <DialogActions>
 
-          <Button
-            onClick={onClose}
-          >
+          <Button onClick={onClose}>
             Cancel
           </Button>
 
           <Button
             variant="contained"
             onClick={handleSave}
-            disabled={isPending}
+            // disabled={isPending}
           >
             Save
           </Button>

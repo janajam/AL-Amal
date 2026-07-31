@@ -9,7 +9,7 @@ import { sidebarItems, type SidebarItem } from '../Entities/SidebarItems';
 export default function DashboardLayout() {
 
   // const userRole = useAuthStore((state) => state.role);
-const theme = useTheme()
+  const theme = useTheme()
 
   const userRole = 'doctor'
 
@@ -20,7 +20,7 @@ const theme = useTheme()
 
   const location = useLocation();
   const currentPage = sidebarItems.find
-  (item => item.path === location.pathname);
+    (item => item.path === location.pathname);
 
 
   const title = currentPage?.label ?? 'Dashboard';
@@ -49,8 +49,8 @@ const theme = useTheme()
           borderRadius: '16px',
           p: 3,
           minHeight: 'calc(100% - 64px)',
-          [theme.breakpoints.only('sm')]:{
-            ml:-10
+          [theme.breakpoints.only('sm')]: {
+            ml: -10
           }
         }}>
           <AppBar title={title} subtitle={subtitle} />
