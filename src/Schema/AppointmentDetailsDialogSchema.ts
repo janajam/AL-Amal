@@ -9,7 +9,7 @@ const dayjsSchema = z
 export const appointmentDetailsSchema = z
     .object({
         patientName: z.string().trim().min(1, "Patient name is required."),
-        appointmentType: z.string().trim().min(1, "Appointment type is required."),
+     appointmentType: z.string().trim().min(1, "Appointment type is required."),
         status: z.enum(["Booked", "Completed"]),
         startTime: dayjsSchema,
         endTime: dayjsSchema,
@@ -19,4 +19,4 @@ export const appointmentDetailsSchema = z
         { message: "End time must be after start time.", path: ["endTime"] }
     );
 
-export type AppointmentDetailsFormValues = z.infer<typeof appointmentDetailsSchema>;
+export type AppointmentDetailsInput = z.infer<typeof appointmentDetailsSchema>;

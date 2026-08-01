@@ -1,14 +1,15 @@
 import { Box, Paper, Typography, useTheme } from "@mui/material";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
-import type { AppointmentListItem, TimeSlot } from "../../../Entities/Appointment";
+import type { TimeSlot } from "../../../Entities/Appointment";
 import ScheduleHeader from "../SchedualeHeader";
 import WeekNavigator from "../WeekNavigatog";
+import AppointmentDetailsDialog from "./AppointmentDetailsDialog";
 import { getMonthWeeks } from "./AppointmentHelper";
 import AppointmentTable from "./AppointmentTable";
+import BookingDialog from "./BookingDialog";
 import { dummySlots } from "./dummySlots";
 import { groupSlotsByDay } from "./helper";
-import BookingDialog from "./BookingDialog";
 
 interface Props {
     doctorId: number;
@@ -23,9 +24,7 @@ const AppointmentScheduleSection = ({ doctorId }: Props) => {
     const [currentWeek, setCurrentWeek] =
         useState(0);
 
-    const [selectedAppointment, setSelectedAppointment] = useState<AppointmentListItem | null>(null);
     const [slots, setSlots] = useState<TimeSlot[]>(dummySlots);
-
     const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
     const [bookingDialogOpen, setBookingDialogOpen] = useState(false);
     const [detailsDialogOpen, setDetailsDialogOpen] = useState(false);
@@ -37,16 +36,6 @@ const AppointmentScheduleSection = ({ doctorId }: Props) => {
 
     }, [selectedMonth]);
 
-    const handleAppointmentClick = (
-        appointment: AppointmentListItem
-    ) => {
-
-        setSelectedAppointment(appointment);
-        // setDialogOpen(true);
-
-    };
-
-    // const slotsData = { data: dummySlots };
 
     const weeks = useMemo(() => getMonthWeeks(selectedMonth), [selectedMonth]);
 
@@ -58,6 +47,9 @@ const AppointmentScheduleSection = ({ doctorId }: Props) => {
         [currentWeekDates, slots]
     );
     const handleSlotClick = (slot: TimeSlot) => {
+        if (slot.status === "Completed") {
+        return; 
+    }
         setSelectedSlot(slot);
 
         if (slot.status === "Available") {
@@ -129,12 +121,20 @@ const AppointmentScheduleSection = ({ doctorId }: Props) => {
 
             </Box>
 
-            <BookingDialog 
-            open={bookingDialogOpen}
-             onClose={() => setBookingDialogOpen(false)}
-            slot={selectedSlot} 
-            doctorId={1} 
-            onConfirm={updateSlotInState}
+            <BookingDialog
+                open={bookingDialogOpen}
+                onClose={() => setBookingDialogOpen(false)}
+                slot={selectedSlot}
+                doctorId={1}
+                onConfirm={updateSlotInState}
+            />
+
+            <AppointmentDetailsDialog
+                open={detailsDialogOpen}
+                onClose={() => setDetailsDialogOpen(false)}
+                slot={selectedSlot}
+                onSave={updateSlotInState}
+                onCancelAppointment={updateSlotInState}
             />
         </Paper>
 
