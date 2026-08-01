@@ -1,52 +1,40 @@
-
-
 export interface Appointment {
-    id:number;
-    patientName:string;
-    doctorId:number;
-    date:string;
-    startTime:string;
-    endTime:string;
+    id: number;
+ date: string;
     status:
-        |"Available"      
-        |"Booked"
-        |"Finished"
-        |"Cancelled";
-    type:string;
+        | "Available"
+        | "Booked"
+        | "Completed";
+    type: string;
 }
 
-export interface AppointmentListItem{
-id:number,
-patientName:string,
-doctorName:string,
-appointment:Appointment,
-patientId:number,
-doctorId:number
+export interface AppointmentListItem {
+    id: number;
+    patientName: string;
+    doctorName: string;
+    appointment: Appointment;
+    patientId: number;
+    doctorId: number;
 }
 
-
-export interface AppointmentResponse{
-    data:AppointmentListItem,
-    message:string,
-    status:number
+export interface AppointmentResponse {
+    data: AppointmentListItem;
+    message: string;
+    status: number;
 }
-
 
 
 
 export type SlotStatus =
     | "Available"
     | "Booked"
-    | "Finished"
-    | "Cancelled";
-
+    | "Completed"
 export interface TimeSlot {
     id: number;
     date: string;
     startTime: string;
     endTime: string;
     status: SlotStatus;
-
     // موجود فقط لما status !== "Available"
     appointment?: AppointmentListItem;
 }

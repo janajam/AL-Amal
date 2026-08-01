@@ -8,6 +8,7 @@ import { getMonthWeeks } from "./AppointmentHelper";
 import AppointmentTable from "./AppointmentTable";
 import { dummySlots } from "./dummySlots";
 import { groupSlotsByDay } from "./helper";
+import BookingDialog from "./BookingDialog";
 
 interface Props {
     doctorId: number;
@@ -23,8 +24,12 @@ const AppointmentScheduleSection = ({ doctorId }: Props) => {
         useState(0);
 
     const [selectedAppointment, setSelectedAppointment] = useState<AppointmentListItem | null>(null);
+    const [slots, setSlots] = useState<TimeSlot[]>(dummySlots);
 
-    const [dialogOpen, setDialogOpen] = useState(false);
+    const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
+    const [bookingDialogOpen, setBookingDialogOpen] = useState(false);
+    const [detailsDialogOpen, setDetailsDialogOpen] = useState(false);
+
 
     useEffect(() => {
 
@@ -37,29 +42,35 @@ const AppointmentScheduleSection = ({ doctorId }: Props) => {
     ) => {
 
         setSelectedAppointment(appointment);
-        setDialogOpen(true);
+        // setDialogOpen(true);
 
     };
 
-    const slotsData = { data: dummySlots };
+    // const slotsData = { data: dummySlots };
 
     const weeks = useMemo(() => getMonthWeeks(selectedMonth), [selectedMonth]);
 
     const currentWeekDates: string[] = weeks[currentWeek] ?? [];
 
-    const groupedSlots = useMemo(
-        () => groupSlotsByDay(slotsData.data, currentWeekDates),
-        [currentWeekDates, slotsData.data]
-    );
 
+    const groupedSlots = useMemo(
+        () => groupSlotsByDay(slots, currentWeekDates),
+        [currentWeekDates, slots]
+    );
     const handleSlotClick = (slot: TimeSlot) => {
+        setSelectedSlot(slot);
+
         if (slot.status === "Available") {
-            // book new appointment
+            setBookingDialogOpen(true);
         } else {
-            // details of appointment
-            setSelectedAppointment(slot.appointment ?? null);
+            setDetailsDialogOpen(true);
         }
-        setDialogOpen(true);
+    };
+
+    const updateSlotInState = (updatedSlot: TimeSlot) => {
+        setSlots((prev) =>
+            prev.map((s) => (s.id === updatedSlot.id ? updatedSlot : s))
+        );
     };
     return (
 
@@ -68,13 +79,13 @@ const AppointmentScheduleSection = ({ doctorId }: Props) => {
             elevation={3}
             sx={{
                 p: 3,
-                mt:1,
-                mb:4,
+                mt: 1,
+                mb: 4,
                 width: "93%",
                 mx: "auto",
                 borderRadius: 2,
-                overflow: "hidden",  
-                maxWidth: "100%",    
+                overflow: "hidden",
+                maxWidth: "100%",
                 bgcolor:
                     theme.palette.background.default,
                 boxShadow:
@@ -87,7 +98,7 @@ const AppointmentScheduleSection = ({ doctorId }: Props) => {
                 sx={{
                     mb: 3,
                     fontWeight: 700,
-                    fontSize:17
+                    fontSize: 17
                 }}
 
             >
@@ -118,16 +129,13 @@ const AppointmentScheduleSection = ({ doctorId }: Props) => {
 
             </Box>
 
-            {/*
-
-            <AppointmentDialog
-                open={dialogOpen}
-                appointment={selectedAppointment}
-                onClose={() => setDialogOpen(false)}
+            <BookingDialog 
+            open={bookingDialogOpen}
+             onClose={() => setBookingDialogOpen(false)}
+            slot={selectedSlot} 
+            doctorId={1} 
+            onConfirm={updateSlotInState}
             />
-
-            */}
-
         </Paper>
 
     );

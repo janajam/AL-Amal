@@ -9,7 +9,7 @@ export const dummySlots: TimeSlot[] = [
         date: "2026-08-06",
         startTime: "07:00",
         endTime: "07:30",
-        status: "Cancelled",
+        status: "Booked",
         appointment: dummyAppointments[0],
     },
     {
@@ -32,7 +32,7 @@ export const dummySlots: TimeSlot[] = [
         date: "2026-08-08",
         startTime: "11:00",
         endTime: "11:30",
-        status: "Finished",
+        status: "Completed",
         appointment: dummyAppointments[2],
     },
     {
@@ -49,5 +49,28 @@ export const dummySlots: TimeSlot[] = [
         endTime: "12:00",
         status: "Available",
     },
+     {
+        id: 4,
+        date: "2026-08-04",
+        startTime: "11:00",
+        endTime: "11:30",
+        status: "Completed",
+        appointment: dummyAppointments[2],
+    },
+    {
+        id: 5,
+        date: "2026-08-03",
+        startTime: "11:30",
+        endTime: "12:00",
+        status: "Available",
+    },
+{
+        id: 6,
+        date: "2026-08-02",
+        startTime: "11:30",
+        endTime: "12:00",
+        status: "Available",
+    },
+
 
 ];

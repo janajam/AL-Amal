@@ -19,8 +19,7 @@ interface Props {
 const statusColorMap: Record<TimeSlot["status"], string> = {
     Available: "etal.main",
     Booked: "primary.main",
-    Finished: "gray",
-    Cancelled: "secondary.main",
+    Completed: "secondary.main",
 };
 
 const TimeSlotCard = ({ slot, onClick }: Props) => {
@@ -36,7 +35,7 @@ const TimeSlotCard = ({ slot, onClick }: Props) => {
                 bgcolor: ` ${slot.status === 'Booked'
                     ? theme.palette.background.paper
                     : theme.palette.background.default}`,
-                border: `1px solid ${slot.status === 'Cancelled'
+                border: `1px solid ${slot.status === 'Completed'
                         ? theme.palette.secondary.main
                         : theme.palette.divider}`,
                 transition: ".25s",
