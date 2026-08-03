@@ -13,6 +13,7 @@ import {
     Stack,
     TextField,
     Typography,
+    useTheme,
 } from "@mui/material";
 
 import {
@@ -43,6 +44,8 @@ const AppointmentDetailsDialog = ({
     onSave,
     onCancelAppointment,
 }: Props) => {
+
+    const theme = useTheme()
 
     const {
         control,
@@ -235,11 +238,16 @@ const AppointmentDetailsDialog = ({
 
                     </DialogContent>
 
-                    <DialogActions sx={{ justifyContent: "space-between", px: 3, pb: 2 }}>
+                    <DialogActions sx={{  px: 3, pb: 2 }}>
 
                         <Stack direction="row" spacing={1}>
-                            <Button onClick={onClose}>
-                                Close
+                            <Button 
+                            sx={{ 
+                                bgcolor:theme.palette.secondary.main,
+                                color:theme.palette.primary.contrastText
+                             }}
+                            onClick={onClose}>
+                                Cancel
                             </Button>
 
                             <Button type="submit" variant="contained">

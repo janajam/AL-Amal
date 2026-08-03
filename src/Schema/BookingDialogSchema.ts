@@ -26,7 +26,7 @@ export const bookingSchema = z
         (data) => data.endTime.isAfter(data.startTime),
         {
             message: "End time must be after start time.",
-            path: ["endTime"], // الخطأ يظهر تحديداً تحت حقل endTime
+            path: ["endTime"], 
         }
     );
 

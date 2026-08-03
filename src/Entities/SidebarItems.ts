@@ -6,7 +6,8 @@ import {
   Announcement,
   AppShortcut,
   CalendarMonth,
-  CreateRounded
+  CreateRounded,
+  Person
 } from '@mui/icons-material';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
@@ -83,6 +84,14 @@ export const sidebarItems: SidebarItem[] = [
     roles:['doctor'],
     subtitle:' '
   },
+  {
+    path:'/doctors',
+    label:'Doctors',
+    icon:Person,
+    roles:['secretary'],
+    subtitle:' '
+  },
+  
   {
     path: '/dashboard/profile',
     label: 'Profile',

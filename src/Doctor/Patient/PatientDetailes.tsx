@@ -185,7 +185,7 @@ const PatientDetailes = () => {
                             </Stack>
 
                             <Stack direction={'row'} spacing={1}>
-                                {patient.gander === 'male'
+                                {patient.gander === 'Male'
                                     ? <MaleOutlined
                                         sx={{
                                             color: theme.palette.etal.main

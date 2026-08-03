@@ -11,7 +11,7 @@ export default function DashboardLayout() {
   // const userRole = useAuthStore((state) => state.role);
   const theme = useTheme()
 
-  const userRole = 'doctor'
+  const userRole = 'secretary'
 
   if (!userRole) {
     return <Navigate to="/login" replace />;

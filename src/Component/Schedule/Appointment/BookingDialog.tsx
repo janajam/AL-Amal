@@ -12,6 +12,7 @@ import {
     Stack,
     TextField,
     Typography,
+    useTheme,
 } from "@mui/material";
 
 import {
@@ -39,6 +40,7 @@ const BookingDialog = ({
     onConfirm,
 }: Props) => {
 
+    const theme=useTheme()
     const {
         control,
         register,
@@ -175,7 +177,13 @@ const BookingDialog = ({
                     </DialogContent>
 
                     <DialogActions>
-                        <Button onClick={onClose}>
+                        <Button
+                          sx={{ 
+                                bgcolor:theme.palette.secondary.main,
+                                color:theme.palette.primary.contrastText
+                             }}
+                          
+                        onClick={onClose}>
                             Cancel
                         </Button>
 

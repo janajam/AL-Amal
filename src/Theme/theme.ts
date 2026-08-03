@@ -16,29 +16,33 @@ export const getTheme = (mode: 'light' | 'dark') =>
       mode,
       ...(mode === "light"
         ? {
-            primary: { main: "#2B5A6C" },
-            background: { default: "#fff", paper: "#E8F2F3", },
-            text: { primary: "#fffff" },
-            secondary: {
-              main: "#7CDBD8",
-              contrastText:''
-            },
-            etal:{
-              main:'#23A6B5'
-            }
-            
+          primary: { main: "#2B5A6C" },
+          background: { default: "#fff", paper: "#E8F2F3", },
+          text: { primary: "#fffff", secondary: '#00000' },
+          secondary: {
+            main: "#7CDBD8",
+            contrastText: ''
+          },
+          etal: {
+            main: '#23A6B5',
+            contrastText: '#000000'
+
           }
+
+        }
         : {
-            primary: { main: "#41B3C4" },
-            background: { default: "#1C6280", paper: "#76D7B6 " },
-     text: { primary: "#fffff" },
-            secondary: {
-              main: "#F1FDFF",
-            },
-            etal: {
-              main: "#9ed1d5",
-            },
-          }),
+          primary: { main: "#41B3C4" },
+          background: { default: "#1C6280", paper: "#76D7B6 " },
+          text: { primary: "#fffff", secondary: '#fffff' },
+          secondary: {
+            main: "#F1FDFF",
+          },
+          etal: {
+            main: "#9ed1d5",
+            contrastText: '#ffffff'
+
+          },
+        }),
     },
 
     typography: {
