@@ -7,7 +7,7 @@ export interface Patient {
     gander: string,
     address: string,
     email: string,
-    medicalRecord: MedicalRecord,
+    medicalRecord: MedicalRecord|null ,
     phoneNumber: string
 }
 
@@ -17,9 +17,9 @@ export interface MedicalRecord {
     allergies?: string[],
     longTermMedication?: string[],
     operations?: string[],
-    treatmentPlan?: TreatmentPlan[],
-    testResult?: TestResult[],
-    xRayImage?: XRayImage[]
+    treatmentPlan?: TreatmentPlan[]|null,
+    testResult?: TestResult[]|null,
+    xRayImage?: XRayImage[]|null
 }
 
 

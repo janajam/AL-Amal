@@ -1,23 +1,26 @@
 
 import {
+    AddRounded,
     ArrowBack,
     CalendarMonthOutlined,
     FemaleOutlined,
-    MaleOutlined
+    MaleOutlined,
+    MedicalInformationOutlined
 } from '@mui/icons-material';
-import { Box, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Button, Stack, Typography, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import type { Patient } from '../../Entities/Patient';
 import pdf from '../../assets/SRS HIMS.pdf'
 import img from '../../assets/img.webp'
-
-
 import img2 from '../../assets/img2.webp'
 import ContactInfo from './ContactInfo/ContactInfo';
 import MedicalRecordSection from './MedicalRecord/MedicalRecordSection';
 import TreatmentPlanSection from './TreatmentPlan/TreatmentPlan';
 import TestResultSection from './TestResult/TestSection';
 import XRayImageSection from './XRayImage/XRayImageSection';
+import { useAuthStore } from '../../Store/AuthStore';
+import CreateMedicalRecordDialog from './MedicalRecord/CreateMedicalRecordDialog';
+import { useState } from 'react';
 
 //for test 
 
@@ -29,102 +32,102 @@ const patient: Patient = {
     address: "New York",
     email: "john@email.com",
     phoneNumber: "123456789",
+    medicalRecord: null
+    // medicalRecord: {
+    //     id: 1,
 
-    medicalRecord: {
-        id: 1,
+    //     sickness: ["Diabetes"],
 
-        sickness: ["Diabetes"],
+    //     allergies: [
+    //         "Penicillin",
+    //         "Seafood"
+    //     ],
 
-        allergies: [
-            "Penicillin",
-            "Seafood"
-        ],
+    //     longTermMedication: [
+    //         "Metformin 500mg"
+    //     ],
 
-        longTermMedication: [
-            "Metformin 500mg"
-        ],
+    //     operations: [
+    //         "Appendectomy"
+    //     ],
 
-        operations: [
-            "Appendectomy"
-        ],
+    //     treatmentPlan: [
+    //         {
+    //             id: 1,
+    //             medicalDiagnosis: "Type 2 Diabetes",
+    //             doctorName: "Ahmed",
+    //             treatmentSteps: [
+    //                 "Continue Metformin",
+    //                 "Walk 30 minutes",
+    //                 "HbA1c after 8 weeks",
+    //                 "HbA1c after 8 weeks"
 
-        treatmentPlan: [
-            {
-                id: 1,
-                medicalDiagnosis: "Type 2 Diabetes",
-                doctorName: "Ahmed",
-                treatmentSteps: [
-                    "Continue Metformin",
-                    "Walk 30 minutes",
-                    "HbA1c after 8 weeks",
-                    "HbA1c after 8 weeks"
+    //             ],
+    //             date: new Date(),
+    //             status: "Ongoing"
+    //         },
+    //         {
+    //             id: 2,
+    //             medicalDiagnosis: "Hypertension",
+    //             doctorName: "Sarah",
+    //             treatmentSteps: [
+    //                 "Reduce salt",
+    //                 "Exercise daily"
+    //             ],
+    //             date: new Date("2025-10-01"),
+    //             status: "Finished"
+    //         }
+    //     ],
 
-                ],
-                date: new Date(),
-                status: "Ongoing"
-            },
-            {
-                id: 2,
-                medicalDiagnosis: "Hypertension",
-                doctorName: "Sarah",
-                treatmentSteps: [
-                    "Reduce salt",
-                    "Exercise daily"
-                ],
-                date: new Date("2025-10-01"),
-                status: "Finished"
-            }
-        ],
+    //     testResult: [
+    //         {
+    //             id: 1,
+    //             requestedBy: "Ahmed",
+    //             uploaded_by: "Leen",
+    //             title: "Blood Test Report.pdf",
+    //             attachment: pdf,
+    //             uploaded_at: new Date(),
+    //             result: 'result of test'
+    //         },
+    //         {
+    //             id: 2,
+    //             requestedBy: "Sarah",
+    //             uploaded_by: "Leen",
+    //             title: "Vitamin D Report.pdf",
+    //             attachment: pdf,
+    //             uploaded_at: new Date("2025-09-12"),
+    //             result: 'result of test'
 
-        testResult: [
-            {
-                id: 1,
-                requestedBy: "Ahmed",
-                uploaded_by: "Leen",
-                title: "Blood Test Report.pdf",
-                attachment: pdf,
-                uploaded_at: new Date(),
-                result: 'result of test'
-            },
-            {
-                id: 2,
-                requestedBy: "Sarah",
-                uploaded_by: "Leen",
-                title: "Vitamin D Report.pdf",
-                attachment: pdf,
-                uploaded_at: new Date("2025-09-12"),
-                result: 'result of test'
+    //         }
+    //     ],
+    //     xRayImage: [
+    //         {
+    //             id: 1,
+    //             requestedBy: "Ahmed",
+    //             description:
+    //                 "Hand X-ray shows no active pulmonary disease.",
 
-            }
-        ],
-        xRayImage: [
-            {
-                id: 1,
-                requestedBy: "Ahmed",
-                description:
-                    "Hand X-ray shows no active pulmonary disease.",
+    //             type: "Hand X-Ray",
 
-                type: "Hand X-Ray",
+    //             image: img,
+    //             uploaded_by: "Leen",
+    //             uploaded_at: new Date()
+    //         },
 
-                image: img,
-                uploaded_by: "Leen",
-                uploaded_at: new Date()
-            },
+    //         {
+    //             id: 2,
+    //             requestedBy: "Sarah",
+    //             description:
+    //                 "Left knee joint with mild osteoarthritis.",
 
-            {
-                id: 2,
-                requestedBy: "Sarah",
-                description:
-                    "Left knee joint with mild osteoarthritis.",
+    //             type: "Knee X-Ray",
 
-                type: "Knee X-Ray",
-
-                image: img2,
-                uploaded_by: 'Leen',
-                uploaded_at: new Date("2025-08-10")
-            }
-        ]
-    }
+    //             image: img2,
+    //             uploaded_by: 'Leen',
+    //             uploaded_at: new Date("2025-08-10")
+    //         }
+    //     ]
+    // }
 };
 
 
@@ -132,7 +135,18 @@ const PatientDetailes = () => {
 
     const theme = useTheme();
     const navigate = useNavigate();
+    const userRole = 'secretary'
+    // const userRole = useAuthStore((state) => state.role);
+    const medicalRecord = patient.medicalRecord;
+const [open,setOpen]=useState(false)
 
+const handleCreate = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <>
@@ -218,30 +232,95 @@ const PatientDetailes = () => {
                         {/* contant info */}
                         <ContactInfo patient={patient} />
                         {/* medical record */}
-                        <MedicalRecordSection record={patient.medicalRecord ?? []} />
+                        {medicalRecord ? (
+
+                            <MedicalRecordSection
+                                record={patient.medicalRecord!}
+                            />
+
+                        ) : userRole === "secretary" ? (
+                            <Stack direction={'column'}>
+                                <Stack
+                                    direction={'row'}
+                                    spacing={2}
+                                    sx={{
+                                        my: 2
+                                    }}
+                                >
+                                    <MedicalInformationOutlined
+                                        sx={{
+                                            color: theme.palette.etal.main
+
+                                        }} />
+
+                                    <Typography
+                                        sx={{
+                                            fontWeight: 600,
+                                            fontSize: 20,
+                                            mt: 2,
+                                            whiteSpace: 'nowrap',
+                                            [theme.breakpoints.down('md')]: {
+                                                fontSize: 19
+                                            },
+
+                                            ml: '50%'
+                                        }}
+                                    >
+                                        Medical Record
+                                    </Typography>
+
+                                </Stack>
+
+                                <Button
+                                    startIcon={<AddRounded />}
+                                    sx={{
+                                        whiteSpace: 'nowrap',
+                                        width: 180,
+                                        border: `2px solid ${theme.palette.etal.main}`,
+                                        bgcolor: theme.palette.etal.main,
+                                        color: theme.palette.primary.contrastText,
+                                       
+                                    }}
+                                    onClick={handleCreate}
+                                >
+                                    Create record
+                                    </Button>
+
+                                    <CreateMedicalRecordDialog
+                                     open={open}
+                                      onClose={handleClose}                            />
+                            </Stack>
+                        ) : (
+
+                            <Typography
+                                color="text.secondary"
+                            >
+                                No medical record found.
+                            </Typography>
+
+                        )}
+
                     </Stack>
+
                 </Box>
 
-                {/* treatment Plan */}
+                {medicalRecord && (
 
-                <TreatmentPlanSection
-                    plans={
-                        patient.medicalRecord.treatmentPlan ?? []
-                    }
-                />
-                {/* test result */}
+                    <>
+                        <TreatmentPlanSection
+                            plans={medicalRecord.treatmentPlan ?? []}
+                        />
 
-                <TestResultSection
-                    results={
-                        patient.medicalRecord.testResult ?? []
-                    } />
+                        <TestResultSection
+                            results={medicalRecord.testResult ?? []}
+                        />
 
-                {/* XRay Image */}
+                        <XRayImageSection
+                            image={medicalRecord.xRayImage ?? []}
+                        />
+                    </>
 
-                <XRayImageSection
-                    image={
-                        patient.medicalRecord.xRayImage ?? []
-                    } />
+                )}
             </div >
 
         </>

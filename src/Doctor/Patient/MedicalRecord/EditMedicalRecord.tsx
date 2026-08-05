@@ -115,24 +115,16 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
                                                 <TextField
                                                     {...field}
                                                     fullWidth
-
                                                 />
-
                                             )}
                                         />
-
-
                                         <IconButton
-
                                             color="error"
-
                                             onClick={() => {
-
                                                 const updated =
                                                     sickness.filter(
                                                         (_, i) => i !== index
                                                     );
-
                                                 setValue(
                                                     "sickness",
                                                     updated,
@@ -140,7 +132,6 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
                                                         shouldDirty: true,
                                                     }
                                                 );
-
                                             }}
                                         >
                                             <Delete />
@@ -152,7 +143,6 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
                             <Button
                                 startIcon={<Add />}
                                 onClick={() => {
-
                                     setValue(
                                         "sickness",
                                         [...sickness, ""],
@@ -160,7 +150,6 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
                                             shouldDirty: true,
                                         }
                                     );
-
                                 }}
                             >
                                 Add Disease

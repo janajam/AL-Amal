@@ -27,7 +27,7 @@ export interface SidebarItem {
 export const sidebarItems: SidebarItem[] = [
   {
     path: '/dashboard',
-    label: 'Dashboard',
+    label: ' Dashboard',
     icon: HomeIcon,
     roles: ['admin', 'secretary', 'doctor'],
     subtitle: 'Welcome To Your Dashboard'

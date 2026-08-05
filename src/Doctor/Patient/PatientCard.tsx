@@ -2,56 +2,31 @@ import { Box, Card, CardContent, CardHeader, Stack, Typography, useTheme } from 
 import CardContainer from "../../Component/CardContainer"
 import { useNavigate } from "react-router-dom"
 import { useGetPatients } from "../../Hook/UseGetPatients"
+import type { Patient } from "../../Entities/Patient"
 
 
-//for test 
-const patients = [
-  {
-    id: 1, name: 'AA', email: 'aa@email.com', birthDay: '2/4/2001', gander: 'mail', address: 'address', phoneNumber: '5555', medicalRecord: {
-      id: 1, allergies: ['allergy1', 'allergy2']
-    }
-  },
-  {
-    id: 2, name: 'BB', email: 'BB@email.com', birthDay: '2/4/2001', gander: 'mail', address: 'address', phoneNumber: '5555', medicalRecord: {
-      id: 1, allergies: ['allergy1', 'allergy2']
-    }
-  },
-  {
-    id: 3, name: 'CC', email: 'CC@email.com', birthDay: '2/4/2001', gander: 'mail', address: 'address', phoneNumber: '5555', medicalRecord: {
-      id: 1, allergies: ['allergy1', 'allergy2']
-    }
-  },
-  {
-    id: 4, name: 'DD', email: 'DD@email.com', birthDay: '2/4/2001', gander: 'mail', address: 'address', phoneNumber: '5555', medicalRecord: {
-      id: 1, allergies: ['allergy1', 'allergy2']
-    }
-  },
 
+interface Props{
+  patient:Patient|null
+}
 
-]
-
-const PatientCard = () => {
+const PatientCard = ({patient}:Props) => {
   const theme = useTheme()
   const navigate = useNavigate()
-  const {data}=useGetPatients()
   return (
 
-    <Box>
-
-      
-      {
-        patients.map((patient) => (
+    <Box>      
           <CardContainer>
-            <Card key={patient.id} sx={{
+            <Card key={patient?.id} sx={{
               my: 2,
               bgcolor: theme.palette.background.default,
               boxShadow: '0 4px 10px #9ed1d5',
               px: 2
             }}
-              onClick={() => navigate(`/patients/${patient.id}`)}
+              onClick={() => navigate(`/patients/${patient?.id}`)}
             >
               <CardHeader
-                subheader={patient.name}
+                subheader={patient?.name}
                 sx={{
                   color: theme.palette.primary.main,
 
@@ -59,7 +34,7 @@ const PatientCard = () => {
               />
               <CardContent>
                 <Stack spacing={2}>
-                  <Typography>{patient.gander}</Typography>
+                  <Typography>{patient?.gander}</Typography>
                   <Stack
                     direction={'row'}
                     spacing={2}
@@ -72,7 +47,7 @@ const PatientCard = () => {
                     >
                       Email :
                     </Typography>
-                    <Typography>{patient.email}
+                    <Typography>{patient?.email}
                     </Typography>
                   </Stack>
                   <Stack direction={'row'} spacing={2}>
@@ -84,7 +59,7 @@ const PatientCard = () => {
                     >
                       Phone :
                     </Typography>
-                    <Typography>{patient.phoneNumber}</Typography>
+                    <Typography>{patient?.phoneNumber}</Typography>
                   </Stack>
                   <Stack direction={'row'} spacing={2}>
                     <Typography
@@ -96,15 +71,14 @@ const PatientCard = () => {
                       Address :
                     </Typography>
                     <Typography>
-                      {patient.address}
+                      {patient?.address}
                     </Typography>
                   </Stack>
                 </Stack>
               </CardContent>
             </Card>
           </CardContainer>
-        ))
-      }
+        
     </Box>
   )
 }
