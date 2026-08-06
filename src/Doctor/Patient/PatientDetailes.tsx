@@ -32,102 +32,102 @@ const patient: Patient = {
     address: "New York",
     email: "john@email.com",
     phoneNumber: "123456789",
-    medicalRecord: null
-    // medicalRecord: {
-    //     id: 1,
+    // medicalRecord: null
+    medicalRecord: {
+        id: 1,
 
-    //     sickness: ["Diabetes"],
+        sickness: ["Diabetes"],
 
-    //     allergies: [
-    //         "Penicillin",
-    //         "Seafood"
-    //     ],
+        allergies: [
+            "Penicillin",
+            "Seafood"
+        ],
 
-    //     longTermMedication: [
-    //         "Metformin 500mg"
-    //     ],
+        longTermMedication: [
+            "Metformin 500mg"
+        ],
 
-    //     operations: [
-    //         "Appendectomy"
-    //     ],
+        operations: [
+            "Appendectomy"
+        ],
 
-    //     treatmentPlan: [
-    //         {
-    //             id: 1,
-    //             medicalDiagnosis: "Type 2 Diabetes",
-    //             doctorName: "Ahmed",
-    //             treatmentSteps: [
-    //                 "Continue Metformin",
-    //                 "Walk 30 minutes",
-    //                 "HbA1c after 8 weeks",
-    //                 "HbA1c after 8 weeks"
+        treatmentPlan: [
+            {
+                id: 1,
+                medicalDiagnosis: "Type 2 Diabetes",
+                doctorName: "Ahmed",
+                treatmentSteps: [
+                    "Continue Metformin",
+                    "Walk 30 minutes",
+                    "HbA1c after 8 weeks",
+                    "HbA1c after 8 weeks"
 
-    //             ],
-    //             date: new Date(),
-    //             status: "Ongoing"
-    //         },
-    //         {
-    //             id: 2,
-    //             medicalDiagnosis: "Hypertension",
-    //             doctorName: "Sarah",
-    //             treatmentSteps: [
-    //                 "Reduce salt",
-    //                 "Exercise daily"
-    //             ],
-    //             date: new Date("2025-10-01"),
-    //             status: "Finished"
-    //         }
-    //     ],
+                ],
+                date: new Date(),
+                status: "Ongoing"
+            },
+            {
+                id: 2,
+                medicalDiagnosis: "Hypertension",
+                doctorName: "Sarah",
+                treatmentSteps: [
+                    "Reduce salt",
+                    "Exercise daily"
+                ],
+                date: new Date("2025-10-01"),
+                status: "Finished"
+            }
+        ],
 
-    //     testResult: [
-    //         {
-    //             id: 1,
-    //             requestedBy: "Ahmed",
-    //             uploaded_by: "Leen",
-    //             title: "Blood Test Report.pdf",
-    //             attachment: pdf,
-    //             uploaded_at: new Date(),
-    //             result: 'result of test'
-    //         },
-    //         {
-    //             id: 2,
-    //             requestedBy: "Sarah",
-    //             uploaded_by: "Leen",
-    //             title: "Vitamin D Report.pdf",
-    //             attachment: pdf,
-    //             uploaded_at: new Date("2025-09-12"),
-    //             result: 'result of test'
+        testResult: [
+            {
+                id: 1,
+                requestedBy: "Ahmed",
+                uploaded_by: "Leen",
+                title: "Blood Test Report.pdf",
+                attachment: pdf,
+                uploaded_at: new Date(),
+                result: 'result of test'
+            },
+            {
+                id: 2,
+                requestedBy: "Sarah",
+                uploaded_by: "Leen",
+                title: "Vitamin D Report.pdf",
+                attachment: pdf,
+                uploaded_at: new Date("2025-09-12"),
+                result: 'result of test'
 
-    //         }
-    //     ],
-    //     xRayImage: [
-    //         {
-    //             id: 1,
-    //             requestedBy: "Ahmed",
-    //             description:
-    //                 "Hand X-ray shows no active pulmonary disease.",
+            }
+        ],
+        xRayImage: [
+            {
+                id: 1,
+                requestedBy: "Ahmed",
+                description:
+                    "Hand X-ray shows no active pulmonary disease.",
 
-    //             type: "Hand X-Ray",
+                type: "Hand X-Ray",
 
-    //             image: img,
-    //             uploaded_by: "Leen",
-    //             uploaded_at: new Date()
-    //         },
+                image: img,
+                uploaded_by: "Leen",
+                uploaded_at: new Date()
+            },
 
-    //         {
-    //             id: 2,
-    //             requestedBy: "Sarah",
-    //             description:
-    //                 "Left knee joint with mild osteoarthritis.",
+            {
+                id: 2,
+                requestedBy: "Sarah",
+                description:
+                    "Left knee joint with mild osteoarthritis.",
 
-    //             type: "Knee X-Ray",
+                type: "Knee X-Ray",
 
-    //             image: img2,
-    //             uploaded_by: 'Leen',
-    //             uploaded_at: new Date("2025-08-10")
-    //         }
-    //     ]
-    // }
+                image: img2,
+                uploaded_by: 'Leen',
+                uploaded_at: new Date("2025-08-10")
+            }
+        ]
+    }
 };
 
 
@@ -135,6 +135,15 @@ const PatientDetailes = () => {
 
     const theme = useTheme();
     const navigate = useNavigate();
+
+    // const { id } = useParams();
+
+    // const {
+    // data,
+    // } = useGetPatient(Number(id));
+
+    // const patient = data?.data;
+
     const userRole = 'secretary'
     // const userRole = useAuthStore((state) => state.role);
     const medicalRecord = patient.medicalRecord;

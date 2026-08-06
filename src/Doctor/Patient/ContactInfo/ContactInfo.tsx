@@ -3,6 +3,7 @@ import { Button, Stack, Typography, useTheme } from "@mui/material"
 import { useState } from "react";
 import type { Patient } from "../../../Entities/Patient";
 import EditContactInfoDialog from "./EditContactInfo";
+import { useAuthStore } from "../../../Store/AuthStore";
 
 interface Props {
     patient: Patient;
@@ -10,7 +11,8 @@ interface Props {
 
 const ContactInfo = ({ patient }: Props) => {
     const [open, setOpen] = useState(false);
-
+    // const userRole = useAuthStore((state) => state.role);
+   const  userRole='secretary'
     const handleEdit = () => {
         setOpen(true);
     };
@@ -103,6 +105,7 @@ const ContactInfo = ({ patient }: Props) => {
 
                     </Stack>
                 </Stack>
+                {userRole!=='secretary'&&
                 <Button
                     startIcon={<EditRounded />}
                     sx={{
@@ -119,6 +122,7 @@ const ContactInfo = ({ patient }: Props) => {
                 >
                     Edit
                 </Button>
+}
             </Stack>
             <EditContactInfoDialog
                 open={open}

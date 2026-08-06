@@ -16,6 +16,8 @@ import pdf from '../../assets/SRS HIMS.pdf'
 import { ArrowBack } from "@mui/icons-material";
 import LicenseItem from "./LicenseItem";
 import Schedule from "../../Component/Schedule/Schedule";
+import { useAuthStore } from "../../Store/AuthStore";
+import AppointmentScheduleSection from "../../Component/Schedule/Appointment/AppointmentScheduleSection";
 
 //for test
 const accounts = [
@@ -56,7 +58,8 @@ const accounts = [
 const AccountDetails = () => {
     const theme = useTheme();
     const navigate = useNavigate();
-
+    const userRole = 'secretary'
+    // const userRole = useAuthStore((state) => state.role);
     // const { id } = useParams();
 
     // const {
@@ -88,7 +91,7 @@ const AccountDetails = () => {
                             width: "90%",
                             bgcolor: theme.palette.background.default,
                             justifySelf: "center",
-                            borderRadius:1,
+                            borderRadius: 1,
                             p: 3,
                             mb: 3,
                             boxShadow: "0 2px 17px #9ed1d5",
@@ -281,44 +284,45 @@ const AccountDetails = () => {
                                     </>
                                 )}
 
-                                {/* <Stack direction="row" spacing={2}>
-                                    <Typography sx={{ fontWeight: 600 }}>
-                                        Working Days:
-                                    </Typography>
-                                    <Schedule accountId={account.id} />
-                                    <Typography>
-
-                                        {account?.workingDays.join(", ")}
-                                        {/* {account.workingDays} 
-                                    </Typography>
-                                </Stack> */}
 
 
-                              
-                              </Stack>
+
+                            </Stack>
                         </Stack>
-                                    
+
                     </Box>
-                       <Schedule accountId={account.id} />
-                         <Button
-                                    variant="contained"
-                                    sx={{
-                                        my: 3,
-                                        alignSelf: "flex-end",
-                                        justifySelf:'flex-end',
-                                        ml:'88%',
-                                        bgcolor:
-                                            account?.status === "ACTIVE"
-                                                ? theme.palette.secondary.main
-                                                : theme.palette.etal.main,
-                                    }}
-                                >
-                                    {account?.status === "ACTIVE"
-                                        ? "Revoke"
-                                        : "Unrevoke"}
-                                </Button>
-                            
-                     
+                    {userRole !== "secretary" ? (
+                        <>
+                            <Schedule accountId={account.id} />
+
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    my: 3,
+                                    alignSelf: "flex-end",
+                                    justifySelf: 'flex-end',
+                                    ml: '88%',
+                                    bgcolor:
+                                        account?.status === "ACTIVE"
+                                            ? theme.palette.secondary.main
+                                            : theme.palette.etal.main,
+                                }}
+                            >
+                                {account?.status === "ACTIVE"
+                                    ? "Revoke"
+                                    : "Unrevoke"}
+                            </Button>
+                        </>
+                    )
+                        : (
+                            <>
+                                <AppointmentScheduleSection
+                                    doctorId={account.id} />
+
+                            </>
+                        )
+                    }
+
                 </div>
             )}
         </>

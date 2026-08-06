@@ -1,8 +1,9 @@
-import AccountCard from './AccountCard'
+
 import logo from '../../assets/logo.webp'
 import type { Account, Department } from '../../Entities/AccountsData'
 import { dummySchedule } from '../../Component/Schedule/ScheduleDummy'
 import { useNavigate } from 'react-router-dom';
+import AccountCard from '../../Admin/Accounts/AccountCard';
 
 //for test
 
@@ -11,7 +12,7 @@ const department: Department = {
   name: "Cardiology",
 };
 
-const accounts: Account[] = [
+const secretaries: Account[] = [
   {
     id: 1,
     name: "A",
@@ -24,7 +25,7 @@ const accounts: Account[] = [
 
     image: logo,
 
-    role: "Doctor",
+    role: "Secretary",
 
     status: "ACTIVE",
 
@@ -50,7 +51,7 @@ const accounts: Account[] = [
 
     image: logo,
 
-    role: "Doctor",
+    role: "Secretary",
 
     status: "ACTIVE",
 
@@ -89,19 +90,19 @@ const accounts: Account[] = [
     workingDays: dummySchedule,
   },
 ];
-const Accounts = () => {
+const DoctorsList = () => {
   const navigate = useNavigate();
   return (
     <>
-      {accounts.map((account) => (
+      {secretaries.map((secretary) => (
         <AccountCard
-          key={account.id}
-          account={account}
-          onClick={() => navigate(`/accounts/${account?.id}`)}
+          key={secretary.id}
+          account={secretary}
+          onClick={() => navigate(`/accounts/${secretary.id}`)}
         />
       ))}
     </>
   )
 
 }
-export default Accounts
+export default DoctorsList

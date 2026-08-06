@@ -5,6 +5,7 @@ import { Button, Stack, Typography, useTheme } from '@mui/material'
 import { useState } from 'react';
 import type { MedicalRecord } from '../../../Entities/Patient';
 import EditMedicalRecord from './EditMedicalRecord';
+import { useAuthStore } from '../../../Store/AuthStore';
 
 interface Props {
     record: MedicalRecord;
@@ -12,7 +13,9 @@ interface Props {
 const MedicalRecordSection = ({ record }: Props) => {
     const theme = useTheme()
     const [open, setOpen] = useState(false);
-
+    // const userRole = useAuthStore((state) => state.role);
+   const  userRole='secretary'
+   
     const handleEdit = () => {
         setOpen(true);
     };
@@ -147,6 +150,7 @@ const MedicalRecordSection = ({ record }: Props) => {
                             ))}
                         </Stack>
                     </Stack>
+                    {userRole!=='secretary'&&
                     <Button
                         startIcon={<EditRounded />}
                         sx={{
@@ -163,7 +167,7 @@ const MedicalRecordSection = ({ record }: Props) => {
                     >
                         Edit
                     </Button>
-
+}
                 </Stack>
             </Stack>
             <EditMedicalRecord

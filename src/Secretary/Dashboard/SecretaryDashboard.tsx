@@ -1,8 +1,8 @@
-import { Alert, Box, Typography } from "@mui/material";
-import PatientSearch from "./Dashboard/PatientSearch";
-import type { Patient } from "../Entities/Patient";
+import { Box, Typography } from "@mui/material";
 import { useState } from "react";
-import PatientCard from "../Doctor/Patient/PatientCard";
+import PatientCard from "../../Doctor/Patient/PatientCard";
+import type { Patient } from "../../Entities/Patient";
+import PatientSearch from "./PatientSearch";
 
 
 // for test

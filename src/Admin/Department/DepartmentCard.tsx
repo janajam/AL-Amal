@@ -88,7 +88,7 @@ const DepartmentCard = () => {
 
                                             onClick={() =>
                                                 navigate(
-                                                    `/accounts?role=Doctor&department=${department.id}`
+                                                    `/dashboard/doctors`
                                                 )
                                             }
                                         >
@@ -112,11 +112,12 @@ const DepartmentCard = () => {
                                                 border: `2px solid ${theme.palette.etal.main}`,
                                                 color: theme.palette.etal.main
                                             }}
-                                            onClick={() =>
+                                              onClick={() =>
                                                 navigate(
-                                                    `/accounts?role=Secretary&department=${department.id}`
+                                                    `/dashboard/secretaries`
                                                 )
                                             }
+                                       
                                         >
                                             Veiw Secretaries
 

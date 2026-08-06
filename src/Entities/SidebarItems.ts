@@ -85,11 +85,11 @@ export const sidebarItems: SidebarItem[] = [
     subtitle:' '
   },
   {
-    path:'/doctors',
+    path:'/dashboard/doctors',
     label:'Doctors',
     icon:Person,
     roles:['secretary'],
-    subtitle:' '
+    subtitle:'Manage Doctor Information'
   },
   
   {

@@ -17,6 +17,7 @@ import { AddRounded, EditRounded, PersonOutlined } from "@mui/icons-material";
 import EditTreatmentPlanDialog from "./EditTreatmentPlanDialog";
 import type { TreatmentPlan } from "../../../Entities/Patient";
 import CreateTreatmentPlanDialog from "./CreateTreatmentPlanDialog";
+import { useAuthStore } from "../../../Store/AuthStore";
 
 interface Props {
     plans: TreatmentPlan[];
@@ -28,6 +29,9 @@ const TreatmentPlanSection = ({ plans }: Props) => {
     const [open, setOpen] = useState(false);
     const [openDialog, setOpenDialog] = useState(false)
 
+    // const userRole = useAuthStore((state) => state.role);
+   const  userRole='secretary'
+   
     const handleCreate = () => {
         setOpenDialog(true);
     };
@@ -70,6 +74,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                 >
                     Treatment Plan
                 </Typography>
+                {userRole!=='secretary'&&
                 <Button
                     variant='outlined'
                     startIcon={<AddRounded />}
@@ -85,6 +90,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                 >
                     New Plane
                 </Button>
+}
             </Stack>
             <Tabs
                 value={selected}
@@ -272,6 +278,8 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                         ))}
                     </Box>
                 </Stack>
+                    {userRole!=='secretary'&&
+            
                 <Button
                     startIcon={<EditRounded />}
                     sx={{
@@ -288,7 +296,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                 >
                     Edit
                 </Button>
-
+}
             </Card>
 
             <CreateTreatmentPlanDialog

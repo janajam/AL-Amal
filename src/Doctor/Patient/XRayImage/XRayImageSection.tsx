@@ -26,6 +26,7 @@ import {
 import type { XRayImage } from "../../../Entities/Patient";
 import EditXRayImageDialog from "./EditXRayImageDialog";
 import AddXRayImageDialog from "./AddXRayImageDialog";
+import { useAuthStore } from "../../../Store/AuthStore";
 
 interface Props {
     image: XRayImage[];
@@ -36,6 +37,9 @@ const XRayImageSection = ({ image }: Props) => {
     const [openDialog, setOpenDialog] = useState(false);
     const [previewOpen, setPreviewOpen] = useState(false);
     const theme = useTheme();
+    // const userRole = useAuthStore((state) => state.role);
+   const  userRole='secretary'
+   
 
     const handleEdit = () => {
         setOpen(true);
@@ -82,6 +86,8 @@ const XRayImageSection = ({ image }: Props) => {
                 >
                     Radiology Image
                 </Typography>
+                    {userRole!=='secretary'&&
+            
                 <Button
                     variant='outlined'
                     startIcon={<AddRounded />}
@@ -97,7 +103,7 @@ const XRayImageSection = ({ image }: Props) => {
                 >
                     Add
                 </Button>
-
+}
             </Stack>
             <Tabs
                 value={selected}
@@ -328,6 +334,8 @@ const XRayImageSection = ({ image }: Props) => {
                         />
                     </Card>
                 </Stack>
+                    {userRole!=='secretary'&&
+            
                 <Button
                     startIcon={<EditRounded />}
                     sx={{
@@ -346,7 +354,7 @@ const XRayImageSection = ({ image }: Props) => {
                 >
                     Edit
                 </Button>
-
+}
             </Card>
 
             <EditXRayImageDialog

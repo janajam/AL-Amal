@@ -25,17 +25,21 @@ import {
 import type { TestResult } from "../../../Entities/Patient";
 import EditTestResultDialog from "./EditTestResultDialog";
 import AddTestResultDialog from "./AddTestResultDialog";
+import { useAuthStore } from "../../../Store/AuthStore";
 
 interface Props {
     results: TestResult[];
 }
 
 const TestResultSection = ({ results }: Props) => {
+const  userRole='secretary'
+   
+    // const userRole = useAuthStore((state) => state.role);
 
     const theme = useTheme();
     const [open, setOpen] = useState(false);
-     const [openDialog, setOpenDialog] = useState(false);
-   
+    const [openDialog, setOpenDialog] = useState(false);
+
     const [selected, setSelected] = useState(0);
 
     const handleEdit = () => {
@@ -45,7 +49,7 @@ const TestResultSection = ({ results }: Props) => {
     const handleClose = () => {
         setOpen(false);
     };
-const handleAdd = () => {
+    const handleAdd = () => {
         setOpenDialog(true);
     };
 
@@ -82,22 +86,23 @@ const handleAdd = () => {
                 >
                     Test Results
                 </Typography>
-                <Button
-                    variant='outlined'
-                    startIcon={<AddRounded />}
-                    sx={{
-                        whiteSpace: 'nowrap',
-                        border: `2px solid ${theme.palette.primary.main}`,
-                        color: theme.palette.primary.main,
-                        ml: '83%',
-                        mt: 4,
+                {userRole !== 'secretary' &&
+                    <Button
+                        variant='outlined'
+                        startIcon={<AddRounded />}
+                        sx={{
+                            whiteSpace: 'nowrap',
+                            border: `2px solid ${theme.palette.primary.main}`,
+                            color: theme.palette.primary.main,
+                            ml: '83%',
+                            mt: 4,
 
-                    }}
-                onClick={() => handleAdd()}
-                >
-                    Add
-                </Button>
-
+                        }}
+                        onClick={() => handleAdd()}
+                    >
+                        Add
+                    </Button>
+                }
             </Stack>
             <Tabs
                 value={selected}
@@ -223,7 +228,7 @@ const handleAdd = () => {
                                 <Typography
                                     sx={{ fontWeight: 700 }}
                                 >
-                                    Laboratory Technician 
+                                    Laboratory Technician
                                 </Typography>
 
                                 <Typography >
@@ -262,12 +267,12 @@ const handleAdd = () => {
 
                         </Stack>
                         <Stack direction={'row'} spacing={3}>
-                                <DescriptionOutlined 
-                                sx={{ color:theme.palette.etal.main }}
-                                />
-                                <Typography>
-                                    {current.result}
-                                </Typography>
+                            <DescriptionOutlined
+                                sx={{ color: theme.palette.etal.main }}
+                            />
+                            <Typography>
+                                {current.result}
+                            </Typography>
                         </Stack>
                     </Stack>
                     {/* <Divider /> */}
@@ -345,37 +350,37 @@ const handleAdd = () => {
                         </Stack>
 
                     </Card>
-
-
                 </Stack>
-                <Button
-                    startIcon={<EditRounded />}
-                    sx={{
-                        whiteSpace: 'nowrap',
-                        width: 120,
-                        border: `2px solid ${theme.palette.etal.main}`,
-                        bgcolor: theme.palette.etal.main,
-                        color: theme.palette.primary.contrastText,
-                        alignSelf: 'flex-end',
-                        mt: 4,
-                        ml: '86%',
+
+                {userRole !== 'secretary' &&
+                    <Button
+                        startIcon={<EditRounded />}
+                        sx={{
+                            whiteSpace: 'nowrap',
+                            width: 120,
+                            border: `2px solid ${theme.palette.etal.main}`,
+                            bgcolor: theme.palette.etal.main,
+                            color: theme.palette.primary.contrastText,
+                            alignSelf: 'flex-end',
+                            mt: 4,
+                            ml: '86%',
 
 
-                    }}
-                    onClick={() => handleEdit()}
-                >
-                    Edit
-                </Button>
-
+                        }}
+                        onClick={() => handleEdit()}
+                    >
+                        Edit
+                    </Button>
+                }
             </Card>
-<EditTestResultDialog
- open={open}
-  result={current} 
-  onClose={handleClose }/>
+            <EditTestResultDialog
+                open={open}
+                result={current}
+                onClose={handleClose} />
 
-  <AddTestResultDialog
-   open={openDialog} 
-   onClose={handleCloseDialog}  />
+            <AddTestResultDialog
+                open={openDialog}
+                onClose={handleCloseDialog} />
         </Box>
 
     );

@@ -14,6 +14,8 @@ import PatientCard from "../Doctor/Patient/PatientCard";
 import PatientDetailes from "../Doctor/Patient/PatientDetailes";
 import DashboardLayout from "../Layout/DashboardLayout";
 import PatientList from "../Doctor/Patient/PatientList";
+import DoctorsList from "../Secretary/DoctorsAppointments/DoctorList";
+import SecretariesList from "../Admin/Department/SecretariesList";
 
 export const router = createBrowserRouter([
 
@@ -46,7 +48,9 @@ export const router = createBrowserRouter([
       { path: 'departments', element: <DepartmentCard /> },
       { path: 'offers', element: <Offers /> },
       { path: 'patients', element: <PatientList /> },
-      
+      { path: 'doctors', element: <DoctorsList /> },
+      { path: 'secretaries', element: <SecretariesList /> },
+
     ],
   },
   {
@@ -58,7 +62,7 @@ export const router = createBrowserRouter([
     path: "patients/:id",
     element: < PatientDetailes />
   },
-{ path: '/appintmentsSchedule', element: <Appointment /> }
+  { path: '/appintmentsSchedule', element: <Appointment /> }
 
 ]);
 
