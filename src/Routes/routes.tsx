@@ -16,6 +16,7 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import PatientList from "../Doctor/Patient/PatientList";
 import DoctorsList from "../Secretary/DoctorsAppointments/DoctorList";
 import SecretariesList from "../Admin/Department/SecretariesList";
+import Profile from "../Component/Profile/Profile";
 
 export const router = createBrowserRouter([
 
@@ -50,6 +51,7 @@ export const router = createBrowserRouter([
       { path: 'patients', element: <PatientList /> },
       { path: 'doctors', element: <DoctorsList /> },
       { path: 'secretaries', element: <SecretariesList /> },
+            { path: 'profile', element: <Profile /> },
 
     ],
   },

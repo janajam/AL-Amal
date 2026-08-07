@@ -315,11 +315,18 @@ const AccountDetails = () => {
                         </>
                     )
                         : (
-                            <>
+                            <Box
+                            sx={{ 
+                                width:'98%',
+                                alignItems:'center',
+                                mt:13,
+                                ml:1
+                             }}
+                            >
                                 <AppointmentScheduleSection
                                     doctorId={account.id} />
 
-                            </>
+                            </Box>
                         )
                     }
 
