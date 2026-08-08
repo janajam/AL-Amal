@@ -1,98 +1,90 @@
-import { Box, Stack, Typography } from "@mui/material"
+import { Box, Stack, Typography, useTheme } from "@mui/material"
 import PulseDivider from "../Schedule/PluseDivider"
 import { useAuthStore } from "../../Store/AuthStore"
 import ProfileHeader from "./ProfileHeader"
 import { useState } from "react"
+import ScheduleSection from "../Schedule/Schedule"
+import { ArrowBack } from "@mui/icons-material"
+import { useNavigate } from "react-router-dom"
 
 const account = {
-    id:1,
-    name :'jhon',
-    role:'secretary',
-    email:'jhon@email.com',
+    id: 1,
+    name: 'jhon',
+    role: 'secretary',
+    email: 'jhon@email.com',
     // createdAt:'2020'
 }
 
 const Profile = () => {
+    const theme = useTheme()
+    const navigate = useNavigate()
 
-    // const fullName = useAuthStore((state) => state.fullName);
+    // const {fullName , role}= useAuthStore();
+    const role = 'admin'
     const fullName = 'Jhon Smith'
-   const [preview, setPreview] = useState<string | null>(null);
+    const [preview, setPreview] = useState<string | null>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-const [selectedFile, setSelectedFile] =useState<File | null>(null);
+    const [editing, setEditing] = useState(false);
+    const handleImageChange = (file: File | null) => {
 
-const [editing,setEditing]=useState(false);
+        if (!file) {
 
-const handleImageChange = (file: File | null) => {
+            setSelectedFile(null);
 
-    if (!file) {
+            setPreview(null);
 
-        setSelectedFile(null);
+            return;
+        }
+
+        setSelectedFile(file);
+
+        setPreview(URL.createObjectURL(file));
+
+    };
+
+    const handleRemoveImage = () => {
 
         setPreview(null);
 
-        return;
-    }
-
-    setSelectedFile(file);
-
-    setPreview(URL.createObjectURL(file));
-
-};
-
-const handleRemoveImage = () => {
-
-    setPreview(null);
-
-};
+    };
     return (
-        <div>
+        <><ArrowBack
+            sx={{
+                mx: 2,
+                mt: 2,
+                cursor: "pointer",
+                color: theme.palette.primary.main,
+            }}
+            onClick={() => navigate(-1)} /><div>
 
 
 
-<ProfileHeader
+                <ProfileHeader
 
-    name={fullName}
+                    name={fullName}
 
-    email={account.email}
+                    email={account.email}
 
-    role={account.role}
+                    role={role}
 
-    image={preview}
+                    image={preview}
 
-    // createdAt={account.createdAt}
+                    // createdAt={account.createdAt}
+                    editable
 
-    editable
+                    isEditing={editing}
 
-    isEditing={editing}
+                    onEdit={() => setEditing(true)}
 
-    onEdit={() => setEditing(true)}
+                    onImageChange={handleImageChange}
 
-    onImageChange={handleImageChange}
+                    onRemoveImage={handleRemoveImage} />
+                <PulseDivider />
 
-    onRemoveImage={handleRemoveImage}
-
-/>
-            {/* <ProfileHeader
-                name={fullName}
-                email="ahmed@gmail.com"
-                role="Doctor"
-
-                image={preview}
-
-                editable
-
-                onImageChange={(file) => {
-                    console.log(file);
-                    handleImageChange(file);
-                }}
-
-                onRemoveImage={() => {
-                    console.log("remove");
-                    handleRemoveImage();
-                }}
-            /> */}
-            <PulseDivider />
-        </div>
+                {role !== 'admin' &&
+                    <ScheduleSection accountId={account.id} />}
+            </div></>
     )
 }
 

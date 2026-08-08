@@ -51,7 +51,6 @@ export const router = createBrowserRouter([
       { path: 'patients', element: <PatientList /> },
       { path: 'doctors', element: <DoctorsList /> },
       { path: 'secretaries', element: <SecretariesList /> },
-            { path: 'profile', element: <Profile /> },
 
     ],
   },
@@ -64,7 +63,9 @@ export const router = createBrowserRouter([
     path: "patients/:id",
     element: < PatientDetailes />
   },
-  { path: '/appintmentsSchedule', element: <Appointment /> }
+  { path: '/appintmentsSchedule', element: <Appointment /> },
+  { path: 'profile', element: <Profile /> },
+
 
 ]);
 

@@ -1,6 +1,7 @@
-import { Box, Stack, Typography } from "@mui/material"
+import { Box, Button, Stack, Typography, useTheme } from "@mui/material"
 import ProfileAvatar from "./ProfileAvatar"
 import { useState } from "react";
+import { EditRounded } from "@mui/icons-material";
 
 
 interface Props {
@@ -41,18 +42,23 @@ const ProfileHeader = ({
 
     // const fullName = useAuthStore((state) => state.fullName);
     const fullName = 'Jhon Smith'
-
+const theme=useTheme();
 
     return (
         <div>
             <Box
                 sx={{
-                    my: 3,
-                    mx: 3,
-                    p: 1
+                    mb: 1,
+                    mx: 4,
+                    px:3 
                 }}
             >
-                <Stack direction={'row'}>
+                <Stack direction={{ sm:'column',md:'row' }}
+                sx={{ 
+                    alignItems:'center',
+                    mx:'auto',
+                    justifyContent:'space-between'
+                 }}>
 
                     <ProfileAvatar
                         name={fullName}
@@ -61,6 +67,7 @@ const ProfileHeader = ({
                         onRemoveImage={onRemoveImage} 
                         
                        />
+                       <Stack>
                     <Typography
                         sx={{
                             fontSize: 18,
@@ -69,6 +76,38 @@ const ProfileHeader = ({
                     >
                         {fullName}
                     </Typography>
+                    <Typography
+                    color="text.secondary"
+                >
+                    {email}
+                </Typography>
+
+                <Typography
+                    sx={{
+                        fontWeight: 550,
+                        color: theme.palette.primary.main,
+                    }}
+                >
+                    {role}
+                </Typography>
+                    </Stack>
+                      {editable && (
+
+                <Button
+                    variant="outlined"
+                    startIcon={<EditRounded />}
+                    onClick={onEdit}
+                    disabled={isEditing}
+                    sx={{ 
+                    color:theme.palette.etal.main,
+                    whiteSpace:'nowrap'
+                     }}
+                >
+                    Edit Profile
+                </Button>
+
+            )}
+
                 </Stack>
             </Box>
 

@@ -93,7 +93,7 @@ export const sidebarItems: SidebarItem[] = [
   },
   
   {
-    path: '/dashboard/profile',
+    path: '/profile',
     label: 'Profile',
     icon: AccountCircle,
     roles: ['admin', 'secretary', 'doctor'],
