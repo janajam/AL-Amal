@@ -1,44 +1,98 @@
-import { Box, Stack, Typography, useTheme } from "@mui/material"
-import PulseDivider from "../Schedule/PluseDivider"
-import { useAuthStore } from "../../Store/AuthStore"
-import ProfileHeader from "./ProfileHeader"
+ import { ArrowBack } from "@mui/icons-material"
+import { useTheme } from "@mui/material"
 import { useState } from "react"
-import ScheduleSection from "../Schedule/Schedule"
-import { ArrowBack } from "@mui/icons-material"
 import { useNavigate } from "react-router-dom"
+import logo from '../../assets/logo.webp'
+import type { Doctor, Secretary } from "../../Entities/AccountsData"
+import PulseDivider from "../Schedule/PluseDivider"
+import ScheduleSection from "../Schedule/Schedule"
+import { dummySchedule } from "../Schedule/ScheduleDummy"
+import ProfileData from "./ProfileData"
+import ProfileHeader from "./ProfileHeader"
+import type { EditProfileInput } from "../../Schema/EditProfilrSchema"
+import EditProfileDialog from "./EditProfileDialog"
+import pdf from '../../assets/SRS HIMS.pdf'
+import pdf2 from '../../assets/Incident-Response-Plan-Template.pdf'
 
-const account = {
+const account: Doctor | Secretary = {
     id: 1,
-    name: 'jhon',
-    role: 'secretary',
-    email: 'jhon@email.com',
-    // createdAt:'2020'
-}
+
+    name: "Ahmed Khaled",
+
+    email: "ahmed@alamal.com",
+
+    phoneNumber: "0599999999",
+
+    birthDay: "1988-06-12",
+
+    image: logo,
+
+    role: "Doctor",
+
+    status: "ACTIVE",
+
+    createdAt: "2022-10-02",
+
+    address: "Ramallah, Palestine",
+
+    department: {
+        id: 1,
+        name: "Internal Medicine",
+    },
+
+    specialty: {
+        id: 1,
+        name: "Cardiology",
+    },
+
+    licenses: [
+        {
+            id: 1,
+            name: "Medical License",
+            fileUrl: pdf,
+            uploadedAt: "2025-07-13",
+        },
+        {
+            id: 2,
+            name: "Board Certificate",
+            fileUrl: pdf2,
+            uploadedAt: "2025-07-14",
+        },
+    ],
+
+    workingDays: dummySchedule,
+};
 
 const Profile = () => {
     const theme = useTheme()
     const navigate = useNavigate()
 
     // const {fullName , role}= useAuthStore();
-    const role = 'admin'
+    const userRole = 'doctor'
     const fullName = 'Jhon Smith'
     const [preview, setPreview] = useState<string | null>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
     const [editing, setEditing] = useState(false);
+    
+    const handleUpdateProfile = (
+        data: EditProfileInput
+    ) => {
+
+        console.log("Data to backend:", data);
+
+        // updateProfile.mutate(data);
+
+        setEditing(false);
+    };
+
     const handleImageChange = (file: File | null) => {
-
         if (!file) {
-
             setSelectedFile(null);
-
             setPreview(null);
-
             return;
         }
 
         setSelectedFile(file);
-
         setPreview(URL.createObjectURL(file));
 
     };
@@ -56,35 +110,35 @@ const Profile = () => {
                 cursor: "pointer",
                 color: theme.palette.primary.main,
             }}
-            onClick={() => navigate(-1)} /><div>
+            onClick={() => navigate(-1)} />
 
+            <ProfileHeader
+                name={fullName}
+                email={account.email}
+                department={account.department.name}
+                image={preview}
+                editable
+                isEditing={editing}
+                onEdit={() => setEditing(true)}
+                onImageChange={handleImageChange}
+                onRemoveImage={handleRemoveImage} />
 
+            <PulseDivider />
 
-                <ProfileHeader
+            <ProfileData account={account} 
+            />
 
-                    name={fullName}
+            {userRole !== 'admin' &&
+                <ScheduleSection accountId={account.id} />}
 
-                    email={account.email}
+            <EditProfileDialog
+                open={editing}
+                account={account}
+                onClose={() => setEditing(false)}
+                onSubmit={handleUpdateProfile}
+        />
 
-                    role={role}
-
-                    image={preview}
-
-                    // createdAt={account.createdAt}
-                    editable
-
-                    isEditing={editing}
-
-                    onEdit={() => setEditing(true)}
-
-                    onImageChange={handleImageChange}
-
-                    onRemoveImage={handleRemoveImage} />
-                <PulseDivider />
-
-                {role !== 'admin' &&
-                    <ScheduleSection accountId={account.id} />}
-            </div></>
+        </>
     )
 }
 

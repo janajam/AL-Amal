@@ -17,6 +17,7 @@ import PatientList from "../Doctor/Patient/PatientList";
 import DoctorsList from "../Secretary/DoctorsAppointments/DoctorList";
 import SecretariesList from "../Admin/Department/SecretariesList";
 import Profile from "../Component/Profile/Profile";
+import ChangePassword from "../Component/ChangePassword";
 
 export const router = createBrowserRouter([
 
@@ -58,7 +59,10 @@ export const router = createBrowserRouter([
     path: "accounts/:id",
     element: < AccountDetails />
   },
-
+{
+  path:'/changePassword',
+  element:<ChangePassword/>
+},
   {
     path: "patients/:id",
     element: < PatientDetailes />

@@ -13,8 +13,7 @@ import {
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import key from "../assets/Key 01 Icon _ Hugeicons.webp";
-import reset from "../assets/Reset Password Icon _ Hugeicons.webp";
+import logo from "../assets/logo.webp";
 import { useChangePassword } from "../Hook/useChangPasssword";
 import { changePasswordSchema, type ChangePasswordInput } from "../Schema/ChangePasswordSchema";
 
@@ -38,7 +37,6 @@ export default function ChangePassword() {
 
   const onSubmit = (data: ChangePasswordInput) => {
     console.log("New password submitted:", data.password);
-    // TODO: send data to your backend via Axios or React Query
     mutation.mutate(data, {
       onSuccess: () => {
         navigate(-1)
@@ -48,17 +46,23 @@ export default function ChangePassword() {
 
   return (
     <Stack>
-      <Box
+     <Box
         sx={{
-          backgroundImage: `url(${reset}) `,
-          backgroundSize: "33%",
+          backgroundImage: `url(${logo}) `,
+          backgroundSize: "43%",
           backgroundRepeat: "no-repeat",
+          backgroundPosition:'left center',
           overflow: "hidden",
           fontWeight: 700,
-          bgcolor: '#ebf2f3',
-          height: "100vh"
+          bgcolor: '#E8F2F3',
+          height: "100vh",
+          mt:-0.7,
+          [theme.breakpoints.down('sm')]:{
+            alignSelf:'center'
+          }
         }}
       >
+      
         <IconButton onClick={() => navigate(-1)}>
           <ArrowBack />
         </IconButton>
@@ -96,7 +100,10 @@ export default function ChangePassword() {
               {...register("passwordCurrent")}
               error={!!errors.passwordCurrent}
               helperText={errors.passwordCurrent?.message}
-              InputProps={{
+               inputRef={register("passwordCurrent").ref}
+             
+             slotProps={{
+              input:{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
@@ -107,6 +114,7 @@ export default function ChangePassword() {
                     </IconButton>
                   </InputAdornment>
                 ),
+              }
               }}
             />
 
@@ -116,7 +124,9 @@ export default function ChangePassword() {
               {...register("password")}
               error={!!errors.password}
               helperText={errors.password?.message}
-              InputProps={{
+               inputRef={register("password").ref}
+               slotProps={{
+                input:{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
@@ -127,6 +137,7 @@ export default function ChangePassword() {
                     </IconButton>
                   </InputAdornment>
                 ),
+              }
               }}
             />
             <TextField
@@ -142,25 +153,6 @@ export default function ChangePassword() {
           </Stack>
         </Box>
       </Box>
-      <Box
-        sx={{
-          backgroundImage: `url(${key}) `,
-          backgroundSize: "80%",
-          backgroundRepeat: "no-repeat",
-          overflow: "hidden",
-          fontWeight: 700,
-          mt: "-18%",
-          height: 200,
-          width: 200,
-          alignSelf: "end",
-          [theme.breakpoints.down("md")]: {
-            backgroundSize: "80%",
-            mt: "-25%",
-            height: 90,
-            width: 100,
-          },
-        }}
-      ></Box>
     </Stack>
   );
 }

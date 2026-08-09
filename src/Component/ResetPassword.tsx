@@ -38,7 +38,6 @@ export default function ResetPassword() {
 
   const onSubmit = (data: ResetPasswordInput) => {
     console.log("New password submitted:", data.password);
-    // TODO: send data to your backend via Axios or React Query
     mutation.mutate(data, {
       onSuccess: () => {
         navigate('/signin')
@@ -53,21 +52,21 @@ export default function ResetPassword() {
           backgroundImage: `url(${logo}) `,
           backgroundSize: "43%",
           backgroundRepeat: "no-repeat",
-          backgroundPosition:'left center',
+          backgroundPosition: 'left center',
           overflow: "hidden",
           fontWeight: 700,
           bgcolor: '#E8F2F3',
           height: "100vh",
-          mt:-0.7,
-          [theme.breakpoints.down('sm')]:{
-            alignSelf:'center'
+          mt: -0.7,
+          [theme.breakpoints.down('sm')]: {
+            alignSelf: 'center'
           }
         }}
       >
         <IconButton onClick={() => navigate(-1)}>
           <ArrowBack />
         </IconButton>
-        
+
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}
@@ -83,9 +82,9 @@ export default function ResetPassword() {
               mx: "4%",
               mt: "7%",
             },
-             border: '1px solid #2B5A6C ',
-           boxShadow: "0 2px 17px #1A7B9B",
-        
+            border: '1px solid #2B5A6C ',
+            boxShadow: "0 2px 17px #1A7B9B",
+
           }}
         >
           <Typography
@@ -95,13 +94,13 @@ export default function ResetPassword() {
             Reset Your Password
           </Typography>
           <Stack spacing={3}>
-           
+
             <TextField
               label="New Password"
               type={showPassword ? "text" : "password"}
               error={!!errors.password}
               helperText={errors.password?.message}
-                            {...register("password")}
+              {...register("password")}
               inputRef={register("password").ref}
               slotProps={{
                 input: {
@@ -119,7 +118,7 @@ export default function ResetPassword() {
               }}
             />
 
-           <TextField
+            <TextField
               label="Confirm Password"
               type={showPassword ? "text" : "password"}
               {...register("confirmPassword")}
@@ -132,7 +131,7 @@ export default function ResetPassword() {
           </Stack>
         </Box>
       </Box>
-    
+
     </Stack>
   );
 }

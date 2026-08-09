@@ -8,11 +8,11 @@ export interface Account {
   name: string;
   email: string;
   phoneNumber: string;
-  birthDay: Date;
+  birthDay: string;
   image: string;
   role: AccountRole;
   status: AccountStatus;
-  createdAt: Date;
+  createdAt: string;
   address: string;
   department: Department;
   workingDays: WorkingSchedule[]
