@@ -6,12 +6,11 @@ import {
     DialogContent,
     DialogTitle,
     Divider,
-    MenuItem,
     Paper,
     Stack,
     TextField,
     Typography,
-    useTheme,
+    useTheme
 } from "@mui/material";
 
 import { useEffect, useState } from "react";
@@ -24,14 +23,12 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import type {
-    Account,
     Doctor,
-    Secretary,
-    Specialty,
+    Secretary
 } from "../../Entities/AccountsData";
 import { editProfileSchema, type EditProfileInput } from "../../Schema/EditProfilrSchema";
-import pdf from '../../assets/SRS HIMS.pdf'
-import pdf2 from '../../assets/Incident-Response-Plan-Template.pdf'
+import pdf2 from '../../assets/Incident-Response-Plan-Template.pdf';
+import pdf from '../../assets/SRS HIMS.pdf';
 interface Props {
     open: boolean;
 
@@ -70,7 +67,6 @@ const EditProfileDialog = ({
 }: Props) => {
 
     const theme = useTheme();
-    // const [removeOldFile, setRemoveOldFile] = useState(false);
     const [removedLicenseIds, setRemovedLicenseIds] = useState<number[]>([]);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -80,7 +76,6 @@ const EditProfileDialog = ({
         register,
         handleSubmit,
         reset,
-        setValue,
         control,
         formState: {
             errors,

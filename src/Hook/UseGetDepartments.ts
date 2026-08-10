@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import ApiClient from "../apiServices/api_client";
-import type { DepartmentResponse } from "../Entities/DepartmentData";
+import type { DepartmentsResponse } from "../Entities/DepartmentData";
 
 
 
-const apiClient = new ApiClient<unknown, DepartmentResponse>("/admin/getDepartments");
+const apiClient = new ApiClient< DepartmentsResponse>("/departments");
 
 export const useGetDepartments = () => {
     return useQuery({

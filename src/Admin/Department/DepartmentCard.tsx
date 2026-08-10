@@ -1,138 +1,153 @@
 
-import { Box, Button, Card, CardContent, CardHeader, Stack, Typography, useTheme } from "@mui/material"
-import CardContainer from "../../Component/CardContainer"
-import { useGetDepartments } from "../../Hook/UseGetDepartments"
-import { useNavigate } from "react-router-dom"
 
-
-//for test 
-const departments = [
-    {
-        id: 1, name: 'AA', doctorNumber: 4, secretariesNumber: 2, description: 'description', specialty: {
-            id: 1, name: 'specialty'
-        }
-    },
-    {
-        id: 2, name: 'BB', doctorNumber: 5, secretariesNumber: 2, description: 'description', specialty: {
-            id: 2, name: 'specialty'
-        }
-    },
-    {
-        id: 3, name: 'CC', doctorNumber: 3, secretariesNumber: 2, description: 'description', specialty: {
-            id: 3, name: 'specialty'
-        }
-    },
-    {
-        id: 4, name: 'DD', doctorNumber: 7, secretariesNumber: 2, description: 'description', specialty: {
-            id: 4, name: 'specialty'
-        }
-    },
-
-
-]
+import {
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    Stack,
+    Typography,
+    useTheme
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import CardContainer from "../../Component/CardContainer";
+import PulseDivider from "../../Component/Schedule/PluseDivider";
+import { useGetDepartments } from "../../Hook/UseGetDepartments";
 
 const DepartmentCard = () => {
-    const theme = useTheme()
-    const navigate = useNavigate()
-    // const {data}=useGetDepartments ()
+    const theme = useTheme();
+    const navigate = useNavigate();
+
+
+    const { data, isLoading, isError } = useGetDepartments();
+
+    if (isLoading) {
+        return (
+            <>
+                <Typography sx={{ p: 2 }}>
+                    Loading departments...
+                </Typography>
+
+            </>
+        );
+    }
+
+    if (isError) {
+        return (
+            <Stack >
+
+                <Typography
+                    color="error"
+                    sx={{ p: 2, color: theme.palette.etal.main }}
+                >
+                    Something went wrong while loading departments.
+                </Typography>
+                <PulseDivider />
+            </Stack>
+        );
+    }
+
     return (
-        <Box>
-
-            {/* {data?.data.map*/}
-            {departments.map
-                (department => (
-                    <CardContainer>
-                        <Card
-                            key={department.id}
+        <>
+            {data?.data.map((department) => (
+                <CardContainer key={department?.id}>
+                    <Card
+                        sx={{
+                            my: 2,
+                            bgcolor: theme.palette.background.default,
+                            boxShadow: "0 4px 10px #9ed1d5",
+                            px: 2,
+                        }}
+                    >
+                        <CardHeader
+                            subheader={department?.name}
                             sx={{
-                                my: 2,
-                                bgcolor: theme.palette.background.default,
-                                boxShadow: '0 4px 10px #9ed1d5',
-                                px: 2
-                            }}>
-                            <CardHeader
-                                subheader={department.name}
-                                sx={{
-                                    color: theme.palette.primary.main,
-                                }}
-                            />
-                            <CardContent>
-                                <Stack spacing={1.5}>
+                                color: theme.palette.primary.main,
+                            }}
+                        />
+
+                        <CardContent>
+                            <Stack spacing={2}>
+                                <Typography>
+                                    {department?.description}
+                                </Typography>
+
+
+                                <Stack spacing={1}>
                                     <Typography
-                                        key={department.specialty.id}
                                         sx={{
-                                            fontWeight: 550,
-                                            fontSize: 16
-                                        }}>
-                                        Specialty : {department.specialty.name}
-                                    </Typography>
-                                    <Typography >
-                                        {department.description}
+                                            fontWeight: 600,
+                                            fontSize: 16,
+                                        }}
+                                    >
+                                        Services
                                     </Typography>
 
-                                    <Stack direction={'row'} sx={{
-                                        justifyContent: 'space-between'
-                                    }}>
+                                    {department?.services?.length > 0 ? (
+                                        department?.services.map((service) => (
+                                            <Stack
+                                                key={service.id}
+                                                spacing={0.3}
+                                            >
+                                                <Typography
+                                                    sx={{
+                                                        fontWeight: 500,
+                                                    }}
+                                                >
+                                                    {service.name}
+                                                </Typography>
 
-                                        <Typography>
-                                            Doctors : {department.doctorNumber}
-                                        </Typography>
-                                        <Button
-                                            variant='outlined'
-                                            sx={{
-                                                whiteSpace: 'nowrap',
-                                                width: 140,
-                                                border: `2px solid ${theme.palette.etal.main}`,
-                                                color: theme.palette.etal.main
-                                            }}
+                                                <Typography
+                                                    variant="body2"
+                                                    color="text.secondary"
+                                                >
+                                                    {service.description}
+                                                </Typography>
 
-                                            onClick={() =>
-                                                navigate(
-                                                    `/dashboard/doctors`
-                                                )
-                                            }
+                                                <Typography
+                                                    variant="body2"
+                                                    sx={{
+                                                        fontWeight: 500,
+                                                    }}
+                                                >
+                                                    Price: {service.price}
+                                                </Typography>
+                                            </Stack>
+                                        ))
+                                    ) : (
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
                                         >
-
-
-                                            Veiw Doctors
-                                        </Button>
-                                    </Stack>
-                                    <Stack direction={'row'} sx={{
-                                        justifyContent: 'space-between'
-                                    }}>
-
-                                        <Typography>
-                                            Secretaries : {department.secretariesNumber}
+                                            No services available.
                                         </Typography>
-                                        <Button
-                                            variant='outlined'
-                                            sx={{
-                                                whiteSpace: 'nowrap',
-                                                width: 160,
-                                                border: `2px solid ${theme.palette.etal.main}`,
-                                                color: theme.palette.etal.main
-                                            }}
-                                              onClick={() =>
-                                                navigate(
-                                                    `/dashboard/secretaries`
-                                                )
-                                            }
-                                       
-                                        >
-                                            Veiw Secretaries
-
-                                        </Button>
-
-                                    </Stack>
+                                    )}
                                 </Stack>
-                            </CardContent>
 
-                        </Card>
-                    </CardContainer>
-                ))
-            }
-        </Box>
-    )
-}
+                                <Button
+                                    variant="outlined"
+                                    sx={{
+                                        alignSelf: "flex-start",
+                                        whiteSpace: "nowrap",
+                                        width: 140,
+                                        border: `2px solid ${theme.palette.etal.main}`,
+                                        color: theme.palette.etal.main,
+                                    }}
+                                    onClick={() =>
+                                        navigate(
+                                            `/dashboard/doctors?departmentId=${department?.id}`
+                                        )
+                                    }
+                                >
+                                    View Doctors
+                                </Button>
+                            </Stack>
+                        </CardContent>
+                    </Card>
+                </CardContainer>
+            ))}
+        </>
+    );
+};
 
-export default DepartmentCard
+export default DepartmentCard;

@@ -1,3 +1,4 @@
+import type { Department } from "./DepartmentData";
 import type { WorkingSchedule } from "./WorkingSchedualeData";
 
 export type AccountRole = "Doctor" | "Secretary";
@@ -8,16 +9,17 @@ export interface Account {
   name: string;
   email: string;
   phoneNumber: string;
-  birthDay: string;
-  image: string;
   role: AccountRole;
   status: AccountStatus;
-  createdAt: string;
-  address: string;
-  department: Department;
-  workingDays: WorkingSchedule[]
 
+  image?: string;
+  birthDay?: string;
+  address?: string;
+  createdAt?: string;
+
+  department?: Department;
 }
+
 
 export interface Doctor extends Account {
   role: "Doctor";
@@ -29,10 +31,12 @@ export interface Secretary extends Account {
   role: "Secretary";
 }
 
-export interface Department {
-  id: number,
-  name: string
-}
+// export interface Department {
+//   id: number;
+//   name: string;
+//   description: string;
+// }
+
 export interface Specialty {
   id: number;
   name: string;

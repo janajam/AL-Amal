@@ -1,52 +1,7 @@
-// import {
-//     Button,
-//     Stack,
-//     Typography
-// } from "@mui/material";
-
-// import DownloadIcon from "@mui/icons-material/Download";
-// import type { License } from "../../Entities/AccountsData";
-
-
-
-// interface Props {
-//     license: License;
-// }
-
-// const LicenseItem = ({ license }: Props) => {
-
-//     const downloadLicense = () => {
-//         window.open(license.fileUrl, "_blank");
-//     };
-
-//     return (
-//         <Stack
-//             direction="row"
-//             spacing={3}
-//             sx={{  
-//             alignItems:"center"}}
-//         >
-//             <Typography>
-//                 {license.name}
-//             </Typography>
-
-//             <Button
-//                 startIcon={<DownloadIcon />}
-//                 onClick={downloadLicense}
-//             >
-//                 Download
-//             </Button>
-//         </Stack>
-//     );
-// };
-
-// export default LicenseItem;
 
 
 import {
-  DeleteOutlineRounded,
-  DescriptionOutlined,
-  VisibilityOutlined,
+  VisibilityOutlined
 } from "@mui/icons-material";
 
 import {
@@ -62,14 +17,10 @@ import type { License } from "../../Entities/AccountsData";
 
 interface Props {
   license: License;
-  onDelete?: (licenseId: number) => void;
-  deleting?: boolean;
 }
 
 const LicenseItem = ({
   license,
-  onDelete,
-  deleting = false,
 }: Props) => {
   const theme = useTheme();
 
@@ -79,12 +30,6 @@ const LicenseItem = ({
       "_blank",
       "noopener,noreferrer"
     );
-  };
-
-  const handleDelete = () => {
-    if (!onDelete) return;
-
-    onDelete(license.id);
   };
 
   return (
@@ -101,31 +46,29 @@ const LicenseItem = ({
       <Stack
         direction="row"
         spacing={2}
-        sx={{lignItems:"center",
-        justifyContent:"space-between"}}
+        sx={{
+          lignItems: "center",
+          justifyContent: "space-between"
+        }}
       >
 
         {/* File information */}
         <Stack
           direction="row"
           spacing={1.5}
-        sx={{   alignItems:"center",
-          minWidth:0}}
+          sx={{
+            alignItems: "center",
+            minWidth: 0
+          }}
         >
 
-          <DescriptionOutlined
-            sx={{
-              color: theme.palette.etal.main,
-              fontSize: 32,
-            }}
-          />
-
           <Box
-          
-          sx={{ 
 
-              minWidth:0}
-          }>
+            sx={{
+
+              minWidth: 0
+            }
+            }>
             <Typography
               sx={{
                 fontWeight: 600,
@@ -158,7 +101,7 @@ const LicenseItem = ({
         <Stack
           direction="row"
           spacing={0.5}
-          sx={{flexShrink:0}}
+          sx={{ flexShrink: 0 }}
         >
 
           <Tooltip title="Preview">
@@ -172,19 +115,6 @@ const LicenseItem = ({
             </IconButton>
           </Tooltip>
 
-          {onDelete && (
-            <Tooltip title="Delete">
-              <IconButton
-                onClick={handleDelete}
-                disabled={deleting}
-                sx={{
-                  color: theme.palette.error.main,
-                }}
-              >
-                <DeleteOutlineRounded />
-              </IconButton>
-            </Tooltip>
-          )}
 
         </Stack>
 

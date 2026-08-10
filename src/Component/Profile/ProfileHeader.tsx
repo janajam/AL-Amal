@@ -31,7 +31,6 @@ const ProfileHeader = ({
     email,
     department,
     image,
-    // createdAt,
     editable = false,
     isEditing = false,
     onEdit,

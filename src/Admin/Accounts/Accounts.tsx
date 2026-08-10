@@ -20,7 +20,7 @@ const accounts: Account[] = [
 
     phoneNumber: "123456789",
 
-    birthDay: new Date("1990-01-01"),
+    birthDay: "1990-01-01",
 
     image: logo,
 
@@ -28,7 +28,7 @@ const accounts: Account[] = [
 
     status: "ACTIVE",
 
-    createdAt: new Date("2022-02-10"),
+    createdAt: "2022-02-10",
 
     address: "Address",
 
@@ -46,7 +46,7 @@ const accounts: Account[] = [
 
     phoneNumber: "987654321",
 
-    birthDay: new Date("1995-06-10"),
+    birthDay: "1995-06-10",
 
     image: logo,
 
@@ -54,7 +54,7 @@ const accounts: Account[] = [
 
     status: "ACTIVE",
 
-    createdAt: new Date(),
+    createdAt:'2-5-2022',
 
     address: "Address",
 
@@ -72,7 +72,7 @@ const accounts: Account[] = [
 
     phoneNumber: "55555555",
 
-    birthDay: new Date("1992-04-20"),
+    birthDay: "1992-04-20",
 
     image: logo,
 
@@ -80,7 +80,7 @@ const accounts: Account[] = [
 
     status: "ACTIVE",
 
-    createdAt: new Date(),
+    createdAt:'12-6-2019',
 
     address: "Address",
 

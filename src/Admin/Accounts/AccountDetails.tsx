@@ -210,7 +210,6 @@ const AccountDetails = () => {
                                         Birthday:
                                     </Typography>
                                     <Typography>
-                                        {/* {account?.birthDay?.toLocaleDateString()} */}
                                         {account.birthDay}
                                     </Typography>
                                 </Stack>
@@ -231,7 +230,6 @@ const AccountDetails = () => {
                                     </Typography>
 
                                     <Typography>
-                                        {/* {account?.createdAt.toLocaleDateString()} */}
                                         {account.createdAt}
                                     </Typography>
                                 </Stack>

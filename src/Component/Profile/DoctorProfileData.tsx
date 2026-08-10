@@ -9,7 +9,6 @@ import {
     useTheme
 } from "@mui/material";
 
-import LicenseItem from "../../Admin/Accounts/LicenseItem";
 import type { Doctor } from "../../Entities/AccountsData";
 import LicensesSection from "./LicenessSection";
 
@@ -71,15 +70,7 @@ const DoctorProfileData = ({ doctor }: Props) => {
                         <LicensesSection
                             licenses={doctor.licenses ?? []}
                         />
-                        {/* {doctor.licenses.map((license) => (
-
-                            <LicenseItem
-                                key={license.id}
-                                license={license}
-                            /> */}
-
-                        {/* ))} */}
-
+                       
                     </Stack>
 
 

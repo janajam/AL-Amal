@@ -1,17 +1,21 @@
-import type { Specialty } from "./AccountsData";
-
-export interface DepartmentData {
-    id: number,
-    name: string,
-    descripttion: string,
-    specialty: Specialty[],
-    doctorsNumber: number,
-    secretariesNumber: number,
-
+export interface Department {
+  id: number;
+  name: string;
+  description: string;
+  services: DepartmentService[];
 }
 
-export interface DepartmentResponse{
-    status: number,
-    message:string,
-    data:DepartmentData[]
+export interface DepartmentService {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+}
+
+export interface DepartmentsResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: Department[];
+  errors: null;
 }
