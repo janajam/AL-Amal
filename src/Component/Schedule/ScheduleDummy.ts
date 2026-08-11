@@ -1,4 +1,4 @@
-import type { WorkingSchedule } from "../../Entities/WorkingSchedualeData";
+
 
 export const dummySchedule: WorkingSchedule[] = [
 

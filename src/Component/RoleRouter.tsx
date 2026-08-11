@@ -4,6 +4,24 @@ import AdminDashboard from '../Admin/Dashboard/AdminDashboard';
 import DoctorDashboard from '../Doctor/Dashboard/DoctorDashboard';
 import SecretaryDashboard from '../Secretary/Dashboard/SecretaryDashboard';
 
+// const dashboardMap = {
+//   admin: <AdminDashboard />,
+//   doctor: <DoctorDashboard />,
+//   secretary: <SecretaryDashboard />,
+// } as const;
+
+// export default function RoleRouter() {
+
+//   const userRole = useAuthStore((state) => state.role);
+// // const userRole='secretary'
+//   if (!userRole || !(userRole in dashboardMap)) {
+//     return <Navigate to="/" replace />;
+//   }
+
+//   return dashboardMap[userRole];
+// }
+
+
 const dashboardMap = {
   admin: <AdminDashboard />,
   doctor: <DoctorDashboard />,
@@ -11,12 +29,15 @@ const dashboardMap = {
 } as const;
 
 export default function RoleRouter() {
+  const userRole = useAuthStore((state) => state.role);
 
-  // const userRole = useAuthStore((state) => state.role);
-const userRole='secretary'
-  if (!userRole || !(userRole in dashboardMap)) {
+  console.log("RoleRouter role:", userRole);
+
+  if (!userRole) {
     return <Navigate to="/" replace />;
   }
 
-  return dashboardMap[userRole];
+  return dashboardMap[userRole as keyof typeof dashboardMap] ?? (
+    <Navigate to="/" replace />
+  );
 }

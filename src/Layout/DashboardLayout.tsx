@@ -4,14 +4,15 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import Sidebar from '../Component/Sidebar';
 import AppBar from '../Component/AppBar';
 import { sidebarItems, type SidebarItem } from '../Entities/SidebarItems';
+import { useAuthStore } from '../Store/AuthStore';
 
 
 export default function DashboardLayout() {
 
-  // const userRole = useAuthStore((state) => state.role);
+  const userRole = useAuthStore((state) => state.role);
   const theme = useTheme()
 
-  const userRole = 'secretary'
+  // const userRole = 'secretary'
 
   if (!userRole) {
     return <Navigate to="/login" replace />;

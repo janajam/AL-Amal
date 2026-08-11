@@ -5,7 +5,7 @@ import {
   AccountTree,
   Announcement,
   AppShortcut,
-  CalendarMonth,
+  CalendarMonth, 
   CreateRounded,
   Person
 } from '@mui/icons-material';
@@ -51,7 +51,7 @@ export const sidebarItems: SidebarItem[] = [
     label: 'Create Account',
     icon: CreateRounded,
     roles: ['admin'],
-    subtitle: 'Add a new doctor or secretary'
+    subtitle: 'Add a new doctor or Secretary'
 
   },
   {

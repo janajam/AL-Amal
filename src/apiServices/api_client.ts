@@ -3,7 +3,7 @@ import { getToken } from "./cookie";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8000/api",
-  withCredentials: true, // important to send cookies
+  // withCredentials: true, // important to send cookies
 });
 
 axiosInstance.interceptors.request.use((config) => {
@@ -11,7 +11,7 @@ axiosInstance.interceptors.request.use((config) => {
   if (token) {
     // config.headers["Authorization"] = `Bearer ${token}`;
      config.headers.Authorization = `Bearer ${token}`;
-  }
+  } 
   return config;
 });
 

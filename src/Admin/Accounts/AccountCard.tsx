@@ -113,7 +113,7 @@ const AccountCard = ({ account, onClick }: Props) => {
                                     Created At :
                                 </Typography>
                                 <Typography>
-                                    {account?.createdAt.getDate()}
+                                    {account?.createdAt}
                                 </Typography>
                             </Stack>
                         }

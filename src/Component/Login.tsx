@@ -50,8 +50,8 @@ const TypografyStylee = styled("a")(({ theme }) => ({
 const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  // const [userName, setUserName] = useState("");
+  // const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [open, setOpen] = useState(false)
   const theme = useTheme();
@@ -104,13 +104,21 @@ const Login = () => {
 
   const loginMutation = useAuth();
 
-  const onSubmit = async () => {
-    console.log(userName, password);
-    loginMutation.mutate({
-      userName,
-      password,
-    });
-  };
+  // const onSubmit = async () => {
+  //   console.log(userName, password);
+  //   loginMutation.mutate({
+  //     userName,
+  //     password,
+  //   });
+  // };
+
+  const onSubmit = (data: LoginInput) => {
+
+  loginMutation.mutate({
+    email: data.email,
+    password: data.password,
+  });
+};
 
   return (
     <Box sx={{
@@ -163,17 +171,17 @@ const Login = () => {
           Login
         </Typography>
         <TextField
-          label="User Name"
+          label="Email"
           fullWidth
           margin="normal"
           sx={{
             backgroundColor: '#E8F2F3',
             borderRadius: '12px',
           }}
-          {...register("userName")}
-          error={!!errors.userName}
-          helperText={errors.userName?.message}
-          onChange={(e) => setUserName(e.target.value)}
+          {...register("email")}
+          error={!!errors.email}
+          helperText={errors.email?.message}
+          // onChange={(e) => setEmail(e.target.value)}
         />
         <Controller
           name="password"
@@ -199,10 +207,10 @@ const Login = () => {
                 type={showPassword ? "text" : "password"}
                 label="Password"
                 {...field}
-                onChange={(e) => {
-                  field.onChange(e);
-                  setPassword(e.target.value);
-                }}
+                // onChange={(e) => {
+                //   field.onChange(e);
+                //   setPassword(e.target.value);
+                // }}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -237,7 +245,7 @@ const Login = () => {
             type="submit"
             variant="contained"
             color="primary"
-            onClick={onSubmit}
+            // onClick={onSubmit}
             disabled={loginMutation.isPending}
             fullWidth
             startIcon={

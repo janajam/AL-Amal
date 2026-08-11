@@ -22,11 +22,12 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useUpdateSchedule } from "../../Hook/UseUpdateSchedule";
 import type { ScheduleDayView } from "./ScheduleHelper";
+import type { ScheduleDay, ScheduleStatus, UpdateScheduleRequest } from "../../Entities/WorkingSchedualeData";
 
 interface Props {
   open: boolean;
   onClose: () => void;
-  day: ScheduleDayView; 
+  day: ScheduleDay; 
   accountId: number;
 }
 
@@ -47,69 +48,132 @@ const EditScheduleDialog = ({
 
   // Local State
 
-  const [available, setAvailable] = useState(false);
+const [status, setStatus] =  useState<ScheduleStatus>(day.status);
 
-  const [startTime, setStartTime] = useState<Dayjs | null>(null);
+const [startTime, setStartTime] =  useState<Dayjs | null>(
+    day.start_time
+      ? dayjs(day.start_time, "HH:mm:ss")
+      : null
+  );
 
-  const [endTime, setEndTime] = useState<Dayjs | null>(null);
+const [endTime, setEndTime] =
+  useState<Dayjs | null>(
+    day.end_time
+      ? dayjs(day.end_time, "HH:mm:ss")
+      : null
+  );
 
+  
   // Fill dialog whenever another day is selected
 
+  // useEffect(() => {
+  //   if (!open) return;
+
+  //   // setAvailable(day.status);
+
+  //   setStartTime(
+  //     day.start_time ? dayjs(day.start_time, "HH:mm") : null
+  //   );
+
+  //   setEndTime(
+  //     day.end_time ? dayjs(day.end_time, "HH:mm") : null
+  //   );
+
+  // }, [day, open]);
+
   useEffect(() => {
-    if (!open) return;
+  if (!open) return;
 
-    setAvailable(day.isAvailable);
+  setStatus(day.status);
 
-    setStartTime(
-      day.startTime ? dayjs(day.startTime, "HH:mm") : null
-    );
+  setStartTime(
+    day.start_time
+      ? dayjs(day.start_time, "HH:mm:ss")
+      : null
+  );
 
-    setEndTime(
-      day.endTime ? dayjs(day.endTime, "HH:mm") : null
-    );
+  setEndTime(
+    day.end_time
+      ? dayjs(day.end_time, "HH:mm:ss")
+      : null
+  );
 
-  }, [day, open]);
+}, [day, open]);
 
   // Save
 
+  // const handleSave = () => {
+
+  //   if (available && (!startTime || !endTime)) return;
+
+  //   const payload = {
+  //     startTime: available ? startTime!.format("HH:mm") : "",
+  //     endTime: available ? endTime!.format("HH:mm") : "",
+  //     isAvailable: available,
+  //   };
+
+  //   if (day.isPlaceholder || day.id === null) {
+
+  //     // createSchedule(
+  //     //   {
+  //     //     date: day.date,
+  //     //     ...payload,
+  //     //   },
+  //     //   {
+  //     //     onSuccess: () => onClose(),
+  //     //   }
+  //     // );
+
+  //   } else {
+
+  //     updateSchedule(
+  //       {
+  //         scheduleId: day.id,
+  //         data: payload,
+  //       },
+  //       {
+  //         onSuccess: () => onClose(),
+  //       }
+  //     );
+
+  //   }
+
+  // };
+
   const handleSave = () => {
 
-    if (available && (!startTime || !endTime)) return;
+  if (
+    status === "work_day" &&
+    (!startTime || !endTime)
+  ) {
+    return;
+  }
 
-    const payload = {
-      startTime: available ? startTime!.format("HH:mm") : "",
-      endTime: available ? endTime!.format("HH:mm") : "",
-      isAvailable: available,
-    };
+  const payload: UpdateScheduleRequest = {
+    status,
+    start_time:
+      status === "work_day"
+        ? startTime!.format("HH:mm")
+        : null,
 
-    if (day.isPlaceholder || day.id === null) {
-
-      // createSchedule(
-      //   {
-      //     date: day.date,
-      //     ...payload,
-      //   },
-      //   {
-      //     onSuccess: () => onClose(),
-      //   }
-      // );
-
-    } else {
-
-      updateSchedule(
-        {
-          scheduleId: day.id,
-          data: payload,
-        },
-        {
-          onSuccess: () => onClose(),
-        }
-      );
-
-    }
-
+    end_time:
+      status === "work_day"
+        ? endTime!.format("HH:mm")
+        : null,
   };
 
+  updateSchedule(
+    {
+      scheduleId: day.id,
+      data: payload,
+    },
+    {
+      onSuccess: () => {
+        onClose();
+      },
+    }
+  );
+};
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Dialog
@@ -124,7 +188,7 @@ const EditScheduleDialog = ({
             fontWeight: 550,
           }}
         >
-          {day.day}
+          {day.day_name} -{" "}
 
           <Typography
             component="span"
@@ -147,10 +211,14 @@ const EditScheduleDialog = ({
               label="Available"
               control={
                 <Switch
-                  checked={available}
-                  onChange={(e) =>
-                    setAvailable(e.target.checked)
-                  }
+                  checked={status === "work_day"}
+                 onChange={(e) =>
+    setStatus(
+      e.target.checked
+        ? "work_day"
+        : "off_day"
+    )
+  }
                 />
               }
             />
@@ -158,7 +226,7 @@ const EditScheduleDialog = ({
             <TimePicker
               label="Start Time"
               value={startTime}
-              disabled={!available}
+              disabled={status!=='work_day'}
               onChange={(value) =>
                 setStartTime(value as Dayjs | null)
               }
@@ -167,8 +235,8 @@ const EditScheduleDialog = ({
             <TimePicker
               label="End Time"
               value={endTime}
-              disabled={!available}
-              onChange={(value) =>
+                disabled={status!=='work_day'}
+            onChange={(value) =>
                 setEndTime(value as Dayjs | null)
               }
             />

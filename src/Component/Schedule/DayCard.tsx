@@ -15,17 +15,18 @@ import {
 } from "@mui/material";
 
 import dayjs from "dayjs";
-import type { ScheduleDayView } from "./ScheduleHelper";
+import type { ScheduleDay } from "../../Entities/WorkingSchedualeData";
 
 
 interface Props {
-  day: ScheduleDayView;
-  onEdit: (schedule: ScheduleDayView) => void;
+  day: ScheduleDay;
+  onEdit: (schedule: ScheduleDay) => void;
 }
 
 const DayCard = ({ day, onEdit }: Props) => {
 
   const theme = useTheme();
+  const isWorkingDay = day.status === "work_day";
 
   return (
     <Card
@@ -33,7 +34,7 @@ const DayCard = ({ day, onEdit }: Props) => {
         height: '90%',
         borderRadius: 1,
         transition: "0.3s",
-        bgcolor: `${day.isAvailable
+        bgcolor: `${day.status==='off_day'
           ? theme.palette.background.default
           : theme.palette.background.paper}`,
         border: 'none',
@@ -63,7 +64,7 @@ const DayCard = ({ day, onEdit }: Props) => {
               fontWeight: 600
             }}
           >
-            {day.day}
+            {day.day_name}
           </Typography>
 
           <Typography
@@ -79,7 +80,7 @@ const DayCard = ({ day, onEdit }: Props) => {
         <Divider sx={{ my: 2 }} />
 
         {/* Time */}
-        {day.isPlaceholder ? (
+        {/* {day.isPlaceholder ? (
 
           <Box sx={{ py: 2, textAlign: "center" }}>
             <Typography sx={{ fontWeight: 600, color: "text.disabled" }}>
@@ -87,7 +88,9 @@ const DayCard = ({ day, onEdit }: Props) => {
             </Typography>
           </Box>
 
-        ) : day.isAvailable ? (
+        ) :
+         */}
+        {isWorkingDay ? (
 
           <Stack spacing={1}>
 
@@ -111,7 +114,7 @@ const DayCard = ({ day, onEdit }: Props) => {
               </Typography>
 
               <Typography>
-                {day.startTime}
+                {day.start_time}
               </Typography>
 
             </Stack>
@@ -136,7 +139,7 @@ const DayCard = ({ day, onEdit }: Props) => {
               </Typography>
 
               <Typography>
-                {day.endTime}
+                {day.end_time}
               </Typography>
 
             </Stack>

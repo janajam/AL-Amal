@@ -38,7 +38,7 @@
 
 
 import dayjs from "dayjs";
-import type { WeekDay, WorkingSchedule } from "../../Entities/WorkingSchedualeData";
+import type { ScheduleDay, WeekDay, WorkingSchedule } from "../../Entities/WorkingSchedualeData";
 
 export interface ScheduleDayView extends Omit<WorkingSchedule, "id"> {
   id: number | null;
@@ -53,7 +53,7 @@ const dayNames: WeekDay[] = [
 export const groupScheduleByDay = (
   schedule: WorkingSchedule[],
   weekDates: string[]
-): ScheduleDayView[] => {
+): ScheduleDay[] => {
 
   const scheduleMap = new Map<string, WorkingSchedule>();
 
@@ -79,8 +79,7 @@ export const groupScheduleByDay = (
       startTime: "",
       endTime: "",
       isAvailable: false,
-      isPlaceholder: true,
-    };
+          };
 
   });
 

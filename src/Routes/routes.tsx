@@ -69,6 +69,8 @@ export const router = createBrowserRouter([
   },
   { path: '/appintmentsSchedule', element: <Appointment /> },
   { path: 'profile', element: <Profile /> },
+  // { path: '/doctors', element: <DoctorsList /> },
+      
 
 
 ]);

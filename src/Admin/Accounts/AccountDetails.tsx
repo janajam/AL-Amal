@@ -51,15 +51,15 @@ const accounts = [
             },
         ],
 
-        workingDays: ["Sunday", "Monday", "Tuesday"]
+        // workingDays: ["Sunday", "Monday", "Tuesday"]
     },
 ]
 
 const AccountDetails = () => {
     const theme = useTheme();
     const navigate = useNavigate();
-    const userRole = 'secretary'
-    // const userRole = useAuthStore((state) => state.role);
+    // const userRole = 'admin'
+    const userRole = useAuthStore((state) => state.role);
     // const { id } = useParams();
 
     // const {
