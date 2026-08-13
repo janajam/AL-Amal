@@ -24,13 +24,12 @@ const DepartmentCard = () => {
 
     if (isLoading) {
         return (
-            <>
-              {/* <Skeleton variant="rounded" width={345} height={300} /> */}
+            
                 <Typography sx={{ p: 2 }}>
                     Loading departments...
                 </Typography>
 
-            </>
+            
         );
     }
 

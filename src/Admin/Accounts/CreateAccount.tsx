@@ -14,7 +14,7 @@ import {
     Typography,
     useTheme
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { CreateAccountSchema, type CreateAccountInfo } from "../../Schema/CreateAccountSchema";
 import {
     AddRounded,
@@ -31,17 +31,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PulseDivider from "../../Component/Schedule/PluseDivider";
+import { useGetDepartments } from "../../Hook/UseGetDepartments";
 import { useCreateAccount } from "../../Hook/UseCreateAccount";
 
-//for test 
-const DEPARTMENTS = [
-    "Cardiology",
-    "Pediatrics",
-    "Radiology",
-    "Front Desk & Reception",
-    "General Medicine",
-];
-
+const ganders = ['male', 'female']
 
 const TextFieldStyle = styled(TextField)(() => ({
     margin: "normal",
@@ -62,23 +55,8 @@ const CreateAccount = () => {
     const navigate = useNavigate()
     const { mutate: createAccount, isPending } = useCreateAccount()
 
-    // const onSubmit = (data: CreateAccountInfo) => {
-    //     createAccount(data, {
-    //         onSuccess: (response) => {
-    //             alert(response.message);
-    //             navigate("/dashboard/accounts");
-    //         },
-    //         onError: (error: any) => {
-    //             alert(
-    //                 error?.response?.data?.message ??
-    //                 "Something went wrong"
-    //             );
+    const { data: departments } = useGetDepartments()
 
-    //         },
-
-    //     });
-
-    // };
     const [snackbar, setSnackbar] = useState({
         open: false,
         message: "",
@@ -92,6 +70,7 @@ const CreateAccount = () => {
 
     };
     const onSubmit = (data: CreateAccountInfo) => {
+        console.log(data)
         createAccount(data, {
 
             onSuccess: (response) => {
@@ -102,7 +81,7 @@ const CreateAccount = () => {
                 });
                 setTimeout(() => {
                     navigate("/accounts");
-                }, 1000);
+                }, 500);
             },
             onError: (error: any) => {
                 setSnackbar({
@@ -121,6 +100,7 @@ const CreateAccount = () => {
         handleSubmit,
         watch,
         reset,
+        control,
         setValue,
         formState: { errors },
     } = useForm<CreateAccountInfo>({
@@ -128,18 +108,21 @@ const CreateAccount = () => {
         mode: "onChange",
         reValidateMode: "onBlur",
         defaultValues: {
-            name: '',
+            full_name: '',
             email: '',
-            phoneNumber: '',
+            // password: '',
+            phone: '',
             address: '',
-            specialty: '',
-            department: '',
+            specialization: '',
+            department_id: undefined,
             role: "Doctor",
-            birthday: '',
+            birth_date: '',
+            gender: undefined,
+            biography: ''
         }
     })
-    const selectedRole = watch("role");
 
+    const selectedRole = watch("role");
     const handleRoleChange = (
         _: React.MouseEvent<HTMLElement>,
         newRole: "Doctor" | "Secretary" | null
@@ -147,7 +130,9 @@ const CreateAccount = () => {
         if (!newRole) return;
         setValue("role", newRole);
         if (newRole === "Secretary") {
-            setValue("specialty", "");
+            setValue("specialization", "");
+            setValue("biography", "");
+
         }
     };
 
@@ -221,13 +206,13 @@ const CreateAccount = () => {
                     }}>
 
                     <TextFieldStyle
-                        label='Name'
+                        label='Full_name'
                         sx={{
                             borderRadius: 1,
                         }}
-                        {...register('name')}
-                        error={!!errors.name}
-                        helperText={errors.name?.message}
+                        {...register('full_name')}
+                        error={!!errors.full_name}
+                        helperText={errors.full_name?.message}
                     />
                     <TextFieldStyle
                         label='Email'
@@ -255,36 +240,88 @@ const CreateAccount = () => {
                             width: 370,
                             height: 59
                         }}
-                        {...register('phoneNumber')}
-                        error={!!errors.phoneNumber}
-                        helperText={errors.phoneNumber?.message}
+                        {...register('phone')}
+                        error={!!errors.phone}
+                        helperText={errors.phone?.message}
                     />
+                    <Controller
+                        name="birth_date"
+                        control={control}
+                        render={({ field }) => (
+                            <LocalizationProvider dateAdapter={AdapterDateFns} >
+                                <Box
+                                    sx={{
+                                        width: 370,
+                                        margin: '20px auto',
+                                        boxShadow: '0 4px 10px #9ed1d5',
+                                        borderRadius: 1,
+                                        border: 'none',
+                                    }}>
+                                    <DatePicker
+                                        sx={{
+                                            width: 370
+                                        }}
+                                        // {...register('birthday')}
+                                        value={field.value ? new Date(field.value) : null}
+                                        label="Birthday"
+                                        // value={birthday}
+                                        onChange={(newValue) => {
+                                            field.onChange(newValue ? newValue.toISOString().split('T')[0] : '');
+                                        }}
+                                        maxDate={today} // Prevents picking future dates
+                                        openTo="year" // Opens the year view first 
+                                        views={['year', 'month', 'day']}
+                                        slotProps={{
+                                            textField: {
+                                                error: !!errors.birth_date,
+                                                helperText: errors.birth_date?.message,
+                                                sx: { width: 370, boxShadow: '0 4px 10px #9ed1d5', borderRadius: 1 }
+                                            }
+                                        }}
 
-                    <LocalizationProvider dateAdapter={AdapterDateFns} >
-                        <Box
-                            sx={{
-                                width: 370,
-                                margin: '20px auto',
-                                boxShadow: '0 4px 10px #9ed1d5',
-                                borderRadius: 1,
-                                border: 'none',
-                            }}>
-                            <DatePicker
-                                sx={{
-                                    width: 370
-                                }}
-                                {...register('birthday')}
-                                label="Birthday"
-                                value={birthday}
-                                onChange={(newValue) => setBirthday(newValue as Date)}
-                                maxDate={today} // Prevents picking future dates
-                                openTo="year" // Opens the year view first 
-                                views={['year', 'month', 'day']}
-                            />
-                        </Box>
-                    </LocalizationProvider>
-
+                                    />
+                                </Box>
+                            </LocalizationProvider>
+                        )} />
                 </Stack>
+
+                {/* <TextField
+                    label='Gander'
+                    sx={{
+                        borderRadius: 1,
+                        boxShadow: '0 4px 10px #9ed1d5',
+                        width: 370
+
+                    }}
+                    {...register('gander')}
+                    error={!!errors.gander}
+                    helperText={errors.gander?.message}
+
+                >
+                    {ganders.map((gander) => (
+                        <MenuItem key={gander} value={gander}>
+                            {gander}
+                        </MenuItem>
+                    ))}
+                </TextField> */}
+                <Controller
+                    name="gender"
+                    control={control}
+                    render={({ field }) => (
+                        <TextField
+                            select
+                            label='Gender'
+                            {...field}
+                            error={!!errors.gender}
+                            helperText={errors.gender?.message}
+                            sx={{ borderRadius: 1, boxShadow: '0 4px 10px #9ed1d5', width: 370 }}
+                        >
+                            {ganders.map((g) => (
+                                <MenuItem key={g} value={g}>{g}</MenuItem>
+                            ))}
+                        </TextField>
+                    )}
+                />
                 <Divider />
 
                 <SectionHeading icon={<HomeOutlined />} title="Address" step="02 / 03" />
@@ -315,7 +352,7 @@ const CreateAccount = () => {
                     }}>
 
 
-                    <TextField
+                    {/* <TextField
                         id="outlined-select-DEPARTMENT"
                         select
                         label="Department"
@@ -329,39 +366,57 @@ const CreateAccount = () => {
                         error={!!errors.department}
                         helperText={errors.department?.message}
                     >
-                        {DEPARTMENTS.map((option) => (
-                            <MenuItem key={option} value={option}>
-                                {option}
+                        {departments?.data.map((option) => (
+                            <MenuItem key={option.id} value={option.name}>
+                                {option.name}
                             </MenuItem>
                         ))}
-                    </TextField>
+                    </TextField> */}
 
-                    <Collapse
-                        in={selectedRole === "Doctor"}
-                    >
-
-                        <TextField
-                            id="outlined-select-SPECIALTY"
-                            select
-                            label="Specialty"
-                            defaultValue="Specialty"
-                            sx={{
-                                borderRadius: 1,
-                                boxShadow: '0 4px 10px #9ed1d5',
-                                width: 370
-                            }}
-                            {...register('specialty')}
-                            error={!!errors.specialty}
-                            helperText={errors.specialty?.message}
-                        >
-                            {DEPARTMENTS.map((option) => (
-                                <MenuItem key={option} value={option}>
-                                    {option}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                    </Collapse>
+                    <Controller
+                        name="department_id"
+                        control={control}
+                        render={({ field }) => (
+                            <TextField
+                                select
+                                label="Department"
+                                value={field.value ?? ''}
+                                onChange={(e) => field.onChange(Number(e.target.value))}
+                                error={!!errors.department_id}
+                                helperText={errors.department_id?.message}
+                                sx={{ borderRadius: 1, boxShadow: '0 4px 10px #9ed1d5', width: 370 }}
+                            >
+                                {departments?.data.map((option) => (
+                                    <MenuItem key={option.id} value={option.id}>
+                                        {option.name}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        )}
+                    />
+                     {selectedRole === 'Doctor' && (
+                    <TextFieldStyle
+                        label='Specialization'
+                        sx={{
+                            borderRadius: 1,
+                        }}
+                        {...register('specialization')}
+                        error={!!errors.specialization}
+                        helperText={errors.specialization?.message}
+                    />
+                    )}
                 </Stack>
+                 {selectedRole === 'Doctor' && (
+                <TextFieldStyle
+                    label='Biography'
+                    sx={{
+                        borderRadius: 1,
+                    }}
+                    {...register('biography')}
+                    error={!!errors.biography}
+                    helperText={errors.biography?.message}
+                />
+                )}
 
                 <Stack
                     direction={{ xs: "column", sm: "row" }}

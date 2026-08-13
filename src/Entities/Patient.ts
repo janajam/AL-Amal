@@ -1,3 +1,4 @@
+import type { User } from "./DoctorData"
 
 
 export interface Patient {
@@ -61,3 +62,51 @@ export interface PatientsResponse {
     message: string
     data: Patient
 }
+
+
+export interface UserInfo {
+  id: number
+  full_name: string
+  email: string
+  phone: string
+  gander:string
+  address:string,
+  birthDay:string
+}
+
+export interface UpdateMedicalRrecord{
+    id: number,
+    sickness?: string[],
+    allergies?: string[],
+    longTermMedication?: string[],
+    operations?: string[],
+    }
+export interface UpdateContactInfoResponse{
+    status:number,
+    message:string,
+    data:UserInfo
+}
+
+export interface UpdateRecordResponse{
+    status:number,
+    message:string,
+    data:UpdateMedicalRrecord
+}
+
+export interface UpdatePlanResponse{
+    status:number,
+    message:string
+    data:TreatmentPlan
+}
+export interface UpdateTestResponse{
+    status:number,
+    message:string,
+    data:TestResult
+}
+
+export interface UpdateImageResponse{
+    status:number,
+    message:string,
+    data:XRayImage
+}
+    

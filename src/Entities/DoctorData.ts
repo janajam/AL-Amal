@@ -36,3 +36,25 @@ export interface Schedule {
   created_at: string
   updated_at: string
 }
+
+
+export interface CreateDoctorResponse {
+    success: boolean;
+    status: number;
+    message: string;
+    data: DoctorData;  
+    errors: any;
+}
+
+export interface CreateAccountPayload {
+    full_name: string;
+    email: string;
+    // password: string;
+    phone: string;
+    gender: string;
+    birth_date: string;
+    address: string;
+    department_id: number;
+    specialization?: string;
+    biography?: string;
+}

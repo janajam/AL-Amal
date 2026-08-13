@@ -50,42 +50,41 @@ const TypografyStylee = styled("a")(({ theme }) => ({
 const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
-  // const [userName, setUserName] = useState("");
-  // const [password, setPassword] = useState("");
+  
   const navigate = useNavigate();
   const [open, setOpen] = useState(false)
   const theme = useTheme();
 
   //for dialog 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
-  const contactAdminMutation = useContactWithAdmin();
+  // const contactAdminMutation = useContactWithAdmin();
 
-  const {
-    register: registerContact,
-    handleSubmit: handleContactSubmit,
-    formState: { errors: contactErrors },
-    reset: resetContactForm,
-  } = useForm<ContectAdminInput>({
-    resolver:zodResolver(ContactAdminSchema),
-    mode: "onChange",
-    defaultValues: {
-      contectEmail: "",
-      contectAsk: "",
-    },
-  });
+  // const {
+  //   register: registerContact,
+  //   handleSubmit: handleContactSubmit,
+  //   formState: { errors: contactErrors },
+  //   reset: resetContactForm,
+  // } = useForm<ContectAdminInput>({
+  //   resolver:zodResolver(ContactAdminSchema),
+  //   mode: "onChange",
+  //   defaultValues: {
+  //     contectEmail: "",
+  //     contectAsk: "",
+  //   },
+  // });
 
-  const submitDialog = (formData: ContectAdminInput) => {
-    contactAdminMutation.mutate(formData)
-    resetContactForm();
-    handleClose();
-  };
+  // const submitDialog = (formData: ContectAdminInput) => {
+  //   contactAdminMutation.mutate(formData)
+  //   resetContactForm();
+  //   handleClose();
+  // };
   //
   //for hid and show password
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -103,14 +102,6 @@ const Login = () => {
   });
 
   const loginMutation = useAuth();
-
-  // const onSubmit = async () => {
-  //   console.log(userName, password);
-  //   loginMutation.mutate({
-  //     userName,
-  //     password,
-  //   });
-  // };
 
   const onSubmit = (data: LoginInput) => {
 
