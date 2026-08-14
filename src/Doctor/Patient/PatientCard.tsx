@@ -1,21 +1,20 @@
 import { Box, Card, CardContent, CardHeader, Stack, Typography, useTheme } from "@mui/material"
-import CardContainer from "../../Component/CardContainer"
 import { useNavigate } from "react-router-dom"
-import { useGetPatients } from "../../Hook/UseGetPatients"
-import type { Patient } from "../../Entities/Patient"
+import CardContainer from "../../Component/CardContainer"
+import type { PatientListItem } from "../../Entities/Patient"
 
 
 
 interface Props {
-  patient: Patient | null
+  patient: PatientListItem | null
 }
 
 const PatientCard = ({ patient }: Props) => {
   const theme = useTheme()
   const navigate = useNavigate()
   //const [searchParams] = useSearchParams();
-   // const { data } = useGetPatiennts();
-    // const patients = data?.data ?? []
+  // const { data } = useGetPatiennts();
+  // const patients = data?.data ?? []
 
 
   return (
@@ -30,54 +29,54 @@ const PatientCard = ({ patient }: Props) => {
         }}
           onClick={() => navigate(`/patients/${patient?.id}`)}
         >
-          <CardHeader
-            subheader={patient?.name}
+          <Stack direction={'row'}
             sx={{
-              color: theme.palette.primary.main,
-
+              justifyContent: 'space-between',
+              alignItems: 'center'
             }}
-          />
+          >
+            <CardHeader
+              subheader={patient?.full_name}
+              sx={{
+                color: theme.palette.primary.main,
+              }}
+            />
+            <Typography
+              sx={{
+                fontSize: 17,
+                fontWeight: 550,
+                color: theme.palette.etal.main
+              }}
+            >
+              {patient?.medical_number}
+            </Typography>
+          </Stack>
           <CardContent>
             <Stack spacing={2}>
-              <Typography>{patient?.gander}</Typography>
+              <Typography>{patient?.gender}</Typography>
               <Stack
                 direction={'row'}
                 spacing={2}
               >
                 <Typography
                   sx={{
-                    color: theme.palette.primary.main,
                     fontWeight: 600
                   }}
                 >
-                  Email :
+                  Birth Day :
                 </Typography>
-                <Typography>{patient?.email}
+                <Typography>{patient?.birth_day}
                 </Typography>
               </Stack>
               <Stack direction={'row'} spacing={2}>
                 <Typography
                   sx={{
-                    color: theme.palette.primary.main,
                     fontWeight: 600
                   }}
                 >
                   Phone :
                 </Typography>
-                <Typography>{patient?.phoneNumber}</Typography>
-              </Stack>
-              <Stack direction={'row'} spacing={2}>
-                <Typography
-                  sx={{
-                    color: theme.palette.primary.main,
-                    fontWeight: 600
-                  }}
-                >
-                  Address :
-                </Typography>
-                <Typography>
-                  {patient?.address}
-                </Typography>
+                <Typography>{patient?.phone}</Typography>
               </Stack>
             </Stack>
           </CardContent>

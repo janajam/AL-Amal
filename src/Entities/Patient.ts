@@ -1,4 +1,3 @@
-import type { User } from "./DoctorData"
 
 
 export interface Patient {
@@ -57,12 +56,22 @@ export interface XRayImage {
     image: string,
 }
 
-export interface PatientsResponse {
-    status: number
-    message: string
-    data: Patient
+export interface PatientListItem {
+    id: number;
+    medical_number: string;
+    full_name: string;
+    phone: string;
+    gender: string;
+    birth_day: string | null;
+    status: string | null;
 }
-
+export interface PatientsResponse {
+    success: boolean;
+    status: number;
+    message: string;
+    data: PatientListItem[];
+    errors: any;
+}
 
 export interface UserInfo {
   id: number

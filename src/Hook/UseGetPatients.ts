@@ -1,14 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import ApiClient from "../apiServices/api_client";
 import type { PatientsResponse } from "../Entities/Patient";
 
-const apiClient= new ApiClient<unknown,PatientsResponse>('/doctor/patients')
+const apiClient = new ApiClient<PatientsResponse>('/patients');
 
-export const useGetPatients=()=>{
+interface UseGetPatientsParams {
+    search?: string;
+}
+
+export const useGetPatients=({search}:UseGetPatientsParams)=>{
     return useQuery({
-        queryKey:['patients'],
+        queryKey:['patients',search],
         queryFn: async () => {
-            return await apiClient.getAll()
-        }
+            return await apiClient.getAll({
+                params: { search }
+            });
+        },
+         placeholderData: keepPreviousData,
+        staleTime: 30 * 1000,
     })
 }
