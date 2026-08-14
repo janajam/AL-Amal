@@ -7,8 +7,8 @@ import {
     MaleOutlined,
     MedicalInformationOutlined
 } from '@mui/icons-material';
-import { Box, Button, Stack, Typography, useTheme } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Box, Button, CircularProgress, Stack, Typography, useTheme } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
 import type { Patient } from '../../Entities/Patient';
 import pdf from '../../assets/SRS HIMS.pdf'
 import img from '../../assets/img.webp'
@@ -21,114 +21,115 @@ import XRayImageSection from './XRayImage/XRayImageSection';
 import { useAuthStore } from '../../Store/AuthStore';
 import CreateMedicalRecordDialog from './MedicalRecord/CreateMedicalRecordDialog';
 import { useState } from 'react';
+import { useGetPatient } from '../../Hook/UseGetPatient';
 
 //for test 
 
-const patient: Patient = {
-    id: 1,
-    name: "John Smith",
-    age: 30,
-    gander: "Male",
-    address: "New York",
-    email: "john@email.com",
-    phoneNumber: "123456789",
-    // medicalRecord: null
-    medicalRecord: {
-        id: 1,
+// const patient: Patient = {
+//     id: 1,
+//     name: "John Smith",
+//     age: 30,
+//     gander: "Male",
+//     address: "New York",
+//     email: "john@email.com",
+//     phoneNumber: "123456789",
+//     // medicalRecord: null
+//     medicalRecord: {
+//         id: 1,
 
-        sickness: ["Diabetes"],
+//         sickness: ["Diabetes"],
 
-        allergies: [
-            "Penicillin",
-            "Seafood"
-        ],
+//         allergies: [
+//             "Penicillin",
+//             "Seafood"
+//         ],
 
-        longTermMedication: [
-            "Metformin 500mg"
-        ],
+//         longTermMedication: [
+//             "Metformin 500mg"
+//         ],
 
-        operations: [
-            "Appendectomy"
-        ],
+//         operations: [
+//             "Appendectomy"
+//         ],
 
-        treatmentPlan: [
-            {
-                id: 1,
-                medicalDiagnosis: "Type 2 Diabetes",
-                doctorName: "Ahmed",
-                treatmentSteps: [
-                    "Continue Metformin",
-                    "Walk 30 minutes",
-                    "HbA1c after 8 weeks",
-                    "HbA1c after 8 weeks"
+//         treatmentPlan: [
+//             {
+//                 id: 1,
+//                 medicalDiagnosis: "Type 2 Diabetes",
+//                 doctorName: "Ahmed",
+//                 treatmentSteps: [
+//                     "Continue Metformin",
+//                     "Walk 30 minutes",
+//                     "HbA1c after 8 weeks",
+//                     "HbA1c after 8 weeks"
 
-                ],
-                date: new Date(),
-                status: "Ongoing"
-            },
-            {
-                id: 2,
-                medicalDiagnosis: "Hypertension",
-                doctorName: "Sarah",
-                treatmentSteps: [
-                    "Reduce salt",
-                    "Exercise daily"
-                ],
-                date: new Date("2025-10-01"),
-                status: "Finished"
-            }
-        ],
+//                 ],
+//                 date: new Date(),
+//                 status: "Ongoing"
+//             },
+//             {
+//                 id: 2,
+//                 medicalDiagnosis: "Hypertension",
+//                 doctorName: "Sarah",
+//                 treatmentSteps: [
+//                     "Reduce salt",
+//                     "Exercise daily"
+//                 ],
+//                 date: new Date("2025-10-01"),
+//                 status: "Finished"
+//             }
+//         ],
 
-        testResult: [
-            {
-                id: 1,
-                requestedBy: "Ahmed",
-                uploaded_by: "Leen",
-                title: "Blood Test Report.pdf",
-                attachment: pdf,
-                uploaded_at: new Date(),
-                result: 'result of test'
-            },
-            {
-                id: 2,
-                requestedBy: "Sarah",
-                uploaded_by: "Leen",
-                title: "Vitamin D Report.pdf",
-                attachment: pdf,
-                uploaded_at: new Date("2025-09-12"),
-                result: 'result of test'
+//         testResult: [
+//             {
+//                 id: 1,
+//                 requestedBy: "Ahmed",
+//                 uploaded_by: "Leen",
+//                 title: "Blood Test Report.pdf",
+//                 attachment: pdf,
+//                 uploaded_at: new Date(),
+//                 result: 'result of test'
+//             },
+//             {
+//                 id: 2,
+//                 requestedBy: "Sarah",
+//                 uploaded_by: "Leen",
+//                 title: "Vitamin D Report.pdf",
+//                 attachment: pdf,
+//                 uploaded_at: new Date("2025-09-12"),
+//                 result: 'result of test'
 
-            }
-        ],
-        xRayImage: [
-            {
-                id: 1,
-                requestedBy: "Ahmed",
-                description:
-                    "Hand X-ray shows no active pulmonary disease.",
+//             }
+//         ],
+//         xRayImage: [
+//             {
+//                 id: 1,
+//                 requestedBy: "Ahmed",
+//                 description:
+//                     "Hand X-ray shows no active pulmonary disease.",
 
-                type: "Hand X-Ray",
+//                 type: "Hand X-Ray",
 
-                image: img,
-                uploaded_by: "Leen",
-                uploaded_at: new Date()
-            },
+//                 image: img,
+//                 uploaded_by: "Leen",
+//                 uploaded_at: new Date()
+//             },
 
-            {
-                id: 2,
-                requestedBy: "Sarah",
-                description:
-                    "Left knee joint with mild osteoarthritis.",
+//             {
+//                 id: 2,
+//                 requestedBy: "Sarah",
+//                 description:
+//                     "Left knee joint with mild osteoarthritis.",
 
-                type: "Knee X-Ray",
+//                 type: "Knee X-Ray",
 
-                image: img2,
-                uploaded_by: 'Leen',
-                uploaded_at: new Date("2025-08-10")
-            }
-        ]
-    }
-};
+//                 image: img2,
+//                 uploaded_by: 'Leen',
+//                 uploaded_at: new Date("2025-08-10")
+//             }
+//         ]
+//     }
+// };
 
 
 const PatientDetailes = () => {
@@ -136,20 +137,32 @@ const PatientDetailes = () => {
     const theme = useTheme();
     const navigate = useNavigate();
 
-    // const { id } = useParams();
+    const { id } = useParams();
 
-    // const {
-    // data,
-    // } = useGetPatient(Number(id));
+    const { data, isLoading, isError } = useGetPatient(Number(id));
+    const patient = data?.data;
 
-    // const patient = data?.data;
+    const userRole = useAuthStore((state) => state.role);
 
-    const userRole = 'secretary'
-    // const userRole = useAuthStore((state) => state.role);
-    const medicalRecord = patient.medicalRecord;
-const [open,setOpen]=useState(false)
+    if (isLoading) {
+        return (
+            <Stack sx={{ py: 8 }}>
+                <CircularProgress />
+            </Stack>
+        );
+    }
 
-const handleCreate = () => {
+    if (isError || !patient) {
+        return (
+            <Typography color="error" sx={{ textAlign: 'center', mt: 4 }}>
+                patient's detailes dosent loaded
+            </Typography>
+        );
+    }
+    const medicalRecord = patient.medical_record;
+    const [open, setOpen] = useState(false)
+
+    const handleCreate = () => {
         setOpen(true);
     };
 
@@ -196,19 +209,21 @@ const handleCreate = () => {
                                 color: theme.palette.primary.main
                             }}
                         >
-                            {patient.name}
+                            {patient.user.full_name}
                         </Typography>
 
                         <Stack direction={'row'} spacing={2}>
                             <Stack direction={'row'} spacing={1}>
-                                <CalendarMonthOutlined sx={{
+                                <MedicalInformationOutlined sx={{
                                     color: theme.palette.etal.main
                                 }} />
-                                <Typography>{patient.age} yrs</Typography>
+                                <Typography sx={{
+                                    fontWeight: 550
+                                }}>{patient.medical_number} </Typography>
                             </Stack>
 
                             <Stack direction={'row'} spacing={1}>
-                                {patient.gander === 'Male'
+                                {patient.user.gender === 'Male'
                                     ? <MaleOutlined
                                         sx={{
                                             color: theme.palette.etal.main
@@ -217,7 +232,7 @@ const handleCreate = () => {
                                         sx={{
                                             color: theme.palette.etal.main
                                         }} />}
-                                <Typography>{patient.gander}</Typography>
+                                <Typography>{patient.user.gender}</Typography>
                             </Stack>
                         </Stack>
 
@@ -244,7 +259,7 @@ const handleCreate = () => {
                         {medicalRecord ? (
 
                             <MedicalRecordSection
-                                record={patient.medicalRecord!}
+                                record={patient.medical_record!}
                             />
 
                         ) : userRole === "secretary" ? (
@@ -288,16 +303,16 @@ const handleCreate = () => {
                                         border: `2px solid ${theme.palette.etal.main}`,
                                         bgcolor: theme.palette.etal.main,
                                         color: theme.palette.primary.contrastText,
-                                       
+
                                     }}
                                     onClick={handleCreate}
                                 >
                                     Create record
-                                    </Button>
+                                </Button>
 
-                                    <CreateMedicalRecordDialog
+                                {/* <CreateMedicalRecordDialog
                                      open={open}
-                                      onClose={handleClose}                            />
+                                      onClose={handleClose}                            /> */}
                             </Stack>
                         ) : (
 
@@ -317,15 +332,15 @@ const handleCreate = () => {
 
                     <>
                         <TreatmentPlanSection
-                            plans={medicalRecord.treatmentPlan ?? []}
+                            plans={medicalRecord.treatment_plans ?? []}
                         />
 
                         <TestResultSection
-                            results={medicalRecord.testResult ?? []}
+                            results={medicalRecord.lab_results ?? []}
                         />
 
                         <XRayImageSection
-                            image={medicalRecord.xRayImage ?? []}
+                            image={medicalRecord.radiology_results ?? []}
                         />
                     </>
 

@@ -3,12 +3,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, useTheme } from '@mui/material';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import type { Patient } from '../../../Entities/Patient';
+import type { Patient, PatientDetail } from '../../../Entities/Patient';
 import { editContactInfoSchema, type EditContactInfoInput } from '../../../Schema/EditContactInfoSchema';
 
 interface Props {
     open: boolean,
-    contactInfo: Patient | null,
+    contactInfo: PatientDetail | null,
     onClose: () => void
 }
 

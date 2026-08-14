@@ -10,17 +10,52 @@ export interface Patient {
     medicalRecord: MedicalRecord|null ,
     phoneNumber: string
 }
+export interface PatientUser {
+    id: number;
+    full_name: string;
+    email: string;
+    phone: string;
+    gender: string;
+    birth_day: string | null;
+    address: string;
+}
+
+export interface PatientDetail {
+    id: number;
+    medical_number: string;
+    user: PatientUser;
+    medical_record: MedicalRecord | null;
+}
+
+export interface PatientDetailResponse {
+    success: boolean;
+    status: number;
+    message: string;
+    data: PatientDetail;
+    errors: any;
+}
 
 export interface MedicalRecord {
-    id: number,
-    sickness?: string[],
-    allergies?: string[],
-    longTermMedication?: string[],
-    operations?: string[],
-    treatmentPlan?: TreatmentPlan[]|null,
-    testResult?: TestResult[]|null,
-    xRayImage?: XRayImage[]|null
+    id: number;
+    status: string | null;
+    sickness: string | null;
+    allergies: string | null;
+    long_term_medication: string | null;
+    operations: string | null;
+    treatment_plans: TreatmentPlan[];
+    lab_results: TestResult[];
+    radiology_results: XRayImage[];
 }
+// export interface MedicalRecord {
+//     id: number,
+//     sickness?: string[],
+//     allergies?: string[],
+//     longTermMedication?: string[],
+//     operations?: string[],
+//     treatmentPlan?: TreatmentPlan[]|null,
+//     testResult?: TestResult[]|null,
+//     xRayImage?: XRayImage[]|null
+// }
 
 
 

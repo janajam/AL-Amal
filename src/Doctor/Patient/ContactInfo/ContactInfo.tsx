@@ -1,18 +1,17 @@
 import { ContactMailOutlined, EditRounded } from "@mui/icons-material"
 import { Button, Stack, Typography, useTheme } from "@mui/material"
 import { useState } from "react";
-import type { Patient } from "../../../Entities/Patient";
+import type { Patient, PatientDetail, PatientUser } from "../../../Entities/Patient";
 import EditContactInfoDialog from "./EditContactInfo";
 import { useAuthStore } from "../../../Store/AuthStore";
 
 interface Props {
-    patient: Patient;
+    patient: PatientDetail;
 }
 
 const ContactInfo = ({ patient }: Props) => {
     const [open, setOpen] = useState(false);
-    // const userRole = useAuthStore((state) => state.role);
-   const  userRole='secretary'
+    const userRole = useAuthStore((state) => state.role);
     const handleEdit = () => {
         setOpen(true);
     };
@@ -69,7 +68,7 @@ const ContactInfo = ({ patient }: Props) => {
                                 Email :
                             </Typography>
                             <Typography>
-                                {patient.email}
+                                {patient.user.email}
                             </Typography>
                         </Stack>
                         <Stack direction={'row'} spacing={2}>
@@ -84,7 +83,7 @@ const ContactInfo = ({ patient }: Props) => {
                                 Phone Number :
                             </Typography>
                             <Typography>
-                                {patient.phoneNumber}
+                                {patient.user.phone}
                             </Typography>
                         </Stack>
 
@@ -99,7 +98,7 @@ const ContactInfo = ({ patient }: Props) => {
                                 Address :
                             </Typography>
                             <Typography>
-                                {patient.address}
+                                {patient.user.address}
                             </Typography>
                         </Stack>
 
