@@ -141,6 +141,7 @@ const PatientDetailes = () => {
 
     const { data, isLoading, isError } = useGetPatient(Number(id));
     const patient = data?.data;
+    console.log(data);
 
     const userRole = useAuthStore((state) => state.role);
 
@@ -336,7 +337,7 @@ const PatientDetailes = () => {
                         />
 
                         <TestResultSection
-                            results={medicalRecord.lab_results ?? []}
+                            results={medicalRecord.lab_result ?? []}
                         />
 
                         <XRayImageSection

@@ -1,15 +1,15 @@
 
 
-export interface Patient {
-    id: number,
-    name: string,
-    age: number,
-    gander: string,
-    address: string,
-    email: string,
-    medicalRecord: MedicalRecord|null ,
-    phoneNumber: string
-}
+// export interface Patient {
+//     id: number,
+//     name: string,
+//     age: number,
+//     gander: string,
+//     address: string,
+//     email: string,
+//     medicalRecord: MedicalRecord|null ,
+//     phoneNumber: string
+// }
 export interface PatientUser {
     id: number;
     full_name: string;
@@ -19,7 +19,23 @@ export interface PatientUser {
     birth_day: string | null;
     address: string;
 }
+export interface Patient {
+  id: number;
+  full_name: string;
+  email: string;
+  phone: string;
+  gender: string;
+  image: string | null;
+  role: string;
+}
 
+export interface SearchPatientResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: Patient | null;
+  errors: unknown;
+}
 export interface PatientDetail {
     id: number;
     medical_number: string;
@@ -35,29 +51,31 @@ export interface PatientDetailResponse {
     errors: any;
 }
 
-export interface MedicalRecord {
-    id: number;
-    status: string | null;
-    sickness: string | null;
-    allergies: string | null;
-    long_term_medication: string | null;
-    operations: string | null;
-    treatment_plans: TreatmentPlan[];
-    lab_results: TestResult[];
-    radiology_results: XRayImage[];
-}
 // export interface MedicalRecord {
-//     id: number,
-//     sickness?: string[],
-//     allergies?: string[],
-//     longTermMedication?: string[],
-//     operations?: string[],
-//     treatmentPlan?: TreatmentPlan[]|null,
-//     testResult?: TestResult[]|null,
-//     xRayImage?: XRayImage[]|null
+//     id: number;
+//     status: string | null;
+//     sickness: string | null;
+//     allergies: string | null;
+//     long_term_medication: string | null;
+//     operations: string | null;
+//     treatment_plans: TreatmentPlan[];
+//     lab_results: TestResult[];
+//     radiology_results: XRayImage[];
 // }
+export interface MedicalRecord {
+status:string|null
+    id: number,
+    sickness?: string[],
+    allergies?: string[],
+    long_term_medication?: string[],
+    operations?: string[],
+    treatment_plans?: TreatmentPlan[]|null,
+    lab_result?: TestResult[]|null,
+    radiology_results?: XRayImage[]|null
+}
 
 
+             
 
 type Status='Finished'|'Ongoing'
 
@@ -108,6 +126,14 @@ export interface PatientsResponse {
     errors: any;
 }
 
+
+// export interface SearchPatientResponse {
+//     success: boolean;
+//     status: number;
+//     message: string;
+//     data: PatientListItem;
+//     errors: any;
+// }
 export interface UserInfo {
   id: number
   full_name: string
@@ -154,3 +180,37 @@ export interface UpdateImageResponse{
     data:XRayImage
 }
     
+
+
+export interface ContactDataResponse {
+  success: boolean
+  status: number
+  message: string
+  data: ContactData
+  errors: any
+}
+
+export interface ContactData {
+  id: number
+  user_id: number
+  medical_number: string
+  created_at: string
+  updated_at: string
+  user: User
+}
+
+export interface User {
+  id: number
+  full_name: string
+  email: string
+  email_verified_at: any
+  phone: string
+  gender: string
+  image: any
+  birth_date: string
+  address: string
+  role_id: number
+  is_active: boolean
+  created_at: string
+  updated_at: string
+}

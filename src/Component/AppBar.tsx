@@ -1,7 +1,8 @@
-import { Box, Grid, Stack, useTheme } from "@mui/material";
+import { Box, Grid, IconButton, Stack, useTheme } from "@mui/material";
 import ThemeToggle from "../Theme/ThemToggel";
 import SearchBar from "./SearchBar";
 import Header from "./Header";
+import { LogoutRounded } from "@mui/icons-material";
 
 
 interface Props {
@@ -13,7 +14,7 @@ interface Props {
 const AppBar = ({ title, subtitle }: Props) => {
   const theme = useTheme();
   return (
-    <Box sx={{ flexGrow: 1, mt:-6 ,bgcolor:theme.palette.background.default}}>
+    <Box sx={{ flexGrow: 1, mt: -6, bgcolor: theme.palette.background.default }}>
       <Grid container spacing={"15%"}>
         <Grid size={"grow"}>
           <Header title={title} subtitle={subtitle} />
@@ -30,6 +31,7 @@ const AppBar = ({ title, subtitle }: Props) => {
             {" "}
             <SearchBar />
             <ThemeToggle />
+          
           </Stack>
         </Grid>
       </Grid>

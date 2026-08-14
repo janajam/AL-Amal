@@ -1,7 +1,7 @@
-import { Box, Button, Stack, Typography, useTheme } from "@mui/material"
+import { Box, Button, IconButton, Stack, Typography, useTheme } from "@mui/material"
 import ProfileAvatar from "./ProfileAvatar"
 import { useState } from "react";
-import { EditRounded } from "@mui/icons-material";
+import { EditRounded, LogoutRounded } from "@mui/icons-material";
 import ProfileData from "./ProfileData";
 import { useNavigate } from "react-router-dom";
 

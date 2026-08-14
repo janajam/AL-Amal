@@ -13,8 +13,7 @@ interface Props {
 const MedicalRecordSection = ({ record }: Props) => {
     const theme = useTheme()
     const [open, setOpen] = useState(false);
-    // const userRole = useAuthStore((state) => state.role);
-   const  userRole='secretary'
+    const userRole = useAuthStore((state) => state.role);
    
     const handleEdit = () => {
         setOpen(true);
@@ -97,7 +96,7 @@ const MedicalRecordSection = ({ record }: Props) => {
                             Long Term Medication :
                         </Typography>
                         <Stack spacing={0.5} sx={{ pl: 2 }}>
-                            {record.longTermMedication?.map((medication, index) => (
+                            {record.long_term_medication?.map((medication, index) => (
                                 <Stack key={index} direction="row" spacing={1} sx={{
                                     alignItems: 'center'
                                 }}>

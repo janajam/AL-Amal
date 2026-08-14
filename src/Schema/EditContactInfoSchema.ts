@@ -3,9 +3,9 @@ import z from "zod";
 
 export const editContactInfoSchema =
     z.object({
-        name: z.string().min(2),
+        full_name: z.string().min(2),
 
-        phoneNumber: z.string().min(10),
+        phone: z.string().min(10),
 
         email: z.email(),
 

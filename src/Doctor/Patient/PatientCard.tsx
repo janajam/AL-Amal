@@ -1,7 +1,7 @@
-import { Box, Card, CardContent, CardHeader, Stack, Typography, useTheme } from "@mui/material"
+import { Box, Card, CardContent, CardHeader, Stack, Typography, useTheme, type PaginationItemNextSlotPropsOverrides } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import CardContainer from "../../Component/CardContainer"
-import type { PatientListItem } from "../../Entities/Patient"
+import type { Patient, PatientListItem } from "../../Entities/Patient"
 
 
 
@@ -12,10 +12,6 @@ interface Props {
 const PatientCard = ({ patient }: Props) => {
   const theme = useTheme()
   const navigate = useNavigate()
-  //const [searchParams] = useSearchParams();
-  // const { data } = useGetPatiennts();
-  // const patients = data?.data ?? []
-
 
   return (
 

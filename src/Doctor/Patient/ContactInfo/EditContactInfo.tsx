@@ -1,10 +1,11 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, useTheme } from '@mui/material';
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, TextField, useTheme } from '@mui/material';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import type { Patient, PatientDetail } from '../../../Entities/Patient';
 import { editContactInfoSchema, type EditContactInfoInput } from '../../../Schema/EditContactInfoSchema';
+import { useEditContactInfo } from '../../../Hook/UseEditContactInfo';
 
 interface Props {
     open: boolean,
@@ -13,34 +14,6 @@ interface Props {
 }
 
 const EditContactInfoDialog = ({ open, contactInfo, onClose }: Props) => {
-
-    const theme = useTheme()
-const handelCancel=()=>{
-        reset()
-        onClose()
-    }
-    
-    // const editcontactInfo=useEditcontactInfo(contactInfo?.id|| 0)
-    useEffect(() => {
-
-
-        if (!contactInfo) return;
-
-        reset({
-            name: contactInfo.name,
-            email: contactInfo.email,
-            address: contactInfo.address,
-            phoneNumber: contactInfo.phoneNumber,
-
-        });
-
-    }, [contactInfo]);
-
-
-    const submitDialog = (formData: EditContactInfoInput) => {
-        // editOffer.mutate(formData)
-        onClose()
-    }
     const {
         register,
         handleSubmit,
@@ -50,6 +23,41 @@ const handelCancel=()=>{
         resolver: zodResolver(editContactInfoSchema),
         mode: 'onChange'
     })
+
+    const theme = useTheme()
+    const handelCancel = () => {
+        reset()
+        onClose()
+    }
+    const editContactInfo = useEditContactInfo(contactInfo?.id ?? 0);
+    useEffect(() => {
+
+        if (!contactInfo) return;
+
+        reset({
+            full_name: contactInfo.user.full_name,
+            email: contactInfo.user.email,
+            address: contactInfo.user.address,
+            phone: contactInfo.user.phone,
+
+        });
+
+    }, [contactInfo, reset]);
+
+    const submitDialog = (formData: EditContactInfoInput) => {
+        if (!contactInfo) return;
+
+        editContactInfo.mutate(formData, {
+            onSuccess: () => {
+                reset();
+                onClose();
+            },
+
+            onError: (error) => {
+                console.error("Failed to update patient:", error);
+            },
+        });
+    };
 
     return (
         <div>
@@ -74,7 +82,7 @@ const handelCancel=()=>{
                     fontWeight: 700,
                     color: theme.palette.primary.main
                 }}>
-                    Edit {contactInfo?.name} Contact Info
+                    Edit {contactInfo?.user.full_name} Contact Info
                 </DialogTitle>
                 <DialogContent >
                     <form onSubmit={handleSubmit(submitDialog)} id="subscription-form">
@@ -82,12 +90,12 @@ const handelCancel=()=>{
                             autoFocus
                             margin="dense"
                             id="name"
-                            label='Title'
+                            label='Full Name'
                             fullWidth
                             variant="outlined"
-                            {...register('name')}
-                            error={!!errors.name}
-                            helperText={errors.name?.message}
+                            {...register('full_name')}
+                            error={!!errors.full_name}
+                            helperText={errors.full_name?.message}
                         />
 
                         <TextField
@@ -107,9 +115,9 @@ const handelCancel=()=>{
                             label='Phone Number'
                             fullWidth
                             variant="outlined"
-                            {...register('phoneNumber')}
-                            error={!!errors.phoneNumber}
-                            helperText={errors.phoneNumber?.message}
+                            {...register('phone')}
+                            error={!!errors.phone}
+                            helperText={errors.phone?.message}
                         />
 
                         <TextField
@@ -143,20 +151,21 @@ const handelCancel=()=>{
                         Cancel
                     </Button>
                     <Button type="submit" form="subscription-form"
-                        //   disabled={editOffer.isPending}
-                        //   startIcon={
-                        //       editOffer.isPending
-                        //           ? <CircularProgress size={20} />
-                        //            : null}
+                        disabled={editContactInfo.isPending}
+                        startIcon={
+                            editContactInfo.isPending ? (
+                                <CircularProgress size={20} />
+                            ) : null
+                        }
                         sx={{
+
                             bgcolor: theme.palette.primary.main,
                             color: theme.palette.primary.contrastText,
                             width: 130,
                             my: 2
 
                         }}>
-                        {/* {editOffer.isPending ? 'Sending...' : 'Send'} */}
-                        save
+                        {editContactInfo.isPending ? "Saving..." : "Save"}
                     </Button>
                 </DialogActions>
             </Dialog>

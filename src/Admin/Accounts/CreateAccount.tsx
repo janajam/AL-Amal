@@ -80,7 +80,7 @@ const CreateAccount = () => {
                     severity: "success",
                 });
                 setTimeout(() => {
-                    navigate("/accounts");
+                    navigate("/dashboard/accounts");
                 }, 500);
             },
             onError: (error: any) => {
