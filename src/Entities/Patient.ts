@@ -146,9 +146,10 @@ export interface UserInfo {
 
 export interface UpdateMedicalRrecord{
     id: number,
+    status: string | null;
     sickness?: string[],
     allergies?: string[],
-    longTermMedication?: string[],
+    long_term_medication?: string[],
     operations?: string[],
     }
 export interface UpdateContactInfoResponse{
@@ -157,12 +158,13 @@ export interface UpdateContactInfoResponse{
     data:UserInfo
 }
 
-export interface UpdateRecordResponse{
-    status:number,
-    message:string,
-    data:UpdateMedicalRrecord
+export interface UpdateRecordResponse {
+    success: boolean;
+    status: number;
+    message: string;
+    data: UpdateMedicalRrecord;
+    errors: any;
 }
-
 export interface UpdatePlanResponse{
     status:number,
     message:string
@@ -214,3 +216,4 @@ export interface User {
   created_at: string
   updated_at: string
 }
+

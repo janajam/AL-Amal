@@ -9,8 +9,9 @@ import { useAuthStore } from '../../../Store/AuthStore';
 
 interface Props {
     record: MedicalRecord;
+    patientId: number; 
 }
-const MedicalRecordSection = ({ record }: Props) => {
+const MedicalRecordSection = ({ record ,patientId}: Props) => {
     const theme = useTheme()
     const [open, setOpen] = useState(false);
     const userRole = useAuthStore((state) => state.role);
@@ -172,6 +173,7 @@ const MedicalRecordSection = ({ record }: Props) => {
             <EditMedicalRecord
                 open={open}
                 record={record}
+                patientId={patientId}   
                 onClose={handleClose} />
         </div>
     )

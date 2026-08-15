@@ -51,7 +51,18 @@ const TreatmentPlanSection = ({ plans }: Props) => {
 
 
     const currentPlan = plans[selected];
-    const isTwoColumns = currentPlan.treatmentSteps.length > 3;
+    const isTwoColumns = currentPlan?.treatmentSteps.length > 3;
+
+    if (!currentPlan) {
+        return (
+            <Box sx={{ width: "93%", justifySelf: "center", p: 4, textDirection: 'rtl' }}>
+                <Typography variant="h6" color="textSecondary" align="center">
+                there are no treatment plans for this patient yet. please create a new treatment plan.
+                </Typography>
+            </Box>
+        );
+    }
+
 
     return (
         <Box

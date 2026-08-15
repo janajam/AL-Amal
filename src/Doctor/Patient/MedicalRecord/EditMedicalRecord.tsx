@@ -2,22 +2,30 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Add, Delete } from '@mui/icons-material'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material'
-import { useEffect } from 'react'
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import type { MedicalRecord } from '../../../Entities/Patient'
 import { editMedicalRecordSchema, type EditMedicalRecordInput } from '../../../Schema/EditMedicalRecordSchema'
+import { useEditMedicalRecord } from '../../../Hook/UseEditMedicalRecord'
 
 interface Props {
     open: boolean,
     record: MedicalRecord | null,
+    patientId: number,
     onClose: () => void
 }
 
-const EditMedicalRecord = ({ open, record, onClose }: Props) => {
+const EditMedicalRecord = ({ open, record, onClose ,patientId}: Props) => {
 
     const theme = useTheme()
+    const { mutate: editRecord, isPending } = useEditMedicalRecord(patientId)
 
+const [snackbar, setSnackbar] = useState({
+        open: false,
+        message: "",
+        severity: "success" as "success" | "error",
+    });
 
     const {
         control,
@@ -32,27 +40,43 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
         defaultValues: {
             sickness: [],
             allergies: [],
-            longTermMedication: [],
+            long_term_medication: [],
             operations: [],
         },
     });
-    const submitDialog = (formData: EditMedicalRecordInput) => {
-        // editOffer.mutate(formData)
-        onClose()
-    }
 
-    const handelCancel=()=>{
+
+const submitDialog = (formData: EditMedicalRecordInput) => {
+        editRecord(formData, {
+            onSuccess: (response) => {
+                setSnackbar({
+                    open: true,
+                    message: response.message,
+                    severity: "success",
+                });
+                onClose();
+            },
+            onError: (error: any) => {
+                setSnackbar({
+                    open: true,
+                    message: error.response?.data?.message ?? "there is an error on the create process",
+                    severity: "error",
+                });
+            },
+        });
+    }
+    const handelCancel = () => {
         reset()
         onClose()
     }
-    
+
     useEffect(() => {
 
         if (record && open) {
             reset({
                 sickness: record.sickness ?? [],
                 allergies: record.allergies ?? [],
-                longTermMedication: record.longTermMedication ?? [],
+                long_term_medication: record.long_term_medication ?? [],
                 operations: record.operations ?? [],
             });
         }
@@ -60,7 +84,7 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
 
     const sickness = watch("sickness");
     const allergies = watch("allergies");
-    const longTermMedication = watch("longTermMedication");
+    const long_term_medication = watch("long_term_medication");
     const operations = watch("operations");
 
     return (
@@ -171,7 +195,7 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
 
                             <Stack spacing={2}>
 
-                                {longTermMedication.map((item, index) => (
+                                {long_term_medication.map((item, index) => (
 
                                     <Stack
                                         key={index}
@@ -180,7 +204,7 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
                                     >
 
                                         <Controller
-                                            name={`longTermMedication.${index}`}
+                                            name={`long_term_medication.${index}`}
                                             control={control}
                                             render={({ field }) => (
 
@@ -200,12 +224,12 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
                                             onClick={() => {
 
                                                 const updated =
-                                                    longTermMedication.filter(
+                                                    long_term_medication.filter(
                                                         (_, i) => i !== index
                                                     );
 
                                                 setValue(
-                                                    "longTermMedication",
+                                                    "long_term_medication",
                                                     updated,
                                                     {
                                                         shouldDirty: true,
@@ -233,9 +257,9 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
 
                                         setValue(
 
-                                            "longTermMedication",
+                                            "long_term_medication",
 
-                                            [...longTermMedication, ""],
+                                            [...long_term_medication, ""],
 
                                             {
                                                 shouldDirty: true,
@@ -463,20 +487,16 @@ const EditMedicalRecord = ({ open, record, onClose }: Props) => {
                                 Cancel
                             </Button>
                             <Button type="submit" form="subscription-form"
-                                //   disabled={editOffer.isPending}
-                                //   startIcon={
-                                //       editOffer.isPending
-                                //           ? <CircularProgress size={20} />
-                                //            : null}
-                                sx={{
+                                disabled={isPending}
+                                startIcon={isPending ? <CircularProgress size={20} /> : null}
+                               sx={{
                                     bgcolor: theme.palette.primary.main,
                                     color: theme.palette.primary.contrastText,
                                     width: 130,
 
                                 }}>
-                                {/* {editOffer.isPending ? 'Sending...' : 'Send'} */}
-                                save
-
+                                {isPending ? 'Sending...' : 'Send'}
+                                
                             </Button>
                         </DialogActions>
 
