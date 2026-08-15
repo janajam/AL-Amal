@@ -15,23 +15,24 @@ import {
 
 import { AddRounded, EditRounded, PersonOutlined } from "@mui/icons-material";
 import EditTreatmentPlanDialog from "./EditTreatmentPlanDialog";
-import type { TreatmentPlan } from "../../../Entities/Patient";
+import type { TreatmentPlan, TreatmentPlanPayload } from "../../../Entities/Patient";
 import CreateTreatmentPlanDialog from "./CreateTreatmentPlanDialog";
 import { useAuthStore } from "../../../Store/AuthStore";
 
 interface Props {
-    plans: TreatmentPlan[];
+    plans: TreatmentPlanPayload[];
+    patientId: number
+    medicalRecordId: number,
 }
 
-const TreatmentPlanSection = ({ plans }: Props) => {
+const TreatmentPlanSection = ({ plans, patientId, medicalRecordId }: Props) => {
     const theme = useTheme()
     const [selected, setSelected] = useState(0);
     const [open, setOpen] = useState(false);
     const [openDialog, setOpenDialog] = useState(false)
 
-    // const userRole = useAuthStore((state) => state.role);
-   const  userRole='secretary'
-   
+    const userRole = useAuthStore((state) => state.role);
+
     const handleCreate = () => {
         setOpenDialog(true);
     };
@@ -51,13 +52,13 @@ const TreatmentPlanSection = ({ plans }: Props) => {
 
 
     const currentPlan = plans[selected];
-    const isTwoColumns = currentPlan?.treatmentSteps.length > 3;
+    const isTwoColumns = currentPlan?.steps.length > 3;
 
     if (!currentPlan) {
         return (
             <Box sx={{ width: "93%", justifySelf: "center", p: 4, textDirection: 'rtl' }}>
                 <Typography variant="h6" color="textSecondary" align="center">
-                there are no treatment plans for this patient yet. please create a new treatment plan.
+                    there are no treatment plans for this patient yet. please create a new treatment plan.
                 </Typography>
             </Box>
         );
@@ -85,23 +86,23 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                 >
                     Treatment Plan
                 </Typography>
-                {userRole!=='secretary'&&
-                <Button
-                    variant='outlined'
-                    startIcon={<AddRounded />}
-                    sx={{
-                        whiteSpace: 'nowrap',
-                        border: `2px solid ${theme.palette.primary.main}`,
-                        color: theme.palette.primary.main,
-                        ml: '83%',
-                        mt: 4,
+                {userRole !== 'secretary' &&
+                    <Button
+                        variant='outlined'
+                        startIcon={<AddRounded />}
+                        sx={{
+                            whiteSpace: 'nowrap',
+                            border: `2px solid ${theme.palette.primary.main}`,
+                            color: theme.palette.primary.main,
+                            ml: '83%',
+                            mt: 4,
 
-                    }}
-                    onClick={() => handleCreate()}
-                >
-                    New Plane
-                </Button>
-}
+                        }}
+                        onClick={() => handleCreate()}
+                    >
+                        New Plane
+                    </Button>
+                }
             </Stack>
             <Tabs
                 value={selected}
@@ -119,7 +120,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
 
                                 <Typography
                                     sx={{ fontWeight: 700 }}>
-                                    {new Date(plan.date).toLocaleDateString(
+                                    {new Date(plan.created_at).toLocaleDateString(
                                         "en-GB",
                                         {
                                             day: "2-digit",
@@ -131,7 +132,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                                 <Typography
                                     variant="caption"
                                 >
-                                    {plan.doctorName}
+                                    {plan.doctor.name}
                                 </Typography>
 
                             </Stack>
@@ -182,7 +183,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
 
                             }}
                         >
-                            {currentPlan.medicalDiagnosis}
+                            {currentPlan.medical_diagnosis}
                         </Typography>
                         <Stack
                             direction="row"
@@ -195,7 +196,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                             <PersonOutlined sx={{ color: theme.palette.etal.main }} />
 
                             <Typography>
-                                Dr. {currentPlan.doctorName}
+                                {currentPlan.doctor.name}
                             </Typography>
                         </Stack>
 
@@ -208,7 +209,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                     >
                         <Typography
                             sx={{
-                                color: `${currentPlan.status === 'Ongoing'
+                                color: `${currentPlan.status === 'ongoing'
                                     ? theme.palette.etal.main
                                     : theme.palette.primary.main
                                     }`,
@@ -223,7 +224,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                                 color: theme.palette.primary.main,
                                 fontWeight: 600
                             }} >
-                            {new Date(currentPlan.date).toLocaleDateString()}
+                            {new Date(currentPlan.created_at).toLocaleDateString()}
                         </Typography>
 
 
@@ -256,7 +257,7 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                             my: 2,
                         }}
                     >
-                        {currentPlan.treatmentSteps.map((step, index) => (
+                        {currentPlan.steps.map((step, index) => (
                             <Stack
                                 key={index}
                                 direction="row"
@@ -279,45 +280,51 @@ const TreatmentPlanSection = ({ plans }: Props) => {
                                         flexShrink: 0,
                                     }}
                                 >
-                                    {index + 1}
+                                    {step.step_number}
                                 </Box>
 
                                 <Typography>
-                                    {step}
+                                    {step.instruction}
                                 </Typography>
                             </Stack>
                         ))}
                     </Box>
                 </Stack>
-                    {userRole!=='secretary'&&
-            
-                <Button
-                    startIcon={<EditRounded />}
-                    sx={{
-                        whiteSpace: 'nowrap',
-                        width: 120,
-                        border: `2px solid ${theme.palette.etal.main}`,
-                        bgcolor: theme.palette.etal.main,
-                        color: theme.palette.primary.contrastText,
-                        ml: '86%',
-                        mt: 4,
+                {userRole !== 'secretary' &&
 
-                    }}
-                    onClick={() => handleEdit()}
-                >
-                    Edit
-                </Button>
-}
+                    <Button
+                        startIcon={<EditRounded />}
+                        sx={{
+                            whiteSpace: 'nowrap',
+                            width: 120,
+                            border: `2px solid ${theme.palette.etal.main}`,
+                            bgcolor: theme.palette.etal.main,
+                            color: theme.palette.primary.contrastText,
+                            ml: '86%',
+                            mt: 4,
+
+                        }}
+                        onClick={() => handleEdit()}
+                    >
+                        Edit
+                    </Button>
+                }
             </Card>
 
             <CreateTreatmentPlanDialog
                 open={openDialog}
                 onClose={handleCloseDialog}
+                patientId={patientId}
+                medicalRecordId={medicalRecordId}
             />
+
             <EditTreatmentPlanDialog
                 open={open}
                 plan={currentPlan}
-                onClose={handleClose}
+                onClose={handleClose} patientId={patientId} medicalRecordId={
+                    medicalRecordId
+                }
+
             />
         </Box>
 

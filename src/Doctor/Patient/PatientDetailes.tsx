@@ -223,6 +223,8 @@ const PatientDetailes = () => {
                     <>
                         <TreatmentPlanSection
                             plans={medicalRecord.treatment_plans ?? []}
+                            patientId={patient.id}
+                            medicalRecordId={medicalRecord.id}
                         />
 
                         <TestResultSection

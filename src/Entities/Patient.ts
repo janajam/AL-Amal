@@ -69,7 +69,7 @@ status:string|null
     allergies?: string[],
     long_term_medication?: string[],
     operations?: string[],
-    treatment_plans?: TreatmentPlan[]|null,
+    treatment_plans?: TreatmentPlanPayload[]|null,
     lab_result?: TestResult[]|null,
     radiology_results?: XRayImage[]|null
 }
@@ -217,3 +217,38 @@ export interface User {
   updated_at: string
 }
 
+
+
+export interface TreatmentPlanStep {
+    step_number: number;
+    instruction: string;
+}
+
+export interface TreatmentPlanDoctor {
+    id: number;
+    name: string;
+}
+
+export interface TreatmentPlanPayload {
+    id: number;
+    medical_diagnosis: string
+    status: 'ongoing' | 'finished';
+    created_at: string;
+    doctor: TreatmentPlanDoctor;
+    steps: TreatmentPlanStep[];
+}
+
+export interface UpdateTreatmentPlanResponse {
+    success: boolean;
+    status: number;
+    message: string;
+    data: TreatmentPlanPayload;
+    errors: any;
+}
+export interface CreateTreatmentPlanResponse {
+    success: boolean;
+    status: number;
+    message: string;
+    data: TreatmentPlan;
+    errors: any;
+}

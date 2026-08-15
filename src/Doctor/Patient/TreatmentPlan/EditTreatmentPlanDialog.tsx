@@ -1,30 +1,48 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Delete } from '@mui/icons-material';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, IconButton, Radio, RadioGroup, Stack, TextField, Typography, useTheme } from '@mui/material';
-import { useEffect } from 'react';
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, IconButton, Radio, RadioGroup, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import type { TreatmentPlan } from '../../../Entities/Patient';
+import type { TreatmentPlan, TreatmentPlanPayload } from '../../../Entities/Patient';
 import { editTreatmentPlanSchema, type EditTreatmentPlanInput } from '../../../Schema/EditTreatmentPlane';
+import { useEditTreatmentPlan } from '../../../Hook/UseEditTreatmentPlan';
 interface Props {
     open: boolean,
-    plan: TreatmentPlan | null,
+    plan: TreatmentPlanPayload | null,
+    patientId: number,
+    medicalRecordId: number,
     onClose: () => void
 }
 
-const EditTreatmentPlanDialog = ({ open, plan, onClose }: Props) => {
+const EditTreatmentPlanDialog = ({ open, plan, patientId, medicalRecordId, onClose }: Props) => {
 
     const theme = useTheme()
-const handelCancel=()=>{
-        reset()
-        onClose()
-    }
-    
-    // const editPlan=useEditPlan(plan?.id|| 0)
+    const { mutate: editPlan, isPending } = useEditTreatmentPlan(plan?.id ?? 0, medicalRecordId, patientId)
+  
+    const [snackbar, setSnackbar] = useState({
+        open: false,
+        message: "",
+        severity: "success" as "success" | "error",
+    });
 
     const submitDialog = (formData: EditTreatmentPlanInput) => {
-        // editPlan.mutate(formData)
-        onClose()
+        editPlan(formData, {
+            onSuccess: (response) => {
+                setSnackbar({
+                    open: true,
+                    message: response.message,
+                    severity: "success",
+                });
+                onClose();
+            },
+            onError: (error: any) => {
+                setSnackbar({
+                    open: true,
+                    message: error.response?.data?.message ?? "حدث خطأ أثناء تعديل الخطة",
+                    severity: "error",
+                });}
+        });
     }
     const {
         register,
@@ -36,29 +54,32 @@ const handelCancel=()=>{
     } = useForm<EditTreatmentPlanInput>({
         resolver: zodResolver(editTreatmentPlanSchema),
         defaultValues: {
-            medicalDiagnosis: '',
-            status: 'Ongoing',
-            treatmentSteps: []
+            medical_diagnosis: '',
+            status: 'ongoing',
+            steps: []
         }
     })
 
 
-    useEffect(() => {
-
+  useEffect(() => {
         if (plan && open) {
-
             reset({
-                medicalDiagnosis: plan.medicalDiagnosis,
-                treatmentSteps: plan.treatmentSteps ?? [],
-                status: plan.status,
+                medical_diagnosis: plan.medical_diagnosis,
+                steps: plan.steps.map((s) => s.instruction) ?? [],
+                status: plan.status === 'ongoing' ? 'ongoing' : 'finished',
             });
         }
-
     }, [plan, open, reset]);
 
+    
+const handelCancel=()=>{
+        reset()
+        onClose()
+    }
 
-    const treatmentSteps = watch("treatmentSteps");
-
+    const steps = watch("steps");
+    const status = watch("status");
+    const medicalDiagnosis = watch("medical_diagnosis");
     return (
         <div>
             <Dialog
@@ -82,7 +103,7 @@ const handelCancel=()=>{
                     fontWeight: 700,
                     color: theme.palette.primary.main
                 }}>
-                    Edit Treatment Plane
+                    Edit Treatment Plan
                 </DialogTitle>
                 <DialogContent >
                     <form onSubmit={handleSubmit(submitDialog)} id="subscription-form">
@@ -90,12 +111,12 @@ const handelCancel=()=>{
 
                             <RadioGroup
                                 row
-                                value={watch("status")}
+                                value={status}
                                 onChange={(e) => {
 
                                     setValue(
                                         "status",
-                                        e.target.value as "Ongoing" | "Finished",
+                                        e.target.value as "ongoing" | "finished",
                                         {
                                             shouldValidate: true
                                         }
@@ -105,15 +126,15 @@ const handelCancel=()=>{
                             >
 
                                 <FormControlLabel
-                                    value="Ongoing"
+                                    value="ongoing"
                                     control={<Radio />}
-                                    label="Ongoing"
+                                    label="ongoing"
                                 />
 
                                 <FormControlLabel
-                                    value="Finished"
+                                    value="finished"
                                     control={<Radio />}
-                                    label="Finished"
+                                    label="finished"
                                 />
 
                             </RadioGroup>
@@ -128,9 +149,9 @@ const handelCancel=()=>{
                         <TextField
                             fullWidth
                             margin="normal"
-                            {...register("medicalDiagnosis")}
-                            error={!!errors.medicalDiagnosis}
-                            helperText={errors.medicalDiagnosis?.message}
+                            {...register("medical_diagnosis")}
+                            error={!!errors.medical_diagnosis}
+                            helperText={errors.medical_diagnosis?.message}
                         />
                         <Typography
                             sx={{
@@ -142,7 +163,7 @@ const handelCancel=()=>{
                             Treatment Steps
                         </Typography>
 
-                        {treatmentSteps.map((step, index) => (
+                        {steps.map((step, index) => (
 
                             <Stack
                                 key={index}
@@ -156,11 +177,11 @@ const handelCancel=()=>{
                                     value={step}
                                     onChange={(e) => {
 
-                                        const updated = [...treatmentSteps];
+                                        const updated = [...steps];
                                         updated[index] = e.target.value;
 
                                         setValue(
-                                            "treatmentSteps",
+                                            "steps",
                                             updated,
                                             {
                                                 shouldValidate: true
@@ -174,12 +195,12 @@ const handelCancel=()=>{
                                     color="error"
                                     onClick={() => {
 
-                                        const updated = treatmentSteps.filter(
+                                        const updated = steps.filter(
                                             (_, i) => i !== index
                                         );
 
                                         setValue(
-                                            "treatmentSteps",
+                                            "steps",
                                             updated,
                                             {
                                                 shouldValidate: true
@@ -200,8 +221,8 @@ const handelCancel=()=>{
                             onClick={() => {
 
                                 setValue(
-                                    "treatmentSteps",
-                                    [...treatmentSteps, ""],
+                                    "steps",
+                                    [...steps, ""],
                                     {
                                         shouldValidate: true
                                     }
@@ -227,19 +248,19 @@ const handelCancel=()=>{
                         Cancel
                     </Button>
                     <Button type="submit" form="subscription-form"
-                        // disabled={editPlan.isPending}
-                        // startIcon={
-                        //     editPlan.isPending
-                        //         ? <CircularProgress size={20} />
-                        //         : null}
+                        disabled={isPending}
+                        startIcon={
+                            isPending
+                                ? <CircularProgress size={20} />
+                                : null}
                         sx={{
                             bgcolor: theme.palette.primary.main,
                             color: theme.palette.primary.contrastText,
                             width: 130,
 
                         }}>
-                        {/* {editPlan.isPending ? 'Sending...' : 'Send'} */}
-                        save
+                        {isPending ? 'Sending...' : 'Send'}
+                        
                     </Button>
                 </DialogActions>
             </Dialog>
