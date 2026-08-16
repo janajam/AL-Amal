@@ -22,19 +22,19 @@ import {
     ScienceOutlined,
     VisibilityOutlined,
 } from "@mui/icons-material";
-import type { TestResult } from "../../../Entities/Patient";
+import type { LabResult, TestResult } from "../../../Entities/Patient";
 import EditTestResultDialog from "./EditTestResultDialog";
 import AddTestResultDialog from "./AddTestResultDialog";
 import { useAuthStore } from "../../../Store/AuthStore";
 
 interface Props {
-    results: TestResult[];
+    results: LabResult[];
+    medicalRecordId:number
 }
 
-const TestResultSection = ({ results }: Props) => {
-const  userRole='secretary'
+const TestResultSection = ({ results ,medicalRecordId}: Props) => {
    
-    // const userRole = useAuthStore((state) => state.role);
+    const userRole = useAuthStore((state) => state.role);
 
     const theme = useTheme();
     const [open, setOpen] = useState(false);
@@ -120,7 +120,7 @@ const  userRole='secretary'
                                 sx={{ alignItems: "flex-start" }}>
 
                                 <Typography sx={{ fontWeight: 700 }}>
-                                    {new Date(item.uploaded_at).toLocaleDateString(
+                                    {new Date(item.created_at).toLocaleDateString(
                                         "en-GB",
                                         {
                                             day: "2-digit",
@@ -130,7 +130,7 @@ const  userRole='secretary'
                                 </Typography>
 
                                 <Typography variant="caption">
-                                    {item.requestedBy}
+                                    {item.doctor_name}
                                 </Typography>
 
                             </Stack>
@@ -194,7 +194,7 @@ const  userRole='secretary'
                             color: theme.palette.primary.main,
                         }}
                     >
-                        {new Date(current.uploaded_at).toLocaleDateString()}
+                        {new Date(current.created_at).toLocaleDateString()}
                     </Typography>
 
                 </Stack>
@@ -232,7 +232,7 @@ const  userRole='secretary'
                                 </Typography>
 
                                 <Typography >
-                                    {current.uploaded_by}
+                                    {current.tecnical}
                                 </Typography>
 
                             </Box>
@@ -260,7 +260,7 @@ const  userRole='secretary'
                                 </Typography>
 
                                 <Typography >
-                                    Dr. {current.requestedBy}
+                                    Dr. {current.doctor_name}
                                 </Typography>
 
                             </Box>
@@ -376,6 +376,7 @@ const  userRole='secretary'
             <EditTestResultDialog
                 open={open}
                 result={current}
+                medicalRecordId={medicalRecordId}
                 onClose={handleClose} />
 
             <AddTestResultDialog

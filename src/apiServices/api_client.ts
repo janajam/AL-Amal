@@ -8,6 +8,8 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((config) => {
   const token = getToken();
+  console.log("TOKEN:", token);
+  console.log("REQUEST:", config.method, config.baseURL, config.url);
   if (token) {
     // config.headers["Authorization"] = `Bearer ${token}`;
      config.headers.Authorization = `Bearer ${token}`;
@@ -28,6 +30,7 @@ class ApiClient<TResponse, TRequest=unknown> {
       this.endpoint, config);
     return res.data;
   }
+
 
 
   async get(id: string | number, config?: AxiosRequestConfig) :Promise<TResponse> {

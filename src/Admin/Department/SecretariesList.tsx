@@ -1,97 +1,113 @@
 
 import logo from '../../assets/logo.webp'
-import type { Account, Department } from '../../Entities/AccountsData'
+import type { Account } from '../../Entities/AccountsData'
 import { dummySchedule } from '../../Component/Schedule/ScheduleDummy'
 import { useNavigate } from 'react-router-dom';
 import AccountCard from '../../Admin/Accounts/AccountCard';
+import type { Department } from '../../Entities/DoctorData';
+import { mapSecretaryToAccount } from '../Accounts/MapingSecretaryData';
+import { useGetSecretaries } from '../../Hook/UseGetSecretaries';
 
 //for test
 
-const department: Department = {
-  id: 1,
-  name: "Cardiology",
-};
+// const department: Department = {
+//   id: 1,
+//   name: "Cardiology",
+// };
 
-const secretaries: Account[] = [
-  {
-    id: 1,
-    name: "A",
+// const secretaries: Account[] = [
+//   {
+//     id: 1,
+//     name: "A",
 
-    email: "A1@email.com",
+//     email: "A1@email.com",
 
-    phoneNumber: "123456789",
+//     phoneNumber: "123456789",
 
-    birthDay: new Date("1990-01-01"),
+//     birthDay: new Date("1990-01-01"),
 
-    image: logo,
+//     image: logo,
 
-    role: "Secretary",
+//     role: "Secretary",
 
-    status: "ACTIVE",
+//     status: "ACTIVE",
 
-    createdAt: new Date("2022-02-10"),
+//     createdAt: new Date("2022-02-10"),
 
-    address: "Address",
+//     address: "Address",
 
-    department,
+//     department,
 
-    workingDays: dummySchedule,
-  },
+//     workingDays: dummySchedule,
+//   },
 
-  {
-    id: 2,
+//   {
+//     id: 2,
 
-    name: "B",
+//     name: "B",
 
-    email: "B@email.com",
+//     email: "B@email.com",
 
-    phoneNumber: "987654321",
+//     phoneNumber: "987654321",
 
-    birthDay: new Date("1995-06-10"),
+//     birthDay: new Date("1995-06-10"),
 
-    image: logo,
+//     image: logo,
 
-    role: "Secretary",
+//     role: "Secretary",
 
-    status: "ACTIVE",
+//     status: "ACTIVE",
 
-    createdAt: new Date(),
+//     createdAt: new Date(),
 
-    address: "Address",
+//     address: "Address",
 
-    department,
+//     department,
 
-    workingDays: dummySchedule,
-  },
+//     workingDays: dummySchedule,
+//   },
 
-  {
-    id: 3,
+//   {
+//     id: 3,
 
-    name: "C",
+//     name: "C",
 
-    email: "C@email.com",
+//     email: "C@email.com",
 
-    phoneNumber: "55555555",
+//     phoneNumber: "55555555",
 
-    birthDay: new Date("1992-04-20"),
+//     birthDay: new Date("1992-04-20"),
 
-    image: logo,
+//     image: logo,
 
-    role: "Secretary",
+//     role: "Secretary",
 
-    status: "ACTIVE",
+//     status: "ACTIVE",
 
-    createdAt: new Date(),
+//     createdAt: new Date(),
 
-    address: "Address",
+//     address: "Address",
 
-    department,
+//     department,
 
-    workingDays: dummySchedule,
-  },
-];
-const DoctorsList = () => {
+//     workingDays: dummySchedule,
+//   },
+// ];
+const SecretariesList = () => {
   const navigate = useNavigate();
+
+  const { data, isLoading, isError } = useGetSecretaries();
+
+  // if (isLoading) {
+  //   return <div>Loading secretaries...</div>;
+  // }
+
+  // if (isError) {
+  //   return <div>Failed to load secretaries.</div>;
+  // }
+
+  const secretaries: Account[] = data?.data?.map(mapSecretaryToAccount) ?? [];
+
   return (
     <>
       {secretaries.map((secretary) => (
@@ -105,4 +121,4 @@ const DoctorsList = () => {
   )
 
 }
-export default DoctorsList
+export default SecretariesList

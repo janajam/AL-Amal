@@ -111,6 +111,8 @@ import logo from "../../assets/logo.webp";
 import type { Account}from "../../Entities/AccountsData";
 import { useNavigate } from "react-router-dom";
 import type { Department } from "../../Entities/DepartmentData";
+import DoctorsList from "../../Secretary/DoctorsAppointments/DoctorList";
+import SecretariesList from "../Department/SecretariesList";
 
 const department: Department = {
   id: 1,
@@ -168,13 +170,16 @@ const Accounts = () => {
 
   return (
     <>
-      {accounts.map((account) => (
+      {/* {accounts.map((account) => (
         <AccountCard
           key={account.id}
           account={account}
           onClick={() => navigate(`/accounts/${account.id}`)}
         />
-      ))}
+      ))} */}
+
+      <DoctorsList/>
+      <SecretariesList/>
     </>
   );
 };

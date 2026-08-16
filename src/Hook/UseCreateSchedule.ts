@@ -1,57 +1,42 @@
-// import { useMutation } from "@tanstack/react-query";
-// import ApiClient from "../apiServices/api_client";
-// import type { CreateScheduleRequest, CreateScheduleResponse } from "../Entities/WorkingSchedualeData";
 
-// const apiClient = new ApiClient<
-//   CreateScheduleResponse,
-//   CreateScheduleRequest
-// >("/doctor/schedules");
+import {
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
-// export const useCreateSchedule = () => {
-//   return useMutation({
-//     mutationFn: (data: CreateScheduleRequest) =>
-//       apiClient.post(data),
-//   });
-// };
-
-
-
-import { useQuery } from "@tanstack/react-query";
 import ApiClient from "../apiServices/api_client";
-import type { ScheduleResponse } from "../Entities/WorkingSchedualeData";
 
-const apiClient = new ApiClient<unknown, ScheduleResponse>(
-  "/doctor/schedules"
-);
+import type {
+  CreateScheduleRequest,
+  CreateScheduleResponse,
+} from "../Entities/WorkingSchedualeData";
 
-export const useGetSchedule = (
-  accountId: number,
-  year: number,
-  month: number
+const apiClient = new ApiClient<
+  CreateScheduleResponse,
+  CreateScheduleRequest
+>("/doctor/schedules");
+
+export const useCreateSchedule = (
+  accountId: number
 ) => {
-  return useQuery({
-    queryKey: ["schedule", accountId, year, month],
+  const queryClient = useQueryClient();
 
-    queryFn: async () => {
-      console.log("GET SCHEDULE PARAMS:", {
-        accountId,
-        year,
-        month,
-      });
-
-      const response = await apiClient.getAll({
-        params: {
-          year,
-          month,
-        },
-      });
-
-      console.log("GET SCHEDULE RESPONSE:", response);
-
-      return response;
+  return useMutation({
+    mutationFn: async (
+      data: CreateScheduleRequest
+    ) => {
+      return await apiClient.post(data);
     },
 
-    enabled: Boolean(accountId && year && month),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [
+          "schedule",
+          accountId,
+          variables.year,
+          variables.month,
+        ],
+      });
+    },
   });
 };
-

@@ -34,7 +34,7 @@ const DayCard = ({ day, onEdit }: Props) => {
         height: '90%',
         borderRadius: 1,
         transition: "0.3s",
-        bgcolor: `${day.status==='off_day'
+        bgcolor: `${day.status === 'off_day'
           ? theme.palette.background.default
           : theme.palette.background.paper}`,
         border: 'none',
@@ -79,17 +79,6 @@ const DayCard = ({ day, onEdit }: Props) => {
 
         <Divider sx={{ my: 2 }} />
 
-        {/* Time */}
-        {/* {day.isPlaceholder ? (
-
-          <Box sx={{ py: 2, textAlign: "center" }}>
-            <Typography sx={{ fontWeight: 600, color: "text.disabled" }}>
-              Not Set
-            </Typography>
-          </Box>
-
-        ) :
-         */}
         {isWorkingDay ? (
 
           <Stack spacing={1}>

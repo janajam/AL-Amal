@@ -1,13 +1,13 @@
 
-import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
+import { useEffect, useState } from "react";
 
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormControlLabel,
   Stack,
   Switch,
@@ -20,9 +20,8 @@ import {
 } from "@mui/x-date-pickers";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useUpdateSchedule } from "../../Hook/UseUpdateSchedule";
-import type { ScheduleDayView } from "./ScheduleHelper";
 import type { ScheduleDay, ScheduleStatus, UpdateScheduleRequest } from "../../Entities/WorkingSchedualeData";
+import { useUpdateScheduleDay } from "../../Hook/UseUpdateScheduleDay";
 
 interface Props {
   open: boolean;
@@ -39,15 +38,14 @@ const EditScheduleDialog = ({
 }: Props) => {
 
   const { mutate: updateSchedule, isPending: isUpdating } =
-    useUpdateSchedule(accountId);
+  useUpdateScheduleDay(
+    accountId,
+    dayjs(day.date).year(),
+    dayjs(day.date).month() + 1
+  );
 
-  // const { mutate: createSchedule, isPending: isCreating } =
-  //   useCreateSchedule(accountId);
-
-  // const isPending = isUpdating || isCreating;
-
-  // Local State
-
+  
+  
 const [status, setStatus] =  useState<ScheduleStatus>(day.status);
 
 const [startTime, setStartTime] =  useState<Dayjs | null>(
@@ -63,24 +61,7 @@ const [endTime, setEndTime] =
       : null
   );
 
-  
-  // Fill dialog whenever another day is selected
-
-  // useEffect(() => {
-  //   if (!open) return;
-
-  //   // setAvailable(day.status);
-
-  //   setStartTime(
-  //     day.start_time ? dayjs(day.start_time, "HH:mm") : null
-  //   );
-
-  //   setEndTime(
-  //     day.end_time ? dayjs(day.end_time, "HH:mm") : null
-  //   );
-
-  // }, [day, open]);
-
+   
   useEffect(() => {
   if (!open) return;
 
@@ -98,50 +79,11 @@ const [endTime, setEndTime] =
       : null
   );
 
+
+
 }, [day, open]);
 
-  // Save
-
-  // const handleSave = () => {
-
-  //   if (available && (!startTime || !endTime)) return;
-
-  //   const payload = {
-  //     startTime: available ? startTime!.format("HH:mm") : "",
-  //     endTime: available ? endTime!.format("HH:mm") : "",
-  //     isAvailable: available,
-  //   };
-
-  //   if (day.isPlaceholder || day.id === null) {
-
-  //     // createSchedule(
-  //     //   {
-  //     //     date: day.date,
-  //     //     ...payload,
-  //     //   },
-  //     //   {
-  //     //     onSuccess: () => onClose(),
-  //     //   }
-  //     // );
-
-  //   } else {
-
-  //     updateSchedule(
-  //       {
-  //         scheduleId: day.id,
-  //         data: payload,
-  //       },
-  //       {
-  //         onSuccess: () => onClose(),
-  //       }
-  //     );
-
-  //   }
-
-  // };
-
-  const handleSave = () => {
-
+const handleSave = () => {
   if (
     status === "work_day" &&
     (!startTime || !endTime)
@@ -151,6 +93,7 @@ const [endTime, setEndTime] =
 
   const payload: UpdateScheduleRequest = {
     status,
+
     start_time:
       status === "work_day"
         ? startTime!.format("HH:mm")
@@ -164,7 +107,7 @@ const [endTime, setEndTime] =
 
   updateSchedule(
     {
-      scheduleId: day.id,
+      dayId: day.id,
       data: payload,
     },
     {
@@ -174,6 +117,8 @@ const [endTime, setEndTime] =
     }
   );
 };
+
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Dialog
@@ -254,7 +199,7 @@ const [endTime, setEndTime] =
           <Button
             variant="contained"
             onClick={handleSave}
-            // disabled={isPending}
+            disabled={isUpdating}
           >
             Save
           </Button>

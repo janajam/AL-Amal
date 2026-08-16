@@ -6,6 +6,13 @@ export interface DoctorsResponse {
   errors: any
 }
 
+export interface DoctorResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: DoctorData;
+  errors: any;
+}
 export interface DoctorData {
   id: number
   user: User

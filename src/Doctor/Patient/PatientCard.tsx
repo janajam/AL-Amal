@@ -1,7 +1,7 @@
-import { Box, Card, CardContent, CardHeader, Stack, Typography, useTheme, type PaginationItemNextSlotPropsOverrides } from "@mui/material"
+import { Box, Card, CardContent, CardHeader, Stack, Typography, useTheme } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import CardContainer from "../../Component/CardContainer"
-import type { Patient, PatientListItem } from "../../Entities/Patient"
+import type { PatientListItem } from "../../Entities/Patient"
 
 
 
@@ -61,7 +61,10 @@ const PatientCard = ({ patient }: Props) => {
                 >
                   Birth Day :
                 </Typography>
-                <Typography>{patient?.birth_day}
+                <Typography>
+                  {/* {patient?.birth_day} */}
+                  
+                        {new Date(patient?.birth_day || '').toLocaleDateString()}
                 </Typography>
               </Stack>
               <Stack direction={'row'} spacing={2}>

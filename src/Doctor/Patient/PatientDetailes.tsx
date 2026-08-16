@@ -229,6 +229,9 @@ const PatientDetailes = () => {
 
                         <TestResultSection
                             results={medicalRecord.lab_result ?? []}
+                            
+                            medicalRecordId={medicalRecord.id}
+
                         />
 
                         <XRayImageSection

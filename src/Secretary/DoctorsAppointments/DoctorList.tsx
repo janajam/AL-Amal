@@ -38,5 +38,4 @@ const doctors: Doctor[] =
     </>
   );
 };
-
 export default DoctorsList;

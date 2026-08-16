@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import ApiClient from "../apiServices/api_client";
 import type { ScheduleResponse } from "../Entities/WorkingSchedualeData";
@@ -14,14 +15,17 @@ export const useGetSchedule = (
   return useQuery({
     queryKey: ["schedule", accountId, year, month],
 
-    queryFn: () =>
-      apiClient.getAll({
+    queryFn: async () => {
+      return await apiClient.getAll({
         params: {
           year,
           month,
         },
-      }),
+      });
+    },
 
-    enabled: !!accountId && !!year && !!month,
+    enabled: Boolean(accountId && year && month),
+
+    retry: false,
   });
 };

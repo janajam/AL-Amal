@@ -3,80 +3,52 @@ import {
     Box,
     Button,
     CardMedia,
+    CircularProgress,
     Divider,
     Stack,
     Typography,
     useTheme,
 } from "@mui/material";
 
-import { useNavigate, useParams } from "react-router-dom";
-import { useGetAccount } from "../../Hook/UseGetAccount";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import logo from '../../assets/amal.webp'
 import pdf from '../../assets/SRS HIMS.pdf'
 import { ArrowBack } from "@mui/icons-material";
 import LicenseItem from "./LicenseItem";
-import Schedule from "../../Component/Schedule/Schedule";
 import { useAuthStore } from "../../Store/AuthStore";
 import AppointmentScheduleSection from "../../Component/Schedule/Appointment/AppointmentScheduleSection";
+import { useGetAccount } from "../../Hook/UseGetAccount";
+import Schedule from "../../Component/Schedule/Schedule";
 
-//for test
-const accounts = [
-    {
-        id: 1, name: 'User Name', email: 'A1@email.com', phoneNumber: 'string', birthDay: '1990',
-        image: { logo },
-        role: "Doctor",
-        status: "ACTIVE",
-        createdAt: '10-2-2022',
-        specialty: {
-            id: 1,
-            name: "Cardiology"
-        },
-        address: 'Lorem ipsum dolor sit amet. ',
-        department: {
-            id: 1,
-            name: "Internal Medicine"
-        },
-        licenses: [
-            {
-                id: 1,
-                name: "Medical License",
-                fileUrl: pdf,
-                uploadedAt: "2025-07-13",
-            },
-            {
-                id: 2,
-                name: "Board Certificate",
-                fileUrl: "https://example.com/certificate.pdf",
-                uploadedAt: "2025-07-14",
-            },
-        ],
-
-        // workingDays: ["Sunday", "Monday", "Tuesday"]
-    },
-]
 
 const AccountDetails = () => {
     const theme = useTheme();
     const navigate = useNavigate();
-    // const userRole = 'admin'
     const userRole = useAuthStore((state) => state.role);
-    // const { id } = useParams();
+    const { id } = useParams();
+    const [searchParams] = useSearchParams();
+const role = (searchParams.get('role') as "Doctor" | "Secretary") ?? "Doctor";
 
-    // const {
-    // data,
-    // } = useGetAccount(Number(id));
+    const { data, isLoading, isError } = useGetAccount(Number(id),role);
+    const account = data?.data;
 
+    if (isLoading) {
+        return (
+            <Stack  sx={{ py: 8 }}>
+                <CircularProgress />
+            </Stack>
+        );
+    }
     // const account = data?.data;
 
 
 
     return (
         <>
-            {accounts.map((account) =>
-                <div key={account.id}
+            {/* {accounts.map((account) => */}
+                <div key={account?.user.id}
                 >
                     <ArrowBack
-                        key={account.id}
                         sx={{
                             mx: 2,
                             mt: 2,
@@ -111,9 +83,9 @@ const AccountDetails = () => {
 
                             <CardMedia
                                 component="img"
-                                // image={account?.image}
+                                // image={account?.user.image}
                                 image={logo}
-                                alt={account?.name}
+                                alt={account?.user.full_name}
                                 sx={{
                                     width: 200,
                                     height: 180,
@@ -135,20 +107,21 @@ const AccountDetails = () => {
                                         justifySelf: 'center'
                                     }}
                                 >
-                                    {account?.name}
+                                    {account?.user.full_name}
                                 </Typography>
 
                                 <Typography sx={{
                                     color: theme.palette.etal.main,
                                     fontWeight: 550
                                 }}>
-                                    {account?.role}
+                                    {/* {account?.user} */}
+                                    {role}
                                 </Typography>
 
-                                {account?.role === "Doctor" && (
-                                    <Typography key={account.id}
+                                {role === "Doctor" && (
+                                    <Typography 
                                         color="text.secondary">
-                                        {account?.specialty.name}
+                                        {/* {account?.} */}
 
                                     </Typography>
                                 )}
@@ -182,7 +155,7 @@ const AccountDetails = () => {
                                     </Typography>
 
                                     <Typography>
-                                        {account?.email}
+                                        {account?.user.email}
                                     </Typography>
                                 </Stack>
 
@@ -193,7 +166,7 @@ const AccountDetails = () => {
                                     </Typography>
 
                                     <Typography>
-                                        {account?.phoneNumber}
+                                        {account?.user.phone}
                                     </Typography>
                                 </Stack>
 
@@ -210,7 +183,7 @@ const AccountDetails = () => {
                                         Birthday:
                                     </Typography>
                                     <Typography>
-                                        {account.birthDay}
+                                        {/* {account?.user.birthDay} */}
                                     </Typography>
                                 </Stack>
 
@@ -220,7 +193,7 @@ const AccountDetails = () => {
                                     </Typography>
 
                                     <Typography>
-                                        {account?.address}
+                                        {/* {account?.user.address} */}
                                     </Typography>
                                 </Stack>
 
@@ -230,7 +203,7 @@ const AccountDetails = () => {
                                     </Typography>
 
                                     <Typography>
-                                        {account.createdAt}
+                                        {/* {account?.user.created_at} */}
                                     </Typography>
                                 </Stack>
                             </Stack>
@@ -249,7 +222,7 @@ const AccountDetails = () => {
 
                                     </Typography>
                                 </Stack>
-                                {account?.role === "Doctor" && (
+                                {role === "Doctor" && (
                                     <>
                                         <Stack
                                             direction="row" spacing={2}>
@@ -258,7 +231,7 @@ const AccountDetails = () => {
                                             </Typography>
 
                                             <Typography>
-                                                {account.specialty.name}
+                                             {/* {account.} */}
 
                                             </Typography>
                                         </Stack>
@@ -268,14 +241,14 @@ const AccountDetails = () => {
                                                 Licenses:
                                             </Typography>
                                             <Stack >
-                                                {account.licenses.map((license) => (
+                                                {/* {account.licenses.map((license) => (
 
                                                     <LicenseItem
                                                         key={license.id}
                                                         license={license}
                                                     />
 
-                                                ))}
+                                                ))} */}
 
                                             </Stack>
                                         </Stack>
@@ -289,10 +262,11 @@ const AccountDetails = () => {
                         </Stack>
 
                     </Box>
-                    {userRole !== "secretary" ? (
-                        <>
-                            <Schedule accountId={account.id} />
+                     <Schedule accountId={account.id} />
 
+                    {/* {userRole !== "secretary" ? (
+                        <>
+                           
                             <Button
                                 variant="contained"
                                 sx={{
@@ -301,7 +275,7 @@ const AccountDetails = () => {
                                     justifySelf: 'flex-end',
                                     ml: '88%',
                                     bgcolor:
-                                        account?.status === "ACTIVE"
+                                        account?.user.status === "ACTIVE"
                                             ? theme.palette.secondary.main
                                             : theme.palette.etal.main,
                                 }}
@@ -322,14 +296,15 @@ const AccountDetails = () => {
                              }}
                             >
                                 <AppointmentScheduleSection
-                                    doctorId={account.id} />
+                                    doctorId={account?.user.id} />
 
                             </Box>
                         )
-                    }
+                    } */}
 
                 </div>
-            )}
+            {/* ) */}
+            {/* } */}
         </>
     );
 };

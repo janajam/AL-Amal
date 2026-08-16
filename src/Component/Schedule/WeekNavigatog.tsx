@@ -8,7 +8,6 @@ interface Props {
     currentWeek: number;
     totalWeeks: number;
     week: ScheduleWeek | undefined;
-    // currentWeekDates: string[]; 
     onPrevious: () => void;
     onNext: () => void;
 }
@@ -17,18 +16,12 @@ const WeekNavigator = ({
     currentWeek,
     totalWeeks,
     week,
-    // currentWeekDates,
     onPrevious,
     onNext,
 }: Props) => {
 
     const firstDay = week?.days?.[0];
     const lastDay = week?.days?.[week.days.length - 1];
-
-    // const firstDay = currentWeekDates.length > 0 ? dayjs(currentWeekDates[0]) : null;
-    // const lastDay = currentWeekDates.length > 0
-    //     ? dayjs(currentWeekDates[currentWeekDates.length - 1])
-    //     : null;
 
     return (
         <Box sx={{ my: 3 }}>
@@ -47,12 +40,7 @@ const WeekNavigator = ({
                             {dayjs(lastDay.date).format("DD MMM YYYY")}
                         </Typography>
                     )}
-                    {/* {firstDay && lastDay && (
-                        <Typography variant="body2" color="text.secondary">
-                            {firstDay.format("DD MMM YYYY")} - {lastDay.format("DD MMM YYYY")}
-                        </Typography>
-                    )} */}
-                </Stack>
+                   </Stack>
 
                 <IconButton onClick={onNext} disabled={currentWeek === totalWeeks - 1}>
                     <ChevronRight />

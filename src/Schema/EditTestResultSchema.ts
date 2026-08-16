@@ -2,13 +2,10 @@ import { z } from "zod";
 
 export const editTestResultSchema = z.object({
 
-    requestedBy: z
+    doctor_name: z
         .string()
         .min(2),
 
-    uploaded_by: z
-        .string()
-        .min(2),
 
     title: z
         .string()

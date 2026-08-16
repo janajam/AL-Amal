@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { TestResult } from "../../../Entities/Patient";
+import type { LabResult, TestResult } from "../../../Entities/Patient";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { editTestResultSchema, type EditTestResultInput } from "../../../Schema/EditTestResultSchema";
@@ -8,14 +8,15 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider
 
 interface Props {
     open: boolean,
-    result: TestResult | null,
+    result: LabResult | null,
+    medicalRecordId: number,
     onClose: () => void
 }
 
 
-const EditTestResultDialog = ({ open, result, onClose }: Props) => {
+const EditTestResultDialog = ({ open, result, onClose ,medicalRecordId}: Props) => {
     const [removeOldFile, setRemoveOldFile] = useState(false);
-    
+
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState("");
     const theme = useTheme();
@@ -32,8 +33,8 @@ const EditTestResultDialog = ({ open, result, onClose }: Props) => {
 
         /*
         {
-            requestedBy,
-            uploaded_by,
+            doctor_name,
+            tecnical,
             title,
             result,
             attachment // File | undefined
@@ -54,19 +55,19 @@ const EditTestResultDialog = ({ open, result, onClose }: Props) => {
         resolver: zodResolver(editTestResultSchema),
         mode: "onChange",
         defaultValues: {
-            requestedBy: "",
-            uploaded_by: "",
+            doctor_name: "",
+            tecnical: "",
             title: "",
             result: "",
         },
     });
-    
+
     useEffect(() => {
         if (!open || !result) return;
 
         reset({
-            requestedBy: result.requestedBy,
-            uploaded_by: result.uploaded_by,
+            doctor_name: result.doctor_name,
+            tecnical: result.tecnical,
             title: result.title,
             result: result.result,
         });
@@ -144,9 +145,9 @@ const EditTestResultDialog = ({ open, result, onClose }: Props) => {
                             <TextField
                                 fullWidth
                                 margin="normal"
-                                {...register("requestedBy")}
-                                error={!!errors.requestedBy}
-                                helperText={errors.requestedBy?.message}
+                                {...register("doctor_name")}
+                                error={!!errors.doctor_name}
+                                helperText={errors.doctor_name?.message}
                             />
                             <Typography sx={{
                                 fontSize: 16,
@@ -157,9 +158,9 @@ const EditTestResultDialog = ({ open, result, onClose }: Props) => {
                             <TextField
                                 fullWidth
                                 margin="normal"
-                                {...register("uploaded_by")}
-                                error={!!errors.uploaded_by}
-                                helperText={errors.uploaded_by?.message}
+                                {...register("tecnical")}
+                                error={!!errors.tecnical}
+                                helperText={errors.tecnical?.message}
                             />
                             <Stack spacing={3}
                                 sx={{ mt: 2 }}>

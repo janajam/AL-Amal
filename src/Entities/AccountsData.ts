@@ -65,6 +65,7 @@
 
 
 import type { Department } from "./DepartmentData";
+import type { DoctorData } from "./DoctorData";
 
 export type AccountRole = "Doctor" | "Secretary";
 
@@ -106,11 +107,11 @@ export interface License {
   uploadedAt: string;
 }
 
-export interface AccountResponse {
-  status: number;
-  message: string;
-  data: Doctor | Secretary;
-}
+// export interface AccountResponse {
+//   status: number;
+//   message: string;
+//   data: Doctor | Secretary;
+// }
 
 export interface AccountsResponse {
   status: number;
@@ -122,3 +123,36 @@ export interface CreateAccountsResponse {
   status: number;
   message: string;
 }
+
+
+
+export interface SecretaryUser {
+  id: number;
+  full_name: string;
+  email: string;
+  phone: string;
+}
+
+export interface SecretaryData {
+  id: number;
+  user: SecretaryUser;
+  department: Department;
+}
+
+export interface DoctorAccountResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: DoctorData;
+  errors: any;
+}
+
+export interface SecretaryAccountResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: SecretaryData;
+  errors: any;
+}
+
+export type AccountResponse = DoctorAccountResponse | SecretaryAccountResponse;

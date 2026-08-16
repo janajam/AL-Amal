@@ -1,15 +1,5 @@
 
 
-// export interface Patient {
-//     id: number,
-//     name: string,
-//     age: number,
-//     gander: string,
-//     address: string,
-//     email: string,
-//     medicalRecord: MedicalRecord|null ,
-//     phoneNumber: string
-// }
 export interface PatientUser {
     id: number;
     full_name: string;
@@ -51,17 +41,6 @@ export interface PatientDetailResponse {
     errors: any;
 }
 
-// export interface MedicalRecord {
-//     id: number;
-//     status: string | null;
-//     sickness: string | null;
-//     allergies: string | null;
-//     long_term_medication: string | null;
-//     operations: string | null;
-//     treatment_plans: TreatmentPlan[];
-//     lab_results: TestResult[];
-//     radiology_results: XRayImage[];
-// }
 export interface MedicalRecord {
 status:string|null
     id: number,
@@ -70,7 +49,7 @@ status:string|null
     long_term_medication?: string[],
     operations?: string[],
     treatment_plans?: TreatmentPlanPayload[]|null,
-    lab_result?: TestResult[]|null,
+    lab_result?: LabResult[]|null,
     radiology_results?: XRayImage[]|null
 }
 
@@ -99,6 +78,17 @@ export interface TestResult {
     attachment: string;
 }
 
+
+
+export interface LabResult {
+  id: number
+  title: string
+  result: string
+  attachment: string
+  doctor_name: string
+  tecnical:string
+  created_at: string
+}
 export interface XRayImage {
     id: number,
     uploaded_at: Date;

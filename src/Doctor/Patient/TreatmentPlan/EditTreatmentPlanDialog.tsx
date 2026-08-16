@@ -39,7 +39,7 @@ const EditTreatmentPlanDialog = ({ open, plan, patientId, medicalRecordId, onClo
             onError: (error: any) => {
                 setSnackbar({
                     open: true,
-                    message: error.response?.data?.message ?? "حدث خطأ أثناء تعديل الخطة",
+                    message: error.response?.data?.message ?? 'some things wrong',
                     severity: "error",
                 });}
         });
@@ -128,13 +128,13 @@ const handelCancel=()=>{
                                 <FormControlLabel
                                     value="ongoing"
                                     control={<Radio />}
-                                    label="ongoing"
+                                    label="Ongoing"
                                 />
 
                                 <FormControlLabel
                                     value="finished"
                                     control={<Radio />}
-                                    label="finished"
+                                    label="Finished"
                                 />
 
                             </RadioGroup>

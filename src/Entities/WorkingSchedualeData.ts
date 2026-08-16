@@ -1,35 +1,4 @@
-// export interface WorkingSchedule {
-//     id: number;
-//     date: string;
-//     day: WeekDay;
-//     startTime: string;
-//     endTime: string;
-//     isAvailable: boolean;
-// }
-
-// export interface WorkingScheduleResponse {
-//   status: number;
-//   message: string;
-//   data: WorkingSchedule[];
-// }
-// export type WeekDay =
-//   | "Monday"
-//   | "Tuesday"
-//   | "Wednesday"
-//   | "Thursday"
-//   | "Friday"
-//   | "Saturday"
-//   | "Sunday";
-
-// export interface UpdateScheduleRequest {
-//     startTime?: string;
-//     endTime?: string;
-//     isAvailable?: boolean;
-// }
-
-//for get schedule
-
-export type WeekDay =
+ export type WeekDay =
   | "Monday"
   | "Tuesday"
   | "Wednesday"
@@ -80,22 +49,6 @@ export interface CreateScheduleRequest {
   year: number;
   month: number;
 }
-
-// export interface CreateScheduleResponse {
-//   success: boolean;
-//   status: number;
-//   message: string;
-//   data: {
-//     id: number;
-//     doctor_id: number;
-//     year: number;
-//     month: number;
-//     created_at: string;
-//     updated_at: string;
-//     days: ScheduleDay[];
-//   };
-//   errors: null;
-// }
 export interface CreatedScheduleDay {
   id: number;
   doctor_monthly_schedule_id: number;
