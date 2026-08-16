@@ -36,7 +36,7 @@ class ApiClient<TResponse, TRequest=unknown> {
   async get(id: string | number, config?: AxiosRequestConfig) :Promise<TResponse> {
     const res = await axiosInstance.get<TResponse>(
       `${this.endpoint}/${id}`,
-      config
+      config 
     );
 
     return res.data;

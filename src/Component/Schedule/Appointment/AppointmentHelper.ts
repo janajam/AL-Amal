@@ -1,30 +1,100 @@
 
-import dayjs, { Dayjs } from "dayjs";
+import type {
+  BackendAppointmentMonth,
+  AppointmentListItem,
+  TimeSlot,
+} from "../../../Entities/Appointment";
 
-export const getMonthWeeks = (selectedMonth: Dayjs): string[][] => {
 
-    const startOfMonth = selectedMonth.startOf("month");
-    const endOfMonth = selectedMonth.endOf("month");
+export const getMonthWeeks = (
+  monthData: BackendAppointmentMonth
+): string[][] => {
 
-    const weeks: string[][] = [];
-    let currentWeek: string[] = [];
+  return monthData.weeks.map((week) =>
+    week.days.map((day) => day.date)
+  );
 
-    let day = startOfMonth;
+};
 
-    while (day.isBefore(endOfMonth) || day.isSame(endOfMonth, "day")) {
+export const mapBackendSlotToTimeSlot = (
+  slot: BackendAppointmentMonth["weeks"][number]["days"][number]["slots"][number],
+  date: string
+): TimeSlot => {
+  const backendAppointment = slot.appointments.find(
+    (appointment) =>
+      appointment.status === "scheduled"
+  );
 
-        currentWeek.push(day.format("YYYY-MM-DD"));
+  return {
 
-        const isSaturday = day.day() === 6;        
-        const isLastDayOfMonth = day.isSame(endOfMonth, "day");
+    id: slot.id,
 
-        if (isSaturday || isLastDayOfMonth) {
-            weeks.push(currentWeek);
-            currentWeek = [];
-        }
+    date,
 
-        day = day.add(1, "day");
-    }
+    startTime: slot.start_time.slice(0, 5),
 
-    return weeks;
+    endTime: slot.end_time.slice(0, 5),
+
+    status:
+      slot.status === "available"
+        ? "Available"
+        : "Booked",
+
+    appointment: backendAppointment
+      ? ({
+          id: backendAppointment.id,
+
+          patientName:
+            backendAppointment.patient.name,
+
+          doctorName: "",
+
+          patientId:
+            backendAppointment.patient.id,
+
+          doctorId:
+            backendAppointment.doctor_id,
+
+          appointment: {
+            id: backendAppointment.id,
+
+            date,
+
+            status: "Booked",
+
+            type: "Appointment",
+          },
+        } satisfies AppointmentListItem)
+      : undefined,
+  };
+};
+
+
+
+export const transformSlots = (
+  monthData: BackendAppointmentMonth
+): TimeSlot[] => {
+
+  const slots: TimeSlot[] = [];
+
+  monthData.weeks.forEach((week) => {
+
+    week.days.forEach((day) => {
+
+      day.slots.forEach((slot) => {
+
+        slots.push(
+          mapBackendSlotToTimeSlot(
+            slot,
+            day.date
+          )
+        );
+
+      });
+
+    });
+
+  });
+
+  return slots;
 };

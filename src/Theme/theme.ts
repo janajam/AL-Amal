@@ -27,13 +27,13 @@ export const getTheme = (mode: 'light' | 'dark') =>
             main: '#23A6B5',
             contrastText: '#000000'
 
-          }
-
+          },
+         
         }
         : {
           primary: { main: "#41B3C4" },
-          background: { default: "#1C6280", paper: "#76D7B6 " },
-          text: { primary: "#fffff", secondary: '#fffff' },
+          background: { default: "#042024", paper: "#36686f " },
+          text: { primary: "#ffffff", secondary: '#ffffff' },
           secondary: {
             main: "#F1FDFF",
           },
@@ -42,6 +42,7 @@ export const getTheme = (mode: 'light' | 'dark') =>
             contrastText: '#ffffff'
 
           },
+         
         }),
     },
 

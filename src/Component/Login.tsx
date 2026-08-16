@@ -50,7 +50,7 @@ const TypografyStylee = styled("a")(({ theme }) => ({
 const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const navigate = useNavigate();
   const [open, setOpen] = useState(false)
   const theme = useTheme();
@@ -105,147 +105,170 @@ const Login = () => {
 
   const onSubmit = (data: LoginInput) => {
 
-  loginMutation.mutate({
-    email: data.email,
-    password: data.password,
-  });
-};
+    loginMutation.mutate({
+      email: data.email,
+      password: data.password,
+    });
+  };
 
   return (
-    <Box sx={{
-      backgroundColor: "white",
-    }}>
+    <Box
+      sx={{
+        width: '100%',
+        bgcolor: 'white',
+        height: '99vh',
+        pt: 2,
+        color: 'black'
+      }}
+    >
+      <Box sx={{
+        backgroundColor: "white",
+      }}>
 
-      <Box
-        component="form"
-        onSubmit={handleSubmit(onSubmit)}
-        sx={{
-          border: '1px solid #2B5A6C ',
-          maxWidth: 600,
-          mx: "auto",
-          my: 3.8,
-          p: 4,
-          pt: 1,
-          borderRadius: 3,
-          boxShadow: "0 2px 17px #1A7B9B",
-          fontWeight: 700,         
-          color: "#1A7B9B",
-          [theme.breakpoints.down("sm")]: {
-            mx: "3%",
-            fontWeight: 500,
-
-          }
-        }} >
         <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
           sx={{
-            backgroundImage: `url(${logo}) `,
-            backgroundSize: "200px",
-            height: "110px",
-            width: "200px",
-            mx: 'auto',
-            alignSelf: "center",
-            backgroundRepeat: "no-repeat",
+            border: '1px solid #2B5A6C ',
+            maxWidth: 600,
+            mx: "auto",
+            my: 3.8,
+            p: 4,
+            pt: 1,
+            borderRadius: 3,
+            boxShadow: "0 2px 17px #1A7B9B",
+            fontWeight: 700,
+            color: "#1A7B9B",
             [theme.breakpoints.down("sm")]: {
-              mt: -2
+              mx: "3%",
+              fontWeight: 500,
 
             }
-          }} />
-
-        <Typography variant="h1" align="center"
-          sx={{
-            color: "#1C6280",
-            [theme.breakpoints.down('sm')]: {
-              fontVariant: 'h3'
-            }
-          }}
-        >
-          Login
-        </Typography>
-        <TextField
-          label="Email"
-          fullWidth
-          margin="normal"
-          sx={{
-            backgroundColor: '#E8F2F3',
-            borderRadius: '12px',
-          }}
-          {...register("email")}
-          error={!!errors.email}
-          helperText={errors.email?.message}
-          // onChange={(e) => setEmail(e.target.value)}
-        />
-        <Controller
-          name="password"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <FormControl
-              fullWidth
-              variant="outlined"
-              error={!!errors.password}
-              margin="normal"
-            >
-              <InputLabel htmlFor="outlined-adornment-password">
-                Password
-              </InputLabel>
-              <OutlinedInput
-                sx={{
-                  backgroundColor: '#E8F2F3',
-                  borderRadius: '12px'
-                }}
-
-                id="outlined-adornment-password"
-                type={showPassword ? "text" : "password"}
-                label="Password"
-                {...field}
-                // onChange={(e) => {
-                //   field.onChange(e);
-                //   setPassword(e.target.value);
-                // }}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label={
-                        showPassword ? "Hide password" : "Show password"
-                      }
-                      onClick={handleClickShowPassword}
-                      edge="end"
-
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-
-                }
-              />
-              <FormHelperText>{errors.password?.message}</FormHelperText>
-            </FormControl>
-          )}
-        />
-
-        <Box sx={{ mt: 1, display: 'flex', flexDirection: 'column' }}>
-          <TypografyStylee sx={{ alignSelf: 'flex-end' }} onClick={() => navigate("/forgotPassword")}>
-            Forgot Password?
-          </TypografyStylee>
-
-          <Button
+          }} >
+          <Box
             sx={{
-              height: '50px',
-              mt: '10px'
+              backgroundImage: `url(${logo}) `,
+              backgroundSize: "200px",
+              height: "110px",
+              width: "200px",
+              mx: 'auto',
+              alignSelf: "center",
+              color: 'black',
+              backgroundRepeat: "no-repeat",
+              [theme.breakpoints.down("sm")]: {
+                mt: -2
+
+              }
+            }} />
+
+          <Typography variant="h1" align="center"
+            sx={{
+              color: "#1C6280",
+              [theme.breakpoints.down('sm')]: {
+                fontVariant: 'h3'
+              }
             }}
-            type="submit"
-            variant="contained"
-            color="primary"
-            // onClick={onSubmit}
-            disabled={loginMutation.isPending}
-            fullWidth
-            startIcon={
-              loginMutation.isPending && <CircularProgress size={20} />
-            }
           >
-            {loginMutation.isPending ? "Logging in..." : "Login"}
-          </Button>
-          {/*<Stack sx={{ mt: 2 }}>
+            Login
+          </Typography>
+          {loginMutation.isError && (
+            <Alert
+              severity="error"
+              sx={{ mb: 2 }}
+            >
+              Email or password is incorrect. Please try again.
+            </Alert>
+          )}
+          <TextField
+            label="Email"
+            fullWidth
+            margin="normal"
+            sx={{
+              backgroundColor: '#E8F2F3',
+              borderRadius: '12px',
+              textcolor: 'black',
+              color: 'black'
+            }}
+            {...register("email")}
+            error={!!errors.email}
+            helperText={errors.email?.message}
+          // onChange={(e) => setEmail(e.target.value)}
+          />
+          <Controller
+            name="password"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <FormControl
+                fullWidth
+                variant="outlined"
+                error={!!errors.password}
+                margin="normal"
+              >
+                <InputLabel htmlFor="outlined-adornment-password">
+                  Password
+                </InputLabel>
+                <OutlinedInput
+                  sx={{
+                    backgroundColor: '#E8F2F3',
+                    borderRadius: '12px',
+                    color: 'black'
+                  }}
+
+                  id="outlined-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  label="Password"
+                  {...field}
+                  // onChange={(e) => {
+                  //   field.onChange(e);
+                  //   setPassword(e.target.value);
+                  // }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label={
+                          showPassword ? "Hide password" : "Show password"
+                        }
+                        onClick={handleClickShowPassword}
+                        edge="end"
+
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+
+                  }
+                />
+                <FormHelperText>{errors.password?.message}</FormHelperText>
+              </FormControl>
+            )}
+          />
+
+          <Box sx={{ mt: 1, display: 'flex', flexDirection: 'column' }}>
+            <TypografyStylee sx={{ alignSelf: 'flex-end' }} onClick={() => navigate("/forgotPassword")}>
+              Forgot Password?
+            </TypografyStylee>
+
+            <Button
+              sx={{
+                height: '50px',
+                mt: '10px',
+                bgcolor: '#1C6280',
+                color: 'white'
+              }}
+              type="submit"
+              variant="contained"
+
+              // onClick={onSubmit}
+              disabled={loginMutation.isPending}
+              fullWidth
+              startIcon={
+                loginMutation.isPending && <CircularProgress size={20} />
+              }
+            >
+              {loginMutation.isPending ? "Logging in..." : "Login"}
+            </Button>
+            {/*<Stack sx={{ mt: 2 }}>
             <TypografyStylee sx={{
               color: 'black',
               "&:hover": {
@@ -348,9 +371,9 @@ const Login = () => {
             </Dialog>
 
           </Stack>*/}
+          </Box>
         </Box>
       </Box>
-
     </Box>
 
   )

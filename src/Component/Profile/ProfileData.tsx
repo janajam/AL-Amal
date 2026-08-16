@@ -3,6 +3,7 @@ import { Box, Stack, Typography, useTheme } from "@mui/material";
 import type { Account, Doctor, Secretary } from "../../Entities/AccountsData";
 import { CakeOutlined, ContactPhoneOutlined, HomeOutlined, HourglassEmptyOutlined } from "@mui/icons-material";
 import DoctorProfileData from "./DoctorProfileData";
+import { useAuthStore } from "../../Store/AuthStore";
 
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 const ProfileData = ({ account }: Props) => {
     const theme = useTheme();
 
+    const userRole = useAuthStore((state) => state.role);
     return (
         <Box
             sx={{
@@ -20,9 +22,6 @@ const ProfileData = ({ account }: Props) => {
                 mx: "auto",
                 my: 3,
                 p: 3,
-                // borderRadius: 2,
-                // bgcolor: theme.palette.background.default,
-                // boxShadow: "0 2px 17px #9ed1d5",
             }}
         >
             <Stack direction={{ sm: 'column', md: 'row' }}
@@ -110,10 +109,7 @@ const ProfileData = ({ account }: Props) => {
                 </Stack>
             </Stack>
 
-            {account.role === "Doctor" && (
-                // <DoctorProfileData
-                //     doctor={account}
-                // />
+            {userRole === "doctor" && (
                 <DoctorProfileData
                     doctor={account} />
             )}

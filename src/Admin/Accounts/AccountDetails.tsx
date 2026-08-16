@@ -19,6 +19,7 @@ import { useAuthStore } from "../../Store/AuthStore";
 import AppointmentScheduleSection from "../../Component/Schedule/Appointment/AppointmentScheduleSection";
 import { useGetAccount } from "../../Hook/UseGetAccount";
 import Schedule from "../../Component/Schedule/Schedule";
+import AccountDetailsSkeleton from "./DetailsSkeleton";
 
 
 const AccountDetails = () => {
@@ -35,7 +36,8 @@ const role = (searchParams.get('role') as "Doctor" | "Secretary") ?? "Doctor";
     if (isLoading) {
         return (
             <Stack  sx={{ py: 8 }}>
-                <CircularProgress />
+                {/* <CircularProgress /> */}
+                <AccountDetailsSkeleton/>
             </Stack>
         );
     }
@@ -262,11 +264,11 @@ const role = (searchParams.get('role') as "Doctor" | "Secretary") ?? "Doctor";
                         </Stack>
 
                     </Box>
-                     <Schedule accountId={account.id} />
-
-                    {/* {userRole !== "secretary" ? (
+                  
+                     {userRole !== "secretary" ? (
                         <>
-                           
+                              <Schedule accountId={account.id} />
+
                             <Button
                                 variant="contained"
                                 sx={{
@@ -300,7 +302,7 @@ const role = (searchParams.get('role') as "Doctor" | "Secretary") ?? "Doctor";
 
                             </Box>
                         )
-                    } */}
+                    } 
 
                 </div>
             {/* ) */}

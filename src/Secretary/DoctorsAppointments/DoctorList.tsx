@@ -4,10 +4,13 @@ import AccountCard from "../../Admin/Accounts/AccountCard";
 import { useGetDoctors } from "../../Hook/UseGetDoctors";
 import { mapDoctorToAccount } from "./MappingDoctorData";
 import type { Doctor } from "../../Entities/AccountsData";
+import CardSkeleton from "../../Component/CardSkelaton";
+import { Typography, useTheme } from "@mui/material";
+import PulseDivider from "../../Component/Schedule/PluseDivider";
 
 const DoctorsList = () => {
   const navigate = useNavigate();
-
+const theme=useTheme()
   const {
     data,
     isLoading,
@@ -16,12 +19,24 @@ const DoctorsList = () => {
 
   console.log(data)
   if (isLoading) {
-    return <div>Loading doctors...</div>;
+    return <CardSkeleton/>;
   }
 
   if (isError) {
-    return <div>Failed to load doctors.</div>;
-  }
+    return (
+
+      <>
+      <Typography
+      sx={{
+        fontWeight:550,
+        color:theme.palette.etal.main
+      }}
+      >
+        Faild To Load Somthing wrong 
+      </Typography>
+      <PulseDivider/>
+      </>
+    )}
 
 const doctors: Doctor[] =
   data?.data?.map(mapDoctorToAccount) ?? [];

@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import CardContainer from "../../Component/CardContainer";
 import PulseDivider from "../../Component/Schedule/PluseDivider";
 import { useGetDepartments } from "../../Hook/UseGetDepartments";
+import CardSkeleton from "../../Component/CardSkelaton";
 
 const DepartmentCard = () => {
     const theme = useTheme();
@@ -25,10 +26,7 @@ const DepartmentCard = () => {
     if (isLoading) {
         return (
             
-                <Typography sx={{ p: 2 }}>
-                    Loading departments...
-                </Typography>
-
+               <CardSkeleton/>
             
         );
     }

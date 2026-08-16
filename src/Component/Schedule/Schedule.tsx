@@ -16,6 +16,7 @@ import type {
   ScheduleDay,
   ScheduleWeek,
 } from "../../Entities/WorkingSchedualeData";
+import { useAuthStore } from "../../Store/AuthStore";
 
 interface Props {
   accountId: number;
@@ -29,11 +30,13 @@ const ScheduleSection = ({ accountId }: Props) => {
   const [selectedMonth, setSelectedMonth] = useState(dayjs());
   const [currentWeek, setCurrentWeek] = useState(0);
 
+    const userRole = useAuthStore((state) => state.role);
   const { data, isLoading, isError } = useGetSchedule(
     accountId,
     selectedMonth.year(),
     selectedMonth.month() + 1
   );
+
 
   const { mutate: createSchedule, isPending: isCreating } = useCreateSchedule(accountId);
 
@@ -89,10 +92,13 @@ const ScheduleSection = ({ accountId }: Props) => {
       />
 
       {noScheduleForMonth ? (
+        
         <Box sx={{ textAlign: "center", py: 6 }}>
           <Typography color="text.secondary" sx={{ mb: 2 }}>
             No schedule has been created for {selectedMonth.format("MMMM YYYY")} yet.
           </Typography>
+
+  {userRole === "doctor" && (
           <Button
             variant="contained"
             startIcon={<AddRounded />}
@@ -102,6 +108,7 @@ const ScheduleSection = ({ accountId }: Props) => {
           >
             {isCreating ? "Creating..." : "Create Monthly Schedule"}
           </Button>
+  )}
         </Box>
       ) : (
         <>

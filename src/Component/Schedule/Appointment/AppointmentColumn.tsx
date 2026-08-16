@@ -35,7 +35,6 @@ const AppointmentColumn = ({
                 "&:hover": { boxShadow: 3 },
             }}
         >
-            {/* Header */}
             <Box
                 sx={{
                     py: 2,
@@ -59,7 +58,6 @@ const AppointmentColumn = ({
             </Box>
             <Divider />
 
-            {/* Slots */}
             <Stack
                 spacing={2}
                 sx={{

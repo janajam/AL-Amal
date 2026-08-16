@@ -50,22 +50,19 @@ const BookingDialog = ({
     } = useForm<BookingFormInput>({
         resolver: zodResolver(bookingSchema),
         defaultValues: {
-            patientName: "",
-            appointmentType: "",
+            medical_number:'',
             startTime: dayjs(),
             endTime: dayjs(),
         },
     });
 
-    // تعبئة/تصفير النموذج بالكامل بسطر واحد كل ما يتغير الـ slot
 
     useEffect(() => {
 
         if (!open || !slot) return;
 
         reset({
-            patientName: "",
-            appointmentType: "",
+            medical_number: "",
             startTime: dayjs(`${slot.date} ${slot.startTime}`, "YYYY-MM-DD HH:mm"),
             endTime: dayjs(`${slot.date} ${slot.endTime}`, "YYYY-MM-DD HH:mm"),
         });
@@ -119,22 +116,22 @@ const BookingDialog = ({
                         <Stack spacing={2.5} sx={{ mt: 2 }}>
 
                             <TextField
-                                label="Patient Name"
+                                label="Patient Medical Number"
                                 fullWidth
                                 autoFocus
-                                error={!!errors.patientName}
-                                helperText={errors.patientName?.message}
-                                {...register("patientName")}
+                                error={!!errors.medical_number}
+                                helperText={errors.medical_number?.message}
+                                {...register("medical_number")}
                             />
 
-                            <TextField
+                            {/* <TextField
                                 label="Appointment Type"
                                 fullWidth
                                 placeholder="Consultation, Follow Up, ..."
                                 error={!!errors.appointmentType}
                                 helperText={errors.appointmentType?.message}
                                 {...register("appointmentType")}
-                            />
+                            /> */}
 
                             <Controller
                                 name="startTime"

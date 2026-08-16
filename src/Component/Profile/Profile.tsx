@@ -13,6 +13,7 @@ import type { EditProfileInput } from "../../Schema/EditProfilrSchema"
 import EditProfileDialog from "./EditProfileDialog"
 import pdf from '../../assets/SRS HIMS.pdf'
 import pdf2 from '../../assets/Incident-Response-Plan-Template.pdf'
+import { useAuthStore } from "../../Store/AuthStore"
 
 const account: Doctor | Secretary = {
     id: 1,
@@ -67,8 +68,8 @@ const Profile = () => {
     const theme = useTheme()
     const navigate = useNavigate()
 
+    const userRole = useAuthStore((state) => state.role);
     // const {fullName , role}= useAuthStore();
-    const userRole = 'doctor'
     const fullName = 'Jhon Smith'
     const [preview, setPreview] = useState<string | null>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);

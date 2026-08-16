@@ -17,6 +17,7 @@ import MedicalRecordSection from './MedicalRecord/MedicalRecordSection';
 import TestResultSection from './TestResult/TestSection';
 import TreatmentPlanSection from './TreatmentPlan/TreatmentPlan';
 import XRayImageSection from './XRayImage/XRayImageSection';
+import AccountDetailsSkeleton from '../../Admin/Accounts/DetailsSkeleton';
 
 
 
@@ -35,9 +36,7 @@ const PatientDetailes = () => {
 
     if (isLoading) {
         return (
-            <Stack sx={{ py: 8 }}>
-                <CircularProgress />
-            </Stack>
+            <AccountDetailsSkeleton/>
         );
     }
 

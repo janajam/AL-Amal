@@ -1,21 +1,34 @@
-import { Card, Skeleton } from "@mui/material";
-import CardContainer from "./CardContainer";
+import {
+  Skeleton,
+  Stack
+} from "@mui/material";
 
-interface CardSkeletonProps {
-  height?: number;
-}
+const CardSkeleton = () => {
 
-const CardSkeleton = ({ height = 250 }: CardSkeletonProps) => {
   return (
-    <CardContainer>
-      <Card sx={{ my: 2 }}>
-        <Skeleton
-          variant="rounded"
-          width="100%"
-          height={height}
-        />
-      </Card>
-    </CardContainer>
+    <>
+
+      <Stack
+
+       >
+        <Skeleton width={'88%'} height={320} sx={{
+          bgcolor: '#ced9d9',
+          alignSelf: 'center',
+        }} />
+
+        <Skeleton width={'88%'} height={320} sx={{
+          bgcolor: '#ced9d9',
+          alignSelf: 'center',
+          
+        }} />
+        <Skeleton width={'88%'} height={320} sx={{
+          bgcolor: '#ced9d9',
+          alignSelf: 'center',
+          
+        }} />
+
+      </Stack>
+    </>
   );
 };
 

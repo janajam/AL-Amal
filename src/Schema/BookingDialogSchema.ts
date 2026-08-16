@@ -9,15 +9,13 @@ const dayjsSchema = z
 
 export const bookingSchema = z
     .object({
-        patientName: z
-            .string()
-            .trim()
-            .min(1, "Patient name is required."),
+        medical_number: z
+            .string().min(1, "Patient medical number is required."),
 
-        appointmentType: z
-            .string()
-            .trim()
-            .min(1, "Appointment type is required."),
+        // appointmentType: z
+        //     .string()
+        //     .trim()
+        //     .min(1, "Appointment type is required."),
 
         startTime: dayjsSchema,
         endTime: dayjsSchema,

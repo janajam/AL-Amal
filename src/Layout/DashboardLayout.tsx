@@ -15,7 +15,7 @@ export default function DashboardLayout() {
   // const userRole = 'secretary'
 
   if (!userRole) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
 
   }
 
@@ -46,7 +46,7 @@ export default function DashboardLayout() {
       >
 
         <Box sx={{
-          backgroundColor: 'white',
+          backgroundColor: theme.palette.background.default,
           borderRadius: '16px',
           p: 3,
           minHeight: 'calc(100% - 64px)',
@@ -55,7 +55,7 @@ export default function DashboardLayout() {
           }
         }}>
           <AppBar title={title} subtitle={subtitle} />
-          <Outlet />
+          <Outlet  />
 
         </Box>
       </Box>

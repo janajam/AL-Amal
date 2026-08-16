@@ -1,31 +1,33 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { useGetPatients } from "../../Hook/UseGetPatients";
 import PatientCard from "./PatientCard";
 import { useState } from "react";
 import PulseDivider from "../../Component/Schedule/PluseDivider";
+import CardSkeleton from "../../Component/CardSkelaton";
 
 
 const PatientList = () => {
-
+const theme=useTheme()
     const [search, setSearch] = useState('');
     const { data, isLoading, isError } = useGetPatients({ search });
     const patients = data?.data ?? [];
 
 if(isLoading){
-    return(
-        <Box>
-            <Typography>
-            patients fetching ...
-            </Typography>
-        </Box>
+
+    return(<CardSkeleton/>
     )
 }
 
 if(isError){
     return(
         <Box>
-            <Typography>
-                somethings wrong
+            <Typography
+            sx={{ 
+                fontWeight:550,
+                color:theme.palette.etal.main
+             }}
+            >
+                somethings wrong faild load patients
             </Typography>
             <PulseDivider/>
         </Box>
