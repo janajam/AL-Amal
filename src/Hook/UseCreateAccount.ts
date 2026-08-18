@@ -16,14 +16,13 @@
 
 // Hook/UseCreateAccount.ts
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import ApiClient from "../apiServices/api_client";
+import ApiClient from "../apiServices/api_client"
 import type { CreateAccountInfo } from "../Schema/CreateAccountSchema";
 import type { CreateAccountPayload, CreateDoctorResponse } from "../Entities/DoctorData";
 
 
 const doctorsApi = new ApiClient<CreateDoctorResponse, CreateAccountPayload>('/doctors');
-const secretariesApi = new ApiClient<CreateDoctorResponse, CreateAccountPayload>('/secretaries');
-
+const secretariesApi = new ApiClient<CreateDoctorResponse, CreateAccountPayload>('/admin/secretaries');
 export const useCreateAccount = () => {
     const queryClient = useQueryClient();
 

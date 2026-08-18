@@ -1,56 +1,55 @@
-
 import { useNavigate } from "react-router-dom";
-import AccountCard from "../../Admin/Accounts/AccountCard";
-import { useGetDoctors } from "../../Hook/UseGetDoctors";
-import { mapDoctorToAccount } from "./MappingDoctorData";
-import type { Doctor } from "../../Entities/AccountsData";
-import CardSkeleton from "../../Component/CardSkelaton";
 import { Typography, useTheme } from "@mui/material";
+
+import { useGetDoctors } from "../../Hook/UseGetDoctors";
+import CardSkeleton from "../../Component/CardSkelaton";
 import PulseDivider from "../../Component/Schedule/PluseDivider";
+import DoctorCard from "./DoctorCard";
 
 const DoctorsList = () => {
   const navigate = useNavigate();
-const theme=useTheme()
+  const theme = useTheme();
+
   const {
     data,
     isLoading,
     isError,
   } = useGetDoctors();
 
-  console.log(data)
   if (isLoading) {
-    return <CardSkeleton/>;
+    return <CardSkeleton />;
   }
 
   if (isError) {
     return (
-
       <>
-      <Typography
-      sx={{
-        fontWeight:550,
-        color:theme.palette.etal.main
-      }}
-      >
-        Faild To Load Somthing wrong 
-      </Typography>
-      <PulseDivider/>
-      </>
-    )}
+        <Typography
+          sx={{
+            fontWeight: 550,
+            color: theme.palette.etal.main,
+          }}
+        >
+          Failed To Load. Something went wrong.
+        </Typography>
 
-const doctors: Doctor[] =
-  data?.data?.map(mapDoctorToAccount) ?? [];
+        <PulseDivider />
+      </>
+    );
+  }
+
+  const doctors = data?.data ?? [];
+
   return (
     <>
       {doctors.map((doctor) => (
-      
-        <AccountCard
+        <DoctorCard
           key={doctor.id}
-          account={doctor}
-          onClick={() => navigate(`/accounts/${doctor.id}`)}
+          doctor={doctor}
+          onClick={() => navigate(`/doctors/${doctor.id}`)}
         />
       ))}
     </>
   );
 };
+
 export default DoctorsList;

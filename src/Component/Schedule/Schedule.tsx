@@ -44,7 +44,7 @@ const ScheduleSection = ({ accountId }: Props) => {
   const currentWeekData = weeks[currentWeek];
   const currentWeekDays = currentWeekData?.days ?? [];
 
-  // لا يوجد جدول لهذا الشهر: إما خطأ فعلي (404) أو نجاح بلا بيانات
+  
   const noScheduleForMonth = !isLoading && (isError || !data?.data);
 
   useEffect(() => {

@@ -1,15 +1,13 @@
 import axios, { type AxiosRequestConfig } from "axios";
 import { getToken } from "./cookie";
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: "http://localhost:8000/api",
   // withCredentials: true, // important to send cookies
 });
 
 axiosInstance.interceptors.request.use((config) => {
   const token = getToken();
-  console.log("TOKEN:", token);
-  console.log("REQUEST:", config.method, config.baseURL, config.url);
   if (token) {
     // config.headers["Authorization"] = `Bearer ${token}`;
      config.headers.Authorization = `Bearer ${token}`;

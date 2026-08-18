@@ -1,17 +1,28 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AddRounded, DeleteOutlineRounded } from "@mui/icons-material"
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Stack, TextField, Typography, useTheme } from "@mui/material"
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Stack, TextField, Typography, useTheme } from "@mui/material"
 import { useForm } from "react-hook-form"
 import { editMedicalRecordSchema, type EditMedicalRecordInput } from "../../../Schema/EditMedicalRecordSchema"
+import { useCreateMedicalRecord } from "../../../Hook/UseCreateMedicalRecord"
+import { useState } from "react"
 
 interface Props {
     open: boolean,
+    userId: number
     onClose: () => void
 }
 
 
-const CreateMedicalRecordDialog = ({ open, onClose }: Props) => {
+const CreateMedicalRecordDialog = ({ open, userId, onClose }: Props) => {
     const theme = useTheme()
+    const { mutate: createRecord, isPending } = useCreateMedicalRecord(userId)
+
+    const [snackbar, setSnackbar] = useState({
+        open: false,
+        message: "",
+        severity: "success" as "success" | "error",
+    });
+
     const submitDialog = (data: EditMedicalRecordInput) => {
 
         const payload: EditMedicalRecordInput = {
@@ -22,7 +33,7 @@ const CreateMedicalRecordDialog = ({ open, onClose }: Props) => {
             allergies: data.allergies.filter(
                 allergy => allergy.trim() !== ''
             ),
-            longTermMedication: data.longTermMedication.filter(
+            long_term_medication: data.long_term_medication.filter(
                 medication => medication.trim() !== ''
             ),
             operations: data.operations.filter(
@@ -30,8 +41,24 @@ const CreateMedicalRecordDialog = ({ open, onClose }: Props) => {
             ),
 
         };
-
-        // createTreatmentPlan.mutate(payload);
+        createRecord(payload, {
+            onSuccess: (response) => {
+                setSnackbar({
+                    open: true,
+                    message: response.message,
+                    severity: "success",
+                });
+                reset();
+                onClose();
+            },
+            onError: (error: any) => {
+                setSnackbar({
+                    open: true,
+                    message: error.response?.data?.message ?? "حدث خطأ أثناء إنشاء الخطة",
+                    severity: "error",
+                });
+            },
+        })
     };
 
     const handelCancel = () => {
@@ -51,14 +78,14 @@ const CreateMedicalRecordDialog = ({ open, onClose }: Props) => {
         defaultValues: {
             sickness: [''],
             allergies: [''],
-            longTermMedication: [''],
+            long_term_medication: [''],
             operations: ['']
 
         },
     });
     const sickness = watch("sickness");
     const allergies = watch("allergies");
-    const longTermMedication = watch("longTermMedication");
+    const long_term_medication = watch("long_term_medication");
     const operations = watch("operations");
 
     const addSickness = () => {
@@ -76,8 +103,8 @@ const CreateMedicalRecordDialog = ({ open, onClose }: Props) => {
     };
 
     const addLongTermMedication = () => {
-        setValue("longTermMedication", [
-            ...longTermMedication,
+        setValue("long_term_medication", [
+            ...long_term_medication,
             "",
         ]);
     };
@@ -113,11 +140,11 @@ const CreateMedicalRecordDialog = ({ open, onClose }: Props) => {
 
     const removeLongTermMedication = (index: number) => {
 
-        if (longTermMedication.length === 1) return;
+        if (long_term_medication.length === 1) return;
 
         setValue(
-            "longTermMedication",
-            longTermMedication.filter((_, i) => i !== index),
+            "long_term_medication",
+            long_term_medication.filter((_, i) => i !== index),
             {
                 shouldDirty: true,
                 shouldValidate: true,
@@ -178,12 +205,12 @@ const CreateMedicalRecordDialog = ({ open, onClose }: Props) => {
         value: string
     ) => {
 
-        const updated = [...longTermMedication];
+        const updated = [...long_term_medication];
 
         updated[index] = value;
 
         setValue(
-            "longTermMedication",
+            "long_term_medication",
             updated,
             {
                 shouldDirty: true,
@@ -351,7 +378,7 @@ const CreateMedicalRecordDialog = ({ open, onClose }: Props) => {
                             Long Term Medications
                         </Typography>
 
-                        {longTermMedication.map((medication, index) => (
+                        {long_term_medication.map((medication, index) => (
 
                             <Stack
                                 key={index}
@@ -364,8 +391,8 @@ const CreateMedicalRecordDialog = ({ open, onClose }: Props) => {
                                     fullWidth
                                     label={`Medication ${index + 1}`}
                                     value={medication}
-                                    error={!!errors.longTermMedication?.[index]}
-                                    helperText={errors.longTermMedication?.[index]?.message}
+                                    error={!!errors.long_term_medication?.[index]}
+                                    helperText={errors.long_term_medication?.[index]?.message}
 
                                     onChange={(e) =>
                                         updateLongTermMedication(index, e.target.value)
@@ -374,7 +401,7 @@ const CreateMedicalRecordDialog = ({ open, onClose }: Props) => {
 
                                 <IconButton
                                     color="error"
-                                    disabled={longTermMedication.length === 1}
+                                    disabled={long_term_medication.length === 1}
                                     onClick={() => removeLongTermMedication(index)}
                                 >
                                     <DeleteOutlineRounded />
@@ -463,18 +490,18 @@ const CreateMedicalRecordDialog = ({ open, onClose }: Props) => {
                         Cancel
                     </Button>
                     <Button type="submit" form="subscription-form"
-                        // disabled={createOffer.isPending}
-                        // startIcon={
-                        //     createOffer.isPending
-                        //         ? <CircularProgress size={20} />
-                        //         : null}
+                        disabled={isPending}
+                        startIcon={
+                            isPending
+                                ? <CircularProgress size={20} />
+                                : null}
                         sx={{
                             bgcolor: theme.palette.primary.main,
                             color: theme.palette.primary.contrastText,
                             width: 130,
 
                         }}>
-                        create    {/* {createOffer.isPending ? 'Creating...' : 'Create'} */}
+                        {isPending ? 'Creating...' : 'Create'}
 
                     </Button>
 

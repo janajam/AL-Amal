@@ -19,21 +19,22 @@ import {
     EditRounded,
     PersonOutlined,
     PictureAsPdf,
-    ScienceOutlined,
-    VisibilityOutlined,
+    VisibilityOutlined
 } from "@mui/icons-material";
-import type { LabResult, TestResult } from "../../../Entities/Patient";
-import EditTestResultDialog from "./EditTestResultDialog";
-import AddTestResultDialog from "./AddTestResultDialog";
+import type { LabResult } from "../../../Entities/Patient";
 import { useAuthStore } from "../../../Store/AuthStore";
+import { getLabAttachmentUrl, openLabAttachment } from "../../Helper";
+import AddTestResultDialog from "./AddTestResultDialog";
+import EditTestResultDialog from "./EditTestResultDialog";
 
 interface Props {
     results: LabResult[];
-    medicalRecordId:number
+    medicalRecordId: number
+    pateintId: number
 }
 
-const TestResultSection = ({ results ,medicalRecordId}: Props) => {
-   
+const TestResultSection = ({ results, medicalRecordId, pateintId }: Props) => {
+
     const userRole = useAuthStore((state) => state.role);
 
     const theme = useTheme();
@@ -217,15 +218,15 @@ const TestResultSection = ({ results ,medicalRecordId}: Props) => {
                             sx={{ alignItems: "center" }}
                         >
 
-                            <ScienceOutlined
+                            {/* <ScienceOutlined
                                 sx={{
                                     color: theme.palette.etal.main,
                                 }}
                             />
-
+ */}
                             <Box>
 
-                                <Typography
+                                {/* <Typography
                                     sx={{ fontWeight: 700 }}
                                 >
                                     Laboratory Technician
@@ -233,7 +234,7 @@ const TestResultSection = ({ results ,medicalRecordId}: Props) => {
 
                                 <Typography >
                                     {current.tecnical}
-                                </Typography>
+                                </Typography> */}
 
                             </Box>
 
@@ -329,7 +330,15 @@ const TestResultSection = ({ results ,medicalRecordId}: Props) => {
                                     variant="outlined"
                                     startIcon={<VisibilityOutlined />}
                                     component="a"
-                                    href={current.attachment}
+                                    //    href={openLabAttachment(current.attachment)}
+
+                                    // href={current.attachment}
+                                    onClick={() => {
+                                        console.log(current.attachment);
+
+                                        openLabAttachment(current.attachment)
+                                    }}
+
                                     target="_blank"
                                 >
                                     Preview
@@ -339,7 +348,9 @@ const TestResultSection = ({ results ,medicalRecordId}: Props) => {
                                     variant="contained"
                                     startIcon={<Download />}
                                     component="a"
-                                    href={current.attachment}
+                                    // href={current.attachment}
+                                    href={getLabAttachmentUrl(current.attachment)}
+                                    // onClick={() => downloadLabAttachment(current.attachment)}
                                     download
                                 >
                                     Download
@@ -377,10 +388,13 @@ const TestResultSection = ({ results ,medicalRecordId}: Props) => {
                 open={open}
                 result={current}
                 medicalRecordId={medicalRecordId}
+                patientId={pateintId}
                 onClose={handleClose} />
 
             <AddTestResultDialog
                 open={openDialog}
+                patientId={pateintId}
+                medicalRecordId={medicalRecordId}
                 onClose={handleCloseDialog} />
         </Box>
 

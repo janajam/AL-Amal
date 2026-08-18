@@ -1,124 +1,57 @@
+import { useNavigate } from "react-router-dom";
+import { Typography, useTheme } from "@mui/material";
 
-import logo from '../../assets/logo.webp'
-import type { Account } from '../../Entities/AccountsData'
-import { dummySchedule } from '../../Component/Schedule/ScheduleDummy'
-import { useNavigate } from 'react-router-dom';
-import AccountCard from '../../Admin/Accounts/AccountCard';
-import type { Department } from '../../Entities/DoctorData';
-import { mapSecretaryToAccount } from '../Accounts/MapingSecretaryData';
-import { useGetSecretaries } from '../../Hook/UseGetSecretaries';
+import { useGetSecretaries } from "../../Hook/UseGetSecretaries";
+import CardSkeleton from "../../Component/CardSkelaton";
+import PulseDivider from "../../Component/Schedule/PluseDivider";
+import SecretaryCard from "./SecretaryCard";
 
-//for test
-
-// const department: Department = {
-//   id: 1,
-//   name: "Cardiology",
-// };
-
-// const secretaries: Account[] = [
-//   {
-//     id: 1,
-//     name: "A",
-
-//     email: "A1@email.com",
-
-//     phoneNumber: "123456789",
-
-//     birthDay: new Date("1990-01-01"),
-
-//     image: logo,
-
-//     role: "Secretary",
-
-//     status: "ACTIVE",
-
-//     createdAt: new Date("2022-02-10"),
-
-//     address: "Address",
-
-//     department,
-
-//     workingDays: dummySchedule,
-//   },
-
-//   {
-//     id: 2,
-
-//     name: "B",
-
-//     email: "B@email.com",
-
-//     phoneNumber: "987654321",
-
-//     birthDay: new Date("1995-06-10"),
-
-//     image: logo,
-
-//     role: "Secretary",
-
-//     status: "ACTIVE",
-
-//     createdAt: new Date(),
-
-//     address: "Address",
-
-//     department,
-
-//     workingDays: dummySchedule,
-//   },
-
-//   {
-//     id: 3,
-
-//     name: "C",
-
-//     email: "C@email.com",
-
-//     phoneNumber: "55555555",
-
-//     birthDay: new Date("1992-04-20"),
-
-//     image: logo,
-
-//     role: "Secretary",
-
-//     status: "ACTIVE",
-
-//     createdAt: new Date(),
-
-//     address: "Address",
-
-//     department,
-
-//     workingDays: dummySchedule,
-//   },
-// ];
 const SecretariesList = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
 
-  const { data, isLoading, isError } = useGetSecretaries();
+  const {
+    data,
+    isLoading,
+    isError,
+  } = useGetSecretaries();
 
-  // if (isLoading) {
-  //   return <div>Loading secretaries...</div>;
-  // }
+  if (isLoading) {
+    return <CardSkeleton />;
+  }
 
-  // if (isError) {
-  //   return <div>Failed to load secretaries.</div>;
-  // }
+  if (isError) {
+    return (
+      <>
+        <Typography
+          sx={{
+            fontWeight: 550,
+            color: theme.palette.etal.main,
+          }}
+        >
+          Failed To Load. Something went wrong.
+        </Typography>
 
-  const secretaries: Account[] = data?.data?.map(mapSecretaryToAccount) ?? [];
+        <PulseDivider />
+      </>
+    );
+  }
+
+  const secretaries = data?.data ?? [];
 
   return (
     <>
       {secretaries.map((secretary) => (
-        <AccountCard
+        <SecretaryCard
           key={secretary.id}
-          account={secretary}
-          onClick={() => navigate(`/accounts/${secretary.id}`)}
+          secretary={secretary}
+          onClick={() =>
+            navigate(`/secretaries/${secretary.id}`)
+          }
         />
       ))}
     </>
-  )
+  );
+};
 
-}
-export default SecretariesList
+export default SecretariesList;

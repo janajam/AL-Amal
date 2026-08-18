@@ -1,7 +1,11 @@
-import { Box, Card, CardContent, CardHeader, Stack, Typography, useTheme } from "@mui/material"
+import { Box, Button, Card, CardContent, CardHeader, Stack, Typography, useTheme } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import CardContainer from "../../Component/CardContainer"
 import type { PatientListItem } from "../../Entities/Patient"
+import { useAuthStore } from "../../Store/AuthStore"
+import { AddRounded } from "@mui/icons-material"
+import { useState } from "react"
+import CreateMedicalRecordDialog from "./MedicalRecord/CreateMedicalRecordDialog"
 
 
 
@@ -13,6 +17,16 @@ const PatientCard = ({ patient }: Props) => {
   const theme = useTheme()
   const navigate = useNavigate()
 
+  const [open, setOpen] = useState(false)
+  const userRole = useAuthStore((state) => state.role);
+  const handleCreate = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
 
     <Box>
@@ -23,7 +37,8 @@ const PatientCard = ({ patient }: Props) => {
           boxShadow: '0 4px 10px #9ed1d5',
           px: 2
         }}
-          onClick={() => navigate(`/patients/${patient?.id}`)}
+          onClick={() => (
+            userRole === 'doctor' && navigate(`/patients/${patient?.id}`))}
         >
           <Stack direction={'row'}
             sx={{
@@ -63,8 +78,8 @@ const PatientCard = ({ patient }: Props) => {
                 </Typography>
                 <Typography>
                   {/* {patient?.birth_day} */}
-                  
-                        {new Date(patient?.birth_day || '').toLocaleDateString()}
+
+                  {patient?.birth_day ? new Date(patient.birth_day).toLocaleDateString() : 'N/A'}
                 </Typography>
               </Stack>
               <Stack direction={'row'} spacing={2}>
@@ -78,6 +93,27 @@ const PatientCard = ({ patient }: Props) => {
                 <Typography>{patient?.phone}</Typography>
               </Stack>
             </Stack>
+            {userRole === 'secretary' &&
+              <><Button
+                startIcon={<AddRounded />}
+                sx={{
+                  whiteSpace: 'nowrap',
+                  width: 180,
+                  border: `2px solid ${theme.palette.etal.main}`,
+                  bgcolor: theme.palette.etal.main,
+                  color: theme.palette.primary.contrastText,
+                  mt: 2
+                }}
+                onClick={handleCreate}
+              >
+                Create record
+              </Button>
+                <CreateMedicalRecordDialog
+                  open={open}
+                  userId={patient?.id ?? 0}
+                  onClose={handleClose} /></>
+
+            }
           </CardContent>
         </Card>
       </CardContainer>

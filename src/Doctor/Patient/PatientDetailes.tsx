@@ -29,6 +29,7 @@ const PatientDetailes = () => {
     const { id } = useParams();
 
     const { data, isLoading, isError } = useGetPatient(Number(id));
+    console.log(data)
     const patient = data?.data;
     console.log(data);
 
@@ -199,9 +200,10 @@ const PatientDetailes = () => {
                                     Create record
                                 </Button>
 
-                                <CreateMedicalRecordDialog
+                                {/* <CreateMedicalRecordDialog
                                      open={open}
-                                      onClose={handleClose}        />
+                                     
+                                      onClose={handleClose}        /> */}
                             </Stack>
                         ) : (
 
@@ -227,8 +229,8 @@ const PatientDetailes = () => {
                         />
 
                         <TestResultSection
-                            results={medicalRecord.lab_result ?? []}
-                            
+                            results={medicalRecord.lab_results ?? []}
+                            pateintId={patient.id}
                             medicalRecordId={medicalRecord.id}
 
                         />

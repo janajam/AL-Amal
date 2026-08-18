@@ -289,7 +289,7 @@ const EditProfileDialog = ({
                     <TextField
                         label="Department"
                         fullWidth
-                        value={account.department.name}
+                        value={account?.department.name}
                         disabled
                     />
 

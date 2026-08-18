@@ -2,29 +2,14 @@ import { z } from "zod";
 
 export const CreateMedecalRecordSchema = z.object({
 
-    name: z.string().min(2),
+    
+        sickness: z.array(z.string()).default([]).optional(),
 
-    age: z.number().min(1),
+        allergies: z.array(z.string()).default([]).optional(),
 
-    gander: z.enum(["Male", "Female"]),
+        long_term_medication: z.array(z.string()).default([]).optional(),
 
-    phoneNumber: z.string().min(10),
-
-    email: z.email(),
-
-    address: z.string().min(3),
-
-    medicalRecord: z.object({
-
-        sickness: z.array(z.string()).default([]),
-
-        allergies: z.array(z.string()).default([]),
-
-        longTermMedication: z.array(z.string()).default([]),
-
-        operations: z.array(z.string()).default([]),
-
-    }),
+        operations: z.array(z.string()).default([]).optional(),
 
 });
 

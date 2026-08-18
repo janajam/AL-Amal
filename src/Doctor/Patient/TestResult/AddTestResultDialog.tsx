@@ -1,29 +1,65 @@
 import { useForm } from "react-hook-form";
 import { createTestResultSchema, type AddTestResultInput } from "../../../Schema/AddTestResultSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography, useTheme } from "@mui/material";
+import { Button, Card, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography, useTheme } from "@mui/material";
 import { PictureAsPdfRounded } from "@mui/icons-material";
+import useCreateLabResult from "../../../Hook/UseAddLabResult";
+import { getLabAttachmentUrl } from "../../Helper";
 
 
 interface Props {
-    open: boolean,
-    onClose: () => void
+    open: boolean;
+    onClose: () => void;
+    medicalRecordId: number;
+    patientId: number;
 }
 
-
-const AddTestResultDialog = ({ open, onClose }: Props) => {
+const AddTestResultDialog = ({ open, onClose, patientId, medicalRecordId }: Props) => {
     const theme = useTheme()
+    const { mutate: createResult, isPending } = useCreateLabResult(patientId)
+
 
     const submitDialog = (data: AddTestResultInput) => {
-  if (!data.attachment) {
-        return;
-    }
-        // createTestResult.mutate(data, {
 
-        reset();
-        onClose();
-    };
-    const handelCancel = () => {
+        const formData = new FormData();
+
+        formData.append(
+            "medical_diagnosis",
+            data.medical_diagnosis
+        );
+
+        formData.append(
+            "medical_record_id",
+            String(data.medical_record_id)
+        );
+
+        formData.append(
+            "title",
+            data.title
+        );
+        formData.append(
+            'doctor_name',
+            data.doctor_name
+        ),
+            formData.append(
+                "result",
+                data.result
+            );
+
+        if (data.attachment) {
+            formData.append(
+                "attachment",
+                data.attachment
+            );
+        }
+
+        createResult(formData, {
+            onSuccess: () => {
+                reset();
+                onClose();
+            },
+        });
+    }; const handelCancel = () => {
         reset()
         onClose()
     }
@@ -35,7 +71,9 @@ const AddTestResultDialog = ({ open, onClose }: Props) => {
         const file = e.target.files?.[0];
 
         if (!file) return;
-
+        if (file.type !== "application/pdf") {
+            return;
+        }
         setValue("attachment", file, {
             shouldValidate: true
         });
@@ -50,17 +88,18 @@ const AddTestResultDialog = ({ open, onClose }: Props) => {
         reset,
         setValue,
         watch,
-        formState: { errors }
+        formState: { errors },
     } = useForm<AddTestResultInput>({
         resolver: zodResolver(createTestResultSchema),
-        defaultValues: {
-            requestedBy: "",
-            uploaded_by: "",
-            title: "",
-            result: ""
-        }
-    });
 
+        defaultValues: {
+            medical_diagnosis: "",
+            medical_record_id: medicalRecordId,
+            title: "",
+            result: "",
+            doctor_name: ''
+        },
+    });
     const removeAttachment = () => {
 
         setValue("attachment", undefined, {
@@ -113,13 +152,13 @@ const AddTestResultDialog = ({ open, onClose }: Props) => {
                             <TextField
                                 autoFocus
                                 margin="dense"
-                                id="requestedBy"
-                                label='Doctor Name'
+                                id="medication"
+                                label='medical_diagnosis'
                                 fullWidth
                                 variant="outlined"
-                                {...register('requestedBy')}
-                                error={!!errors.requestedBy}
-                                helperText={errors.requestedBy?.message}
+                                {...register('medical_diagnosis')}
+                                error={!!errors.medical_diagnosis}
+                                helperText={errors.medical_diagnosis?.message}
                             />
                             <TextField
                                 autoFocus
@@ -132,6 +171,19 @@ const AddTestResultDialog = ({ open, onClose }: Props) => {
                                 error={!!errors.result}
                                 helperText={errors.result?.message}
                             />
+
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                id=""
+                                label='doctorName '
+                                fullWidth
+                                variant="outlined"
+                                {...register('doctor_name')}
+                                error={!!errors.doctor_name}
+                                helperText={errors.doctor_name?.message}
+                            />
+
 
                             <Stack spacing={2}
                                 sx={{ mt: 3 }}
@@ -158,13 +210,14 @@ const AddTestResultDialog = ({ open, onClose }: Props) => {
                                         variant="outlined"
                                         sx={{ p: 2 }}
                                     >
-                                        <Stack direction="row" spacing={1}> <PictureAsPdfRounded/>
-                                        <Typography>
+                                        <Stack direction="row" spacing={1}> <PictureAsPdfRounded />
+                                            <Typography>
 
-                                            {attachment.name}
+                                                {attachment.name}
 
-                                        </Typography>
-</Stack>
+                                            </Typography>
+                                        </Stack>
+
                                         <Stack
                                             direction="row"
                                             spacing={2}
@@ -177,6 +230,7 @@ const AddTestResultDialog = ({ open, onClose }: Props) => {
                                                 variant="outlined"
                                                 href={URL.createObjectURL(attachment)}
                                                 target="_blank"
+
                                                 rel="noopener noreferrer"
                                                 component="a"
                                             >
@@ -214,19 +268,19 @@ const AddTestResultDialog = ({ open, onClose }: Props) => {
                         Cancel
                     </Button>
                     <Button type="submit" form="subscription-form"
-                        // disabled={editPlan.isPending}
-                        // startIcon={
-                        //     editPlan.isPending
-                        //         ? <CircularProgress size={20} />
-                        //         : null}
+                        disabled={isPending}
+                        startIcon={
+                            isPending
+                                ? <CircularProgress size={20} />
+                                : null}
                         sx={{
                             bgcolor: theme.palette.primary.main,
                             color: theme.palette.primary.contrastText,
                             width: 130,
 
                         }}>
-                        {/* {editPlan.isPending ? 'Sending...' : 'Send'} */}
-                        save
+                        {isPending ? 'Sending...' : 'Send'}
+
                     </Button>
                 </DialogActions>
 

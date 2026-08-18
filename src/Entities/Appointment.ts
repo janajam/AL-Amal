@@ -82,3 +82,30 @@ export interface TimeSlot {
   status: SlotStatus;
   appointment?: AppointmentListItem;
 }
+
+export interface BookAppointmentDoctor {
+    id: number;
+    name: string;
+    specialization: string;
+    image: string | null;
+}
+
+export interface BookedAppointment {
+    id: number;
+    doctor: BookAppointmentDoctor;
+    date: string;
+    start_time: string;
+    end_time: string;
+    status: string;
+    reason: string | null;
+    notes: string | null;
+    cancelled_at: string | null;
+}
+
+export interface BookAppointmentResponse {
+    success: boolean;
+    status: number;
+    message: string;
+    data: BookedAppointment;
+    errors: any;
+}

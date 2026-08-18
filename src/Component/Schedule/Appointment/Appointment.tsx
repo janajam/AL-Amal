@@ -1,12 +1,14 @@
 import { ArrowBack } from "@mui/icons-material";
 import AppointmentScheduleSection from "./AppointmentScheduleSection";
-import { useTheme } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Typography, useTheme } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Appointment = () => {
     const theme = useTheme()
     const navigate = useNavigate()
-    
+    const { doctorId } = useParams<{ doctorId: string }>();
+    const numericDoctorId = Number(doctorId);
+
     return (
         <><ArrowBack sx={{
             mx: 2,
@@ -16,8 +18,16 @@ const Appointment = () => {
         }}
             onClick={() => navigate(-1)}
         />
-            <AppointmentScheduleSection
-                doctorId={1} /></>
+            {numericDoctorId && !isNaN(numericDoctorId) ? (
+                <AppointmentScheduleSection
+                    doctorId={numericDoctorId} />
+
+             ) :
+                 <Typography color="error" sx={{ m: 2 }}>
+                    Doctor ID is missing or invalid.,
+                </Typography>
+            } 
+        </>
 
     );
 

@@ -57,9 +57,39 @@ const TreatmentPlanSection = ({ plans, patientId, medicalRecordId }: Props) => {
     if (!currentPlan) {
         return (
             <Box sx={{ width: "93%", justifySelf: "center", p: 4, textDirection: 'rtl' }}>
-                <Typography variant="h6" color="textSecondary" align="center">
+                <Typography variant="h4" color="textSecondary" align="center">
                     there are no treatment plans for this patient yet. please create a new treatment plan.
                 </Typography>
+                <Stack direction={'row'} spacing={4}>
+                <Typography
+                    variant="h5"
+                    sx={{
+                        fontWeight: 700,
+                        my: 2,
+                        fontSize: 20
+                    }}
+                >
+                    Treatment Plan
+                </Typography>
+                {userRole !== 'secretary' &&
+                    <Button
+                        variant='outlined'
+                        startIcon={<AddRounded />}
+                        sx={{
+                            whiteSpace: 'nowrap',
+                            border: `2px solid ${theme.palette.primary.main}`,
+                            color: theme.palette.primary.main,
+                            ml: '83%',
+                            mt: 4,
+
+                        }}
+                        onClick={() => handleCreate()}
+                    >
+                        New Plane
+                    </Button>
+                }
+            </Stack>
+            
             </Box>
         );
     }

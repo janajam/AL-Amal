@@ -4,6 +4,7 @@ import CardContainer from '../../Component/CardContainer'
 import type { Account } from '../../Entities/AccountsData'
 import { useAuthStore } from '../../Store/AuthStore'
 import logo from '../../assets/amal.webp'
+import getCroppedImageUrl from '../../apiServices/Image_URL'
 
 
 interface Props {
@@ -16,13 +17,7 @@ const AccountCard = ({ account, onClick }: Props) => {
     const theme = useTheme()
     const navigate = useNavigate();
     const userRole = useAuthStore((state) => state.role);
-    //const [searchParams] = useSearchParams();
-
-    // });
-    // const { data } = useGetAccounts();
-    // const accounts = data?.data ?? []‍
-
-    return (
+        return (
         <Box>
             <CardContainer>
                 <Card key={account?.id}
@@ -38,7 +33,7 @@ const AccountCard = ({ account, onClick }: Props) => {
                         justifyContent: 'space-between'
                     }}>
                         <CardHeader
-                            subheader={account?.name}
+                            subheader={account?.full_name}
                             title={account?.role}
                             sx={{
                                 color: theme.palette.primary.main,
@@ -79,8 +74,9 @@ const AccountCard = ({ account, onClick }: Props) => {
                                     }
 
                                 }}
-                                image={logo}
-                                title="Account photo"
+                             image={getCroppedImageUrl(account?.image ?? "")}  
+                              title="Account photo"
+
                             />
 
                             <Typography
@@ -100,7 +96,7 @@ const AccountCard = ({ account, onClick }: Props) => {
                                 }}>
                                 Phone Number :
                             </Typography>
-                            <Typography> {account?.phoneNumber}</Typography>
+                            <Typography> {account?.phone}</Typography>
                         </Stack>
                         {userRole === 'admin' &&
                             <Stack direction={'row'} spacing={1}>

@@ -73,9 +73,9 @@ export type AccountStatus = "ACTIVE" | "REVOKED";
 
 export interface Account {
   id: number;
-  name: string;
+  full_name: string;
   email: string;
-  phoneNumber: string;
+  phone: string;
   role: AccountRole;
   status: AccountStatus;
 
@@ -87,13 +87,39 @@ export interface Account {
   department?: Department;
 }
 
-export interface Doctor extends Account {
+// export interface Doctor extends Account {
+//   role: "Doctor";
+//   specialty:string;
+//   licenses: License[];
+//   biography:string
+// }
+
+export interface Doctor {
+  id: number;
+  
+  status: AccountStatus;
+
+  full_name: string;
+  image: string | null;
   role: "Doctor";
-  specialty:string;
-  licenses: License[];
+  email: string;
+  phone: string;
+  birth_date: string;
+  address: string;
+  department: string;
+  specialization: string;
+  license: string[] | null;
   biography:string
 }
 
+
+export interface DoctorResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: Doctor;
+  errors: unknown;
+}
 export interface Secretary extends Account {
   role: "Secretary";
 }

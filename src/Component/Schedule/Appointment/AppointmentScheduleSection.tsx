@@ -30,6 +30,7 @@ import {
 } from "./AppointmentHelper";
 import { useGetAppointmentSlots } from "../../../Hook/UseGetAppointmentSlot";
 import AccountDetailsSkeleton from "../../../Admin/Accounts/DetailsSkeleton";
+import { useQueryClient } from "@tanstack/react-query";
 
 
 
@@ -43,7 +44,7 @@ const AppointmentScheduleSection = ({
 }: Props) => {
 
     const theme = useTheme();
-
+const queryClient = useQueryClient();
 
     const [selectedMonth, setSelectedMonth] =
         useState(dayjs());
@@ -68,7 +69,8 @@ const AppointmentScheduleSection = ({
         isError,
     } = useGetAppointmentSlots(
         selectedMonth.year(),
-        selectedMonth.month() + 1
+        selectedMonth.month() + 1,
+        doctorId
     );
 
     useEffect(() => {
@@ -132,37 +134,48 @@ const AppointmentScheduleSection = ({
         currentWeekSlots,
     ]);
 
-    const handleSlotClick = (
-        slot: TimeSlot
-    ) => {
+    // const handleSlotClick = (
+    //     slot: TimeSlot
+    // ) => {
 
-        setSelectedSlot(slot);
+    //     setSelectedSlot(slot);
 
-        if (slot.status === "Available") {
+    //     if (slot.status === "Available") {
 
-            setBookingDialogOpen(true);
+    //         setBookingDialogOpen(true);
 
-        } else {
+    //     } else {
 
-            setDetailsDialogOpen(true);
+    //         setDetailsDialogOpen(true);
 
-        }
+    //     }
 
-    };
+    // };
 
+const handleSlotClick = (slot: TimeSlot) => {
+    setSelectedSlot(slot);
 
-    const updateSlotInState = (
-        updatedSlot: TimeSlot
-    ) => {
+    // تحويل الحالة للحروف الصغيرة للتحقق بصورة صحيحة ("available" vs "Available")
+    if (slot.status.toLowerCase() === "available") {
+        setBookingDialogOpen(true);
+    } else {
+        setDetailsDialogOpen(true);
+    }
+};
+    // const updateSlotInState = (
+    //     updatedSlot: TimeSlot
+    // ) => {
+    //     console.log(
+    //         "Updated slot:",
+    //         updatedSlot
+    //     );
 
+    // };
 
-        console.log(
-            "Updated slot:",
-            updatedSlot
-        );
-
-    };
-
+    const updateSlotInState = () => {
+    // إعادة جلب البيانات ليظهر التحديث فوراً في الجدول
+    queryClient.invalidateQueries({ queryKey: ["appointment-slots"] });
+};
 
     return (
 

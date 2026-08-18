@@ -1,4 +1,4 @@
-// Hook/UseCreateTreatmentPlane.ts
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ApiClient from "../apiServices/api_client";
 import type { CreateTreatmentPlanInput } from "../Schema/CreateTreatmentPlaneSchema";

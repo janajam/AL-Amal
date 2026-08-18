@@ -34,7 +34,7 @@ import PulseDivider from "../../Component/Schedule/PluseDivider";
 import { useGetDepartments } from "../../Hook/UseGetDepartments";
 import { useCreateAccount } from "../../Hook/UseCreateAccount";
 
-const ganders = ['male', 'female']
+const ganders = ['Male', 'Female']
 
 const TextFieldStyle = styled(TextField)(() => ({
     margin: "normal",

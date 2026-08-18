@@ -49,8 +49,9 @@ status:string|null
     long_term_medication?: string[],
     operations?: string[],
     treatment_plans?: TreatmentPlanPayload[]|null,
-    lab_result?: LabResult[]|null,
+    lab_results?: LabResult[] | null;
     radiology_results?: XRayImage[]|null
+
 }
 
 
@@ -79,15 +80,38 @@ export interface TestResult {
 }
 
 
-
 export interface LabResult {
-  id: number
-  title: string
-  result: string
-  attachment: string
-  doctor_name: string
-  tecnical:string
-  created_at: string
+  id: number;
+  medical_record_id?: number | string;
+  doctor_name: string;
+  title: string;
+  result: string;
+  attachment: string|null
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface CreateLabResultInput {
+  medical_diagnosis: string;
+  medical_record_id: number;
+  title: string;
+  result: string;
+  attachment?: File;
+}
+
+export interface UpdateLabResultResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: LabResult;
+  errors: any;
+}
+export interface CreateLabResultResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: LabResult;
+  errors: any;
 }
 export interface XRayImage {
     id: number,
@@ -240,5 +264,40 @@ export interface CreateTreatmentPlanResponse {
     status: number;
     message: string;
     data: TreatmentPlan;
+    errors: any;
+}
+
+
+export interface CreatePatientUser {
+    id: number;
+    full_name: string;
+    email: string;
+    phone: string;
+    gender: string;
+    birth_date: string;
+    address: string;
+}
+
+export interface CreatePatientMedicalRecord {
+    id: number;
+    status: string | null;
+    sickness: string;
+    allergies: string;
+    long_term_medication: string;
+    operations: string;
+}
+
+export interface CreatePatientData {
+    id: number;
+    medical_number: string;
+    user: CreatePatientUser;
+    medical_record: CreatePatientMedicalRecord;
+}
+
+export interface CreatePatientResponse {
+    success: boolean;
+    status: number;
+    message: string;
+    data: CreatePatientData;
     errors: any;
 }

@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import AccountDetails from "../Admin/Accounts/AccountDetails";
 import Accounts from "../Admin/Accounts/Accounts";
 import CreateAccount from "../Admin/Accounts/CreateAccount";
 import Complaints from "../Admin/Complaints/Complaints";
@@ -10,7 +9,6 @@ import Login from "../Component/Login";
 import ResetPassword from "../Component/ResetPassword";
 import RoleRouter from "../Component/RoleRouter";
 import Appointment from "../Component/Schedule/Appointment/Appointment";
-import PatientCard from "../Doctor/Patient/PatientCard";
 import PatientDetailes from "../Doctor/Patient/PatientDetailes";
 import DashboardLayout from "../Layout/DashboardLayout";
 import PatientList from "../Doctor/Patient/PatientList";
@@ -18,6 +16,8 @@ import DoctorsList from "../Secretary/DoctorsAppointments/DoctorList";
 import SecretariesList from "../Admin/Department/SecretariesList";
 import Profile from "../Component/Profile/Profile";
 import ChangePassword from "../Component/ChangePassword";
+import DoctorDetails from "../Secretary/DoctorsAppointments/DoctorDetailes";
+import SecretaryDetails from "../Admin/Department/SecretaryDetails";
 
 export const router = createBrowserRouter([
 
@@ -56,21 +56,23 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "accounts/:id",
-    element: < AccountDetails />
+    path: "doctors/:id",
+    element: < DoctorDetails />
   },
-{
-  path:'/changePassword',
-  element:<ChangePassword/>
-},
+  {
+    path: 'secretaries/:id',
+    element: <SecretaryDetails/>
+  },
+  {
+    path: '/changePassword',
+    element: <ChangePassword />
+  },
   {
     path: "patients/:id",
     element: < PatientDetailes />
   },
   { path: '/appintmentsSchedule', element: <Appointment /> },
   { path: 'profile', element: <Profile /> },
-  // { path: '/doctors', element: <DoctorsList /> },
-      
 
 
 ]);

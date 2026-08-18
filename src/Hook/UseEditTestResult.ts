@@ -1,14 +1,43 @@
-import { useMutation } from "@tanstack/react-query"
-import ApiClient from "../apiServices/api_client"
-import type { UpdateTestResponse } from "../Entities/Patient"
-import type { EditTestResultInput } from "../Schema/EditTestResultSchema"
+// // Hook/UseEditTestResult.ts
+// import { useMutation, useQueryClient } from "@tanstack/react-query";
+// import ApiClient from "../apiServices/api_client";
+// import type { UpdateLabResultResponse } from "../Entities/Patient";
 
-const apiClient = new ApiClient<UpdateTestResponse, EditTestResultInput>('/doctors')
-export const useEditTstResult = (patientId: number) => {
+// export const useEditTestResult = (resultId: number, patientId: number) => {
+//     const queryClient = useQueryClient();
+//     const apiClient = new ApiClient<UpdateLabResultResponse, FormData>(`/lab-results/${resultId}`);
+
+//     return useMutation({
+//         mutationFn: async (formData: FormData) => {
+//             formData.append("_method", "PUT");
+//             return await apiClient.post(formData);
+//         },
+//         onSuccess: () => {
+//             queryClient.invalidateQueries({ queryKey: ["patient", patientId] });
+//         },
+//     });
+// };
+
+// Hook/UseEditTestResult.ts
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import ApiClient from "../apiServices/api_client";
+import type { UpdateLabResultResponse } from "../Entities/Patient";
+
+type EditTestPayload = FormData | { remove_attachment: boolean };
+
+export const useEditTestResult = (resultId: number, patientId: number) => {
+    const queryClient = useQueryClient();
+    
+    // إنشاء apiClient
+    const apiClient = new ApiClient<UpdateLabResultResponse, EditTestPayload>(`/lab-results/${resultId}`);
+
     return useMutation({
-        mutationKey: ['editRecord'],
-        mutationFn: async (data: EditTestResultInput) => {
-            return await apiClient.update(patientId, data)
+        mutationFn: async (payload: EditTestPayload) => {
+            // السيرفر يتوقع POST دائماً لهذا الـ Route
+            return await apiClient.post(payload);
         },
-    })
-}
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["patient", patientId] });
+        },
+    });
+};
