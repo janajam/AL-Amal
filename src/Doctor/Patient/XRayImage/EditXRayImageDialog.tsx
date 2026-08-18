@@ -1,246 +1,300 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography, useTheme } from "@mui/material";
-import { useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Stack,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import type { XRayImage } from "../../../Entities/Patient";
-import { editXRayImageSchema, type EditXRayImageInput } from "../../../Schema/EditXRayImageSchema";
 
+import type { XRayImage } from "../../../Entities/Patient";
+
+import {
+  editXRayImageSchema,
+  type EditXRayImageInput,
+} from "../../../Schema/EditXRayImageSchema";
+
+import { useEditXRayImage } from "../../../Hook/UseEditXRayImage";
 
 interface Props {
-    open: boolean,
-    img: XRayImage | null,
-    onClose: () => void
+  open: boolean;
+  img: XRayImage | null;
+  patientId: number;
+  onClose: () => void;
+  onSuccess?: () => void;
 }
 
-const EditXRayImageDialog = ({ open, img, onClose }: Props) => {
+const EditXRayImageDialog = ({
+  open,
+  img,
+  patientId,
+  onClose,
+  onSuccess,
+}: Props) => {
+  const theme = useTheme();
 
-    // const [newImage, setNewImage] = useState<File | null>(null);
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const theme = useTheme();
+  const editMutation = useEditXRayImage(
+    img?.id ?? 0,
+    patientId
+  );
 
-    const handelCancel = () => {
-        reset()
-        onClose()
-    }
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<EditXRayImageInput>({
+    resolver: zodResolver(editXRayImageSchema),
+    mode: "onChange",
 
+    defaultValues: {
+      doctor_name: "",
+      image: undefined,
+    },
+  });
 
-    const submitDialog = (data: EditXRayImageInput) => {
+  const newImage = watch("image");
 
-        console.log(data);
-        onClose()
-    }
+  const previewImage = newImage
+    ? URL.createObjectURL(newImage)
+    : img?.image;
 
-    const {
-        register,
-        handleSubmit,
-        reset,
-        setValue,
-        watch,
-        formState: { errors },
-    } = useForm<EditXRayImageInput>({
-        resolver: zodResolver(editXRayImageSchema),
-        mode: "onChange",
-        defaultValues: {
-            requestedBy: "",
-            uploaded_by: "",
-            type: "",
-            description: "",
+  useEffect(() => {
+    if (!img || !open) return;
 
-        },
+    reset({
+      doctor_name: img.doctor_name ?? "",
+      image: undefined,
     });
+  }, [img, open, reset]);
 
-    const newImage = watch("image");
+  const handleCancel = () => {
+    reset();
+    onClose();
+  };
 
-    const previewImage = newImage
-        ? URL.createObjectURL(newImage)
-        : img?.image;
+  const submitDialog = (data: EditXRayImageInput) => {
+  console.log("========== EDIT XRAY ==========");
+  console.log("Result ID:", img?.id);
+  console.log("Patient ID:", patientId);
+  console.log("Doctor:", data.doctor_name);
+  console.log("Image:", data.image);
 
+  if (!img?.id) {
+    console.error("No XRay ID!");
+    return;
+  }
 
-    useEffect(() => {
-        if (!img || !open) return;
+  editMutation.mutate(data, {
+    onSuccess: (response) => {
+      console.log(
+        "XRAY UPDATE SUCCESS:",
+        response
+      );
 
-        reset({
-            requestedBy: img.requestedBy,
-            uploaded_by: img.uploaded_by,
-            type: img.type,
-            description: img.description,
-        });
+      reset();
+      onClose();
+      onSuccess?.();
+    },
 
-        setValue("image", undefined as never);
+    onError: (error) => {
+      console.error(
+        "XRAY UPDATE ERROR:",
+        error
+      );
+    },
+  });
+};
+  return (
+    <Dialog
+      open={open}
+      onClose={
+        editMutation.isPending
+          ? undefined
+          : onClose
+      }
+      sx={{
+        "& .MuiBackdrop-root": {
+          backgroundColor: "rgba(0, 0, 0, 0.22)",
+        },
 
-    }, [img, open, reset, setValue]);
+        "& .MuiDialog-paper": {
+          width: {
+            xs: "99vw",
+            sm: 520,
+            md: 620,
+          },
+          maxWidth: "none",
+          backgroundImage: "none",
+          boxShadow: "none",
+        },
+      }}
+    >
+      <DialogTitle
+        sx={{
+          fontSize: 17,
+          fontWeight: 700,
+          color: theme.palette.primary.main,
+        }}
+      >
+        Edit Radiology Image
+      </DialogTitle>
 
-    return (
-        <div>
-            <Dialog
-                open={open}
-                onClose={onClose}
-                sx={{
-                    '& .MuiBackdrop-root': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.22)',
-                    },
-                    '& .MuiDialog-paper': {
-                        width: { xs: '99vw', sm: 520, md: 620 },
-                        maxWidth: 'none',
-                        backgroundImage: 'none',
-                        boxShadow: 'none',
+      <DialogContent>
+        <form
+          onSubmit={handleSubmit(submitDialog)}
+          id="edit-xray-form"
+        >
+          <Stack spacing={2} sx={{ mt: 1 }}>
 
-                    },
-                }}
+            {/* Doctor */}
+            <Typography
+              sx={{
+                fontSize: 16,
+                fontWeight: 550,
+              }}
             >
-                <DialogTitle sx={{
-                    fontSize: 17,
-                    fontWeight: 700,
-                    color: theme.palette.primary.main
-                }}>
-                    Edit Radilogy Image
-                </DialogTitle>
-                <DialogContent >
-                    <form onSubmit={handleSubmit(submitDialog)} id="subscription-form">
-                        <Stack spacing={2}>
+              Doctor Name
+            </Typography>
 
-                            <Typography sx={{
-                                fontSize: 16,
-                                fontWeight: 550
-                            }}>
-                                Doctor Name
-                            </Typography>
-                            <TextField
-                                fullWidth
-                                margin="normal"
-                                {...register("requestedBy")}
-                                error={!!errors.requestedBy}
-                                helperText={errors.requestedBy?.message}
-                            />
-                            <Typography sx={{
-                                fontSize: 16,
-                                fontWeight: 550
-                            }}>
-                                Radiologist Name
-                            </Typography>
-                            <TextField
-                                fullWidth
-                                margin="normal"
-                                {...register("uploaded_by")}
-                                error={!!errors.uploaded_by}
-                                helperText={errors.uploaded_by?.message}
-                            />
-                            <Typography
-                                sx={{
-                                    fontSize: 16,
-                                    fontWeight: 550
-                                }}>
-                                Image Type
-                            </Typography>
-                            <TextField
-                                fullWidth
-                                margin="normal"
-                                {...register("type")}
-                                error={!!errors.type}
-                                helperText={errors.type?.message}
-                            />
-                            <Typography
-                                sx={{
-                                    fontSize: 16,
-                                    fontWeight: 550
-                                }}>
-                                Image Description
-                            </Typography>
-                            <TextField
-                                fullWidth
-                                margin="normal"
-                                {...register("description")}
-                                error={!!errors.description}
-                                helperText={errors.description?.message}
-                            />
-                            {/* Image */}
-                            <Box
-                                component="img"
-                                src={previewImage}
-                                sx={{
-                                    width: "86%",
-                                    height: 330,
-                                    objectFit: "cover",
-                                    borderRadius: 2,
-                                    alignSelf: "center",
-                                }}
-                            />
-                            <Button
-                                component="label"
-                                variant="outlined"
-                                sx={{
-                                    width: '50%',
-                                    alignSelf: 'center'
-                                }}
-                            >
-                                Replace Image
+            <TextField
+              fullWidth
+              {...register("doctor_name")}
+              error={!!errors.doctor_name}
+              helperText={
+                errors.doctor_name?.message
+              }
+            />
 
-                                <input
-                                    hidden
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={(e) => {
-                                        const file = e.target.files?.[0];
+            {/* Image */}
+            <Typography
+              sx={{
+                fontSize: 16,
+                fontWeight: 550,
+              }}
+            >
+              Radiology Image
+            </Typography>
 
-                                        if (!file) return;
+            {previewImage && (
+              <Box
+                component="iframe"
+                src={previewImage}
+                sx={{
+                  width: "100%",
+                  height: 300,
+                  border: 0,
+                  borderRadius: 2,
+                }}
+              />
+            )}
 
-                                        setValue("image", file, {
-                                            shouldDirty: true,
-                                            shouldValidate: true,
-                                        });
-                                    }}
-                                />
-                            </Button>
-                            <Button
-                                sx={{
-                                    width: '50%',
-                                    alignSelf: 'center'
-                                }}
-                                color="error"
-                                variant="outlined"
-                                onClick={() => {
-                                    setValue("image", undefined as never);
-                                }}
-                            >
-                                Remove New Image
-                            </Button>
-                        </Stack>
-                    </form>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handelCancel}
-                        sx={{
-                            bgcolor: theme.palette.secondary.main,
-                            color: theme.palette.secondary.contrastText,
-                            width: 100,
-                            mx: 3
-                        }}
+            <Button
+              component="label"
+              variant="outlined"
+              sx={{
+                width: "60%",
+                alignSelf: "center",
+              }}
+            >
+              Replace Image
 
-                    >
+              <input
+                hidden
+                type="file"
+                accept="image/*,.pdf"
+                onChange={(e) => {
+                  const file =
+                    e.target.files?.[0];
 
-                        Cancel
-                    </Button>
-                    <Button type="submit" form="subscription-form"
-                        // disabled={editPlan.isPending}
-                        // startIcon={
-                        //     editPlan.isPending
-                        //         ? <CircularProgress size={20} />
-                        //         : null}
-                        sx={{
-                            bgcolor: theme.palette.primary.main,
-                            color: theme.palette.primary.contrastText,
-                            width: 130,
+                  if (!file) return;
 
-                        }}>
-                        {/* {editPlan.isPending ? 'Sending...' : 'Send'} */}
-                        save
-                    </Button>
-                </DialogActions>
+                  setValue(
+                    "image",
+                    file,
+                    {
+                      shouldDirty: true,
+                      shouldValidate: true,
+                    }
+                  );
+                }}
+              />
+            </Button>
 
-            </Dialog>
+            {newImage && (
+              <Button
+                color="error"
+                variant="outlined"
+                sx={{
+                  width: "60%",
+                  alignSelf: "center",
+                }}
+                onClick={() =>
+                  setValue(
+                    "image",
+                    undefined
+                  )
+                }
+              >
+                Remove New Image
+              </Button>
+            )}
 
-        </div>
-    )
-}
+          </Stack>
+        </form>
+      </DialogContent>
 
-export default EditXRayImageDialog
+      <DialogActions>
+
+        <Button
+          onClick={handleCancel}
+          disabled={editMutation.isPending}
+          sx={{
+            bgcolor:
+              theme.palette.secondary.main,
+            color:
+              theme.palette.secondary.contrastText,
+            width: 100,
+          }}
+        >
+          Cancel
+        </Button>
+
+        <Button
+          type="submit"
+          form="edit-xray-form"
+          disabled={editMutation.isPending}
+          startIcon={
+            editMutation.isPending ? (
+              <CircularProgress size={20} />
+            ) : null
+          }
+          sx={{
+            bgcolor:
+              theme.palette.primary.main,
+            color:
+              theme.palette.primary.contrastText,
+            width: 130,
+          }}
+        >
+          {editMutation.isPending
+            ? "Saving..."
+            : "Save"}
+        </Button>
+
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+export default EditXRayImageDialog;

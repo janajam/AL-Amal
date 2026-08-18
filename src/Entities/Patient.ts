@@ -114,15 +114,13 @@ export interface CreateLabResultResponse {
   errors: any;
 }
 export interface XRayImage {
-    id: number,
-    uploaded_at: Date;
-    requestedBy: string;
-    uploaded_by: string;
-    description: string
-    type: string,
-    image: string,
+  id: number;
+  doctor_name: string;
+  type: string;
+  description: string;
+  image: string;
+  created_at: string;
 }
-
 export interface PatientListItem {
     id: number;
     medical_number: string;
@@ -190,12 +188,13 @@ export interface UpdateTestResponse{
     data:TestResult
 }
 
-export interface UpdateImageResponse{
-    status:number,
-    message:string,
-    data:XRayImage
-}
-    
+export interface UpdateImageResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: XRayImage;
+  errors: any;
+}    
 
 
 export interface ContactDataResponse {
