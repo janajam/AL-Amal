@@ -21,7 +21,7 @@
 // Hook/UseEditTestResult.ts
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ApiClient from "../apiServices/api_client";
-import type { UpdateLabResultResponse } from "../Entities/Patient";
+import type { UpdateImageResponse } from "../Entities/Patient";
 
 type EditTestPayload = FormData | { remove_attachment: boolean };
 
@@ -29,10 +29,11 @@ export const useEditTestResult = (resultId: number, patientId: number) => {
     const queryClient = useQueryClient();
     
     // إنشاء apiClient
-    const apiClient = new ApiClient<UpdateLabResultResponse, EditTestPayload>(`/lab-results/${resultId}`);
+    const apiClient = new ApiClient<UpdateImageResponse, EditTestPayload>(`/lab-results/${resultId}`);
 
     return useMutation({
         mutationFn: async (payload: EditTestPayload) => {
+           console.log("Payload being sent to the server:", payload);
             // السيرفر يتوقع POST دائماً لهذا الـ Route
             return await apiClient.post(payload);
         },

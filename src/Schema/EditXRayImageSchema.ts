@@ -32,6 +32,8 @@ import { z } from "zod";
 
 export const editXRayImageSchema = z.object({
   doctor_name: z.string().min(2, "Doctor name is required"),
+  description: z.string().min(3, "Description is required"),
+  type: z.string().min(2, "Image type is required"),
   image: z.instanceof(File).optional(),
 });
 

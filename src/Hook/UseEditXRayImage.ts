@@ -17,15 +17,31 @@ export const useEditXRayImage = (
     mutationKey: ["editRadiologyResult", resultId],
 
     mutationFn: async (data: EditXRayImageInput) => {
-      const formData = new FormData();
+  const formData = new FormData();
 
-      formData.append("doctor_name", data.doctor_name);
+  formData.append(
+    "doctor_name",
+    data.doctor_name
+  );
 
-      if (data.image) {
-        formData.append("image", data.image);
-      }
+  formData.append(
+    "type",
+    data.type
+  );
 
-      return await apiClient.post(formData);
+  formData.append(
+    "description",
+    data.description
+  );
+
+  if (data.image) {
+    formData.append(
+      "image",
+      data.image
+    );
+  }
+
+  return await apiClient.post(formData);
     },
 
     onSuccess: () => {

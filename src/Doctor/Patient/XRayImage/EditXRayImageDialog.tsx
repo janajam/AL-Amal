@@ -12,7 +12,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 
 import type { XRayImage } from "../../../Entities/Patient";
@@ -59,69 +59,109 @@ const EditXRayImageDialog = ({
 
     defaultValues: {
       doctor_name: "",
+      description: "",
+      type: "",
       image: undefined,
     },
   });
 
   const newImage = watch("image");
 
-  const previewImage = newImage
-    ? URL.createObjectURL(newImage)
-    : img?.image;
+  /*
+   * إذا لم يختر المستخدم صورة جديدة
+   * نعرض الصورة القديمة.
+   *
+   * إذا اختار صورة جديدة
+   * نعرض الصورة الجديدة.
+   */
+  const previewImage = useMemo(() => {
+    if (newImage) {
+      return URL.createObjectURL(newImage);
+    }
 
+    return img?.image ?? "";
+  }, [newImage, img?.image]);
+
+  useEffect(() => {
+    return () => {
+      if (newImage && previewImage.startsWith("blob:")) {
+        URL.revokeObjectURL(previewImage);
+      }
+    };
+  }, [newImage, previewImage]);
+
+  /*
+   * عند فتح Dialog
+   * تعبئة البيانات الحالية.
+   */
   useEffect(() => {
     if (!img || !open) return;
 
     reset({
       doctor_name: img.doctor_name ?? "",
+      description: img.description ?? "",
+      type: img.type ?? "",
       image: undefined,
     });
   }, [img, open, reset]);
 
+  /*
+   * Cancel
+   */
   const handleCancel = () => {
+    if (editMutation.isPending) return;
+
     reset();
     onClose();
   };
 
-  const submitDialog = (data: EditXRayImageInput) => {
-  console.log("========== EDIT XRAY ==========");
-  console.log("Result ID:", img?.id);
-  console.log("Patient ID:", patientId);
-  console.log("Doctor:", data.doctor_name);
-  console.log("Image:", data.image);
+  /*
+   * Submit
+   */
+  const submitDialog = (
+    data: EditXRayImageInput
+  ) => {
+    if (!img?.id) {
+      console.error("No XRay result ID");
+      return;
+    }
 
-  if (!img?.id) {
-    console.error("No XRay ID!");
-    return;
-  }
+    console.log("========== EDIT XRAY ==========");
+    console.log("Result ID:", img.id);
+    console.log("Patient ID:", patientId);
+    console.log("Doctor:", data.doctor_name);
+    console.log("Type:", data.type);
+    console.log("Description:", data.description);
+    console.log("Image:", data.image);
 
-  editMutation.mutate(data, {
-    onSuccess: (response) => {
-      console.log(
-        "XRAY UPDATE SUCCESS:",
-        response
-      );
+    editMutation.mutate(data, {
+      onSuccess: (response) => {
+        console.log(
+          "XRAY UPDATE SUCCESS:",
+          response
+        );
 
-      reset();
-      onClose();
-      onSuccess?.();
-    },
+        reset();
+        onClose();
+        onSuccess?.();
+      },
 
-    onError: (error) => {
-      console.error(
-        "XRAY UPDATE ERROR:",
-        error
-      );
-    },
-  });
-};
+      onError: (error) => {
+        console.error(
+          "XRAY UPDATE ERROR:",
+          error
+        );
+      },
+    });
+  };
+
   return (
     <Dialog
       open={open}
       onClose={
         editMutation.isPending
           ? undefined
-          : onClose
+          : handleCancel
       }
       sx={{
         "& .MuiBackdrop-root": {
@@ -152,12 +192,13 @@ const EditXRayImageDialog = ({
 
       <DialogContent>
         <form
-          onSubmit={handleSubmit(submitDialog)}
           id="edit-xray-form"
+          onSubmit={handleSubmit(submitDialog)}
         >
           <Stack spacing={2} sx={{ mt: 1 }}>
 
-            {/* Doctor */}
+            {/* Doctor Name */}
+
             <Typography
               sx={{
                 fontSize: 16,
@@ -176,7 +217,50 @@ const EditXRayImageDialog = ({
               }
             />
 
-            {/* Image */}
+            {/* Image Type */}
+
+            <Typography
+              sx={{
+                fontSize: 16,
+                fontWeight: 550,
+              }}
+            >
+              Image Type
+            </Typography>
+
+            <TextField
+              fullWidth
+              {...register("type")}
+              error={!!errors.type}
+              helperText={
+                errors.type?.message
+              }
+            />
+
+            {/* Description */}
+
+            <Typography
+              sx={{
+                fontSize: 16,
+                fontWeight: 550,
+              }}
+            >
+              Description
+            </Typography>
+
+            <TextField
+              fullWidth
+              multiline
+              rows={3}
+              {...register("description")}
+              error={!!errors.description}
+              helperText={
+                errors.description?.message
+              }
+            />
+
+            {/* Current / New Image */}
+
             <Typography
               sx={{
                 fontSize: 16,
@@ -190,6 +274,7 @@ const EditXRayImageDialog = ({
               <Box
                 component="iframe"
                 src={previewImage}
+                title="Radiology Image"
                 sx={{
                   width: "100%",
                   height: 300,
@@ -198,6 +283,8 @@ const EditXRayImageDialog = ({
                 }}
               />
             )}
+
+            {/* Replace Image */}
 
             <Button
               component="label"
@@ -219,17 +306,16 @@ const EditXRayImageDialog = ({
 
                   if (!file) return;
 
-                  setValue(
-                    "image",
-                    file,
-                    {
-                      shouldDirty: true,
-                      shouldValidate: true,
-                    }
-                  );
+                  setValue("image", file, {
+                    shouldDirty: true,
+                    shouldValidate: true,
+                    shouldTouch: true,
+                  });
                 }}
               />
             </Button>
+
+            {/* Remove Selected New Image */}
 
             {newImage && (
               <Button
@@ -239,15 +325,33 @@ const EditXRayImageDialog = ({
                   width: "60%",
                   alignSelf: "center",
                 }}
-                onClick={() =>
+                onClick={() => {
                   setValue(
                     "image",
-                    undefined
-                  )
-                }
+                    undefined,
+                    {
+                      shouldDirty: true,
+                      shouldValidate: true,
+                    }
+                  );
+                }}
               >
                 Remove New Image
               </Button>
+            )}
+
+            {/* Image Error */}
+
+            {errors.image && (
+              <Box
+                sx={{
+                  color: "error.main",
+                  fontSize: 13,
+                  textAlign: "center",
+                }}
+              >
+                {errors.image.message}
+              </Box>
             )}
 
           </Stack>
@@ -263,7 +367,8 @@ const EditXRayImageDialog = ({
             bgcolor:
               theme.palette.secondary.main,
             color:
-              theme.palette.secondary.contrastText,
+              theme.palette.secondary
+                .contrastText,
             width: 100,
           }}
         >

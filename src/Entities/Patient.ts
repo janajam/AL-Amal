@@ -121,6 +121,16 @@ export interface XRayImage {
   image: string;
   created_at: string;
 }
+
+
+export interface UpdateImageResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: XRayImage;
+  errors: any;
+}
+
 export interface PatientListItem {
     id: number;
     medical_number: string;
@@ -299,4 +309,18 @@ export interface CreatePatientResponse {
     message: string;
     data: CreatePatientData;
     errors: any;
+}
+
+export interface CreateXRayImageResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: {
+    id: number;
+    type: string;
+    description: string;
+    image: string;
+    created_at: string;
+  };
+  errors: any;
 }

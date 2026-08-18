@@ -238,6 +238,7 @@ const PatientDetailes = () => {
                         <XRayImageSection
                             image={medicalRecord.radiology_results ?? []}
                             patientId={patient.id}
+                            medicalRecordId={medicalRecord.id}
                         />
                     </>
 
